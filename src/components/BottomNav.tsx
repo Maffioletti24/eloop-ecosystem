@@ -21,16 +21,20 @@ export function BottomNav() {
   return (
     <nav
       className="fixed bottom-0 inset-x-0 z-40 mx-auto max-w-[390px] border-t"
-      style={{ background: "#0A0F0A", borderColor: "#1f2a1f" }}
+      style={{
+        background: "#111A11",
+        borderColor: "rgba(29,185,84,0.15)",
+        height: 72,
+      }}
     >
-      <div className="grid grid-cols-5">
+      <div className="grid grid-cols-5 h-full">
         {items.map(({ to, label, icon: Icon }) => {
           const active = pathname === to || pathname.startsWith(to + "/");
           return (
             <Link
               key={to}
               to={to}
-              className="flex flex-col items-center gap-1 py-2.5 text-[10px] font-medium"
+              className="flex flex-col items-center justify-center gap-1 text-[10px] font-medium"
               style={{ color: active ? "#1DB954" : "#7a8a7a" }}
             >
               <Icon className="h-5 w-5" />
@@ -41,7 +45,7 @@ export function BottomNav() {
         <button
           type="button"
           onClick={handleLogout}
-          className="flex flex-col items-center gap-1 py-2.5 text-[10px] font-medium"
+          className="flex flex-col items-center justify-center gap-1 text-[10px] font-medium"
           style={{ color: "#7a8a7a" }}
           aria-label="Sair"
         >
