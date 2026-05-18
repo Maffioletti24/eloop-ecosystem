@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
+import { requireAuth } from "@/lib/require-auth";
 import eloopLogo from "@/assets/eloop-logo.png";
 
 export const Route = createFileRoute("/dashboard")({
-  head: () => ({ meta: [{ title: "Dashboard ELP" }] }),
+  beforeLoad: requireAuth,
+  head: () => ({ meta: [{ title: "Dashboard ELP — Eloop Token" }] }),
   component: DashboardPage,
 });
 

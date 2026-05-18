@@ -2,8 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
 import { QrCode } from "lucide-react";
 
+import { requireAuth } from "@/lib/require-auth";
+
 export const Route = createFileRoute("/registro")({
-  head: () => ({ meta: [{ title: "Registrar Descarte" }] }),
+  beforeLoad: requireAuth,
+  head: () => ({ meta: [{ title: "Registrar Descarte — Eloop Token" }] }),
   component: RegistroPage,
 });
 

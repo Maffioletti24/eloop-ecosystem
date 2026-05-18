@@ -1,8 +1,11 @@
+
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
+import { requireAuth } from "@/lib/require-auth";
 
 export const Route = createFileRoute("/conformidade")({
-  head: () => ({ meta: [{ title: "Conformidade & SINIR" }] }),
+  beforeLoad: requireAuth,
+  head: () => ({ meta: [{ title: "Conformidade & SINIR — Eloop Token" }] }),
   component: ConformidadePage,
 });
 
