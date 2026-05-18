@@ -104,6 +104,24 @@ function ConformidadePage() {
     }
   }
 
+  async function handleCertificate(eventId: string) {
+    setCertifying(eventId);
+    try {
+      const r = await genCert({ data: { eventId } });
+      if (r.pdfUrl) {
+        window.open(r.pdfUrl, "_blank");
+        toast.success(`Certificado ${r.numero} gerado`);
+      } else {
+        toast.error("PDF gerado mas URL indisponível");
+      }
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Falha ao gerar certificado");
+    } finally {
+      setCertifying(null);
+    }
+  }
+
+
   return (
     <PageShell title="Conformidade & SINIR">
       <p className="text-sm mb-4" style={{ color: "#7a8a7a" }}>
