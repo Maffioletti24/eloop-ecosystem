@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RegistroRouteImport } from './routes/registro'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as EsgRouteImport } from './routes/esg'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ConformidadeRouteImport } from './routes/conformidade'
 import { Route as CadastroRouteImport } from './routes/cadastro'
@@ -23,6 +24,11 @@ const RegistroRoute = RegistroRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EsgRoute = EsgRouteImport.update({
+  id: '/esg',
+  path: '/esg',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/cadastro': typeof CadastroRoute
   '/conformidade': typeof ConformidadeRoute
   '/dashboard': typeof DashboardRoute
+  '/esg': typeof EsgRoute
   '/login': typeof LoginRoute
   '/registro': typeof RegistroRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/cadastro': typeof CadastroRoute
   '/conformidade': typeof ConformidadeRoute
   '/dashboard': typeof DashboardRoute
+  '/esg': typeof EsgRoute
   '/login': typeof LoginRoute
   '/registro': typeof RegistroRoute
 }
@@ -60,6 +68,7 @@ export interface FileRoutesById {
   '/cadastro': typeof CadastroRoute
   '/conformidade': typeof ConformidadeRoute
   '/dashboard': typeof DashboardRoute
+  '/esg': typeof EsgRoute
   '/login': typeof LoginRoute
   '/registro': typeof RegistroRoute
 }
@@ -69,15 +78,23 @@ export interface FileRouteTypes {
     | '/cadastro'
     | '/conformidade'
     | '/dashboard'
+    | '/esg'
     | '/login'
     | '/registro'
   fileRoutesByTo: FileRoutesByTo
-  to: '/cadastro' | '/conformidade' | '/dashboard' | '/login' | '/registro'
+  to:
+    | '/cadastro'
+    | '/conformidade'
+    | '/dashboard'
+    | '/esg'
+    | '/login'
+    | '/registro'
   id:
     | '__root__'
     | '/cadastro'
     | '/conformidade'
     | '/dashboard'
+    | '/esg'
     | '/login'
     | '/registro'
   fileRoutesById: FileRoutesById
@@ -86,6 +103,7 @@ export interface RootRouteChildren {
   CadastroRoute: typeof CadastroRoute
   ConformidadeRoute: typeof ConformidadeRoute
   DashboardRoute: typeof DashboardRoute
+  EsgRoute: typeof EsgRoute
   LoginRoute: typeof LoginRoute
   RegistroRoute: typeof RegistroRoute
 }
@@ -104,6 +122,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/esg': {
+      id: '/esg'
+      path: '/esg'
+      fullPath: '/esg'
+      preLoaderRoute: typeof EsgRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -134,6 +159,7 @@ const rootRouteChildren: RootRouteChildren = {
   CadastroRoute: CadastroRoute,
   ConformidadeRoute: ConformidadeRoute,
   DashboardRoute: DashboardRoute,
+  EsgRoute: EsgRoute,
   LoginRoute: LoginRoute,
   RegistroRoute: RegistroRoute,
 }
