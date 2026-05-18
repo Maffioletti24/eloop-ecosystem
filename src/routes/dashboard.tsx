@@ -209,11 +209,19 @@ function DashboardPage() {
           className="rounded-2xl border p-5"
           style={{ background: COLORS.surface, borderColor: COLORS.ring }}
         >
-          <div
-            className="text-[10px] font-semibold tracking-[0.14em]"
-            style={{ color: COLORS.greenMuted }}
-          >
-            SALDO ELP · CARTEIRA DE CONFORMIDADE
+          <div className="flex items-center justify-between">
+            <div
+              className="text-[10px] font-semibold tracking-[0.14em]"
+              style={{ color: COLORS.greenMuted }}
+            >
+              SALDO ELP · CARTEIRA DE CONFORMIDADE
+            </div>
+            <span
+              className="text-[9px] font-bold tracking-wider px-2 py-0.5 rounded-md"
+              style={{ background: `${COLORS.green}22`, color: COLORS.green }}
+            >
+              ON-CHAIN · POLYGON
+            </span>
           </div>
           {loading ? (
             <Skeleton className="mt-2 h-9 w-40 bg-white/5" />
@@ -231,11 +239,23 @@ function DashboardPage() {
               </span>
             </div>
           )}
-          <div className="mt-2 text-xs" style={{ color: COLORS.dim }}>
-            α = 2.0 ELP/kg
-            {!loading && data.saldo > 0
-              ? ` · R$ ${formatELP(data.saldo * 8)}`
-              : ""}
+          <div className="mt-2 text-xs flex items-center gap-2" style={{ color: COLORS.dim }}>
+            <span>α = 2.0 ELP/kg</span>
+            {!loading && data.saldo > 0 && (
+              <>
+                <span>·</span>
+                <span style={{ color: COLORS.text }}>
+                  ≈ R$ {formatELP(data.saldo * 8)}
+                </span>
+              </>
+            )}
+          </div>
+          <div
+            className="mt-3 rounded-lg px-2.5 py-1.5 text-[10px] font-mono flex items-center justify-between"
+            style={{ background: "#0A0F0A", color: COLORS.dim }}
+          >
+            <span>contrato 0x6b01…DE26</span>
+            <span style={{ color: COLORS.greenMuted }}>cap 250M</span>
           </div>
 
           <div
