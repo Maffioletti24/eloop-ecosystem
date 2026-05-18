@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Download, FileText, Loader2 } from "lucide-react";
+import { Download, FileText, Loader2, FileBadge } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { requireAuth } from "@/lib/require-auth";
 import { supabase } from "@/integrations/supabase/client";
 import { useServerFn } from "@tanstack/react-start";
 import { generateSinirReport } from "@/lib/sinir.functions";
+import { generateCertificate } from "@/lib/certificate.functions";
 import { formatKg, formatELP, estimarCO2e } from "@/lib/elp";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
