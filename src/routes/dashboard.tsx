@@ -15,6 +15,9 @@ import { BottomNav } from "@/components/BottomNav";
 import { EloopLogo } from "@/components/EloopLogo";
 import { requireAuth } from "@/lib/require-auth";
 import { formatELP, formatKg, estimarCO2e } from "@/lib/elp";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard")({
   beforeLoad: requireAuth,
@@ -70,6 +73,7 @@ function timeAgo(iso: string): string {
 function DashboardPage() {
   const [email, setEmail] = useState<string>("");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<DashboardData>({
     saldo: 0,
     totalEventos: 0,
@@ -82,57 +86,68 @@ function DashboardPage() {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const { data: userData } = await supabase.auth.getUser();
-      const user = userData.user;
-      if (!user) return;
-      if (!cancelled) setEmail(user.email ?? "");
+      try {
+        const { data: userData, error: authErr } = await supabase.auth.getUser();
+        if (authErr) throw authErr;
+        const user = userData.user;
+        if (!user) return;
+        if (!cancelled) setEmail(user.email ?? "");
 
-      const [walletRes, eventsRes, kpiRes, allEventsRes] = await Promise.all([
-        supabase
-          .from("wallets")
-          .select("saldo_elp")
-          .eq("user_id", user.id)
-          .maybeSingle(),
-        supabase
-          .from("disposal_events")
-          .select(
-            "id, weight_kg, elp_amount, created_at, categories(nome, risk_level)",
-          )
-          .order("created_at", { ascending: false })
-          .limit(5),
-        supabase
-          .from("kpis")
-          .select("scan_rate, uptime, tx_custo, beta_score")
-          .order("periodo", { ascending: false })
-          .limit(1)
-          .maybeSingle(),
-        supabase
-          .from("disposal_events")
-          .select("weight_kg, categories(risk_level)"),
-      ]);
+        const [walletRes, eventsRes, kpiRes, allEventsRes] = await Promise.all([
+          supabase
+            .from("wallets")
+            .select("saldo_elp")
+            .eq("user_id", user.id)
+            .maybeSingle(),
+          supabase
+            .from("disposal_events")
+            .select(
+              "id, weight_kg, elp_amount, created_at, categories(nome, risk_level)",
+            )
+            .order("created_at", { ascending: false })
+            .limit(5),
+          supabase
+            .from("kpis")
+            .select("scan_rate, uptime, tx_custo, beta_score")
+            .order("periodo", { ascending: false })
+            .limit(1)
+            .maybeSingle(),
+          supabase
+            .from("disposal_events")
+            .select("weight_kg, categories(risk_level)"),
+        ]);
 
-      const totalEventos = allEventsRes.data?.length ?? 0;
-      const totalKg =
-        allEventsRes.data?.reduce((s, e) => s + Number(e.weight_kg ?? 0), 0) ??
-        0;
-      const totalCO2e =
-        allEventsRes.data?.reduce((s, e) => {
-          const risk =
-            (e.categories as { risk_level?: "alto" | "medio" | "baixo" } | null)
-              ?.risk_level ?? "baixo";
-          return s + estimarCO2e(Number(e.weight_kg ?? 0), risk);
-        }, 0) ?? 0;
+        const firstErr =
+          walletRes.error ?? eventsRes.error ?? kpiRes.error ?? allEventsRes.error;
+        if (firstErr) throw firstErr;
 
-      if (cancelled) return;
-      setData({
-        saldo: Number(walletRes.data?.saldo_elp ?? 0),
-        totalEventos,
-        totalKg,
-        totalCO2e,
-        events: (eventsRes.data ?? []) as RecentEvent[],
-        kpi: kpiRes.data ?? null,
-      });
-      setLoading(false);
+        const totalEventos = allEventsRes.data?.length ?? 0;
+        const totalKg =
+          allEventsRes.data?.reduce((s, e) => s + Number(e.weight_kg ?? 0), 0) ??
+          0;
+        const totalCO2e =
+          allEventsRes.data?.reduce((s, e) => {
+            const risk =
+              (e.categories as { risk_level?: "alto" | "medio" | "baixo" } | null)
+                ?.risk_level ?? "baixo";
+            return s + estimarCO2e(Number(e.weight_kg ?? 0), risk);
+          }, 0) ?? 0;
+
+        if (cancelled) return;
+        setData({
+          saldo: Number(walletRes.data?.saldo_elp ?? 0),
+          totalEventos,
+          totalKg,
+          totalCO2e,
+          events: (eventsRes.data ?? []) as RecentEvent[],
+          kpi: kpiRes.data ?? null,
+        });
+      } catch (e) {
+        if (!cancelled)
+          setError(e instanceof Error ? e.message : "Erro ao carregar dados");
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
     })();
     return () => {
       cancelled = true;
@@ -176,6 +191,19 @@ function DashboardPage() {
       </header>
 
       <div className="px-5 space-y-4">
+        {error && (
+          <Alert
+            variant="destructive"
+            className="border-red-500/30 bg-red-500/10 text-red-200"
+          >
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Erro ao carregar dashboard</AlertTitle>
+            <AlertDescription className="text-red-200/80 text-xs">
+              {error}
+            </AlertDescription>
+          </Alert>
+        )}
+
         {/* BALANCE CARD */}
         <section
           className="rounded-2xl border p-5"
@@ -187,21 +215,27 @@ function DashboardPage() {
           >
             SALDO ELP · CARTEIRA DE CONFORMIDADE
           </div>
-          <div
-            className="mt-2 font-bold leading-none"
-            style={{ color: COLORS.text, fontSize: 36 }}
-          >
-            {loading ? "—" : formatELP(data.saldo)}{" "}
-            <span
-              className="text-2xl font-semibold"
-              style={{ color: COLORS.greenMuted }}
+          {loading ? (
+            <Skeleton className="mt-2 h-9 w-40 bg-white/5" />
+          ) : (
+            <div
+              className="mt-2 font-bold leading-none"
+              style={{ color: COLORS.text, fontSize: 36 }}
             >
-              ELP
-            </span>
-          </div>
+              {formatELP(data.saldo)}{" "}
+              <span
+                className="text-2xl font-semibold"
+                style={{ color: COLORS.greenMuted }}
+              >
+                ELP
+              </span>
+            </div>
+          )}
           <div className="mt-2 text-xs" style={{ color: COLORS.dim }}>
             α = 2.0 ELP/kg
-            {data.saldo > 0 ? ` · R$ ${formatELP(data.saldo * 8)}` : ""}
+            {!loading && data.saldo > 0
+              ? ` · R$ ${formatELP(data.saldo * 8)}`
+              : ""}
           </div>
 
           <div
@@ -209,23 +243,31 @@ function DashboardPage() {
             style={{ background: "rgba(29,185,84,0.15)" }}
           />
 
-          <div className="grid grid-cols-3 gap-2 text-center">
-            <Stat
-              value={String(data.totalEventos)}
-              unit="eventos"
-              color={COLORS.green}
-            />
-            <Stat
-              value={formatKg(data.totalKg)}
-              unit="kg"
-              color={COLORS.green}
-            />
-            <Stat
-              value={`${(data.totalCO2e / 1000).toFixed(1)}t`}
-              unit="CO₂e"
-              color={COLORS.amber}
-            />
-          </div>
+          {loading ? (
+            <div className="grid grid-cols-3 gap-2">
+              <Skeleton className="h-10 bg-white/5" />
+              <Skeleton className="h-10 bg-white/5" />
+              <Skeleton className="h-10 bg-white/5" />
+            </div>
+          ) : (
+            <div className="grid grid-cols-3 gap-2 text-center">
+              <Stat
+                value={String(data.totalEventos)}
+                unit="eventos"
+                color={COLORS.green}
+              />
+              <Stat
+                value={formatKg(data.totalKg)}
+                unit="kg"
+                color={COLORS.green}
+              />
+              <Stat
+                value={`${(data.totalCO2e / 1000).toFixed(1)}t`}
+                unit="CO₂e"
+                color={COLORS.amber}
+              />
+            </div>
+          )}
         </section>
 
         {/* QUICK ACTIONS */}
@@ -342,7 +384,12 @@ function DashboardPage() {
               borderColor: "rgba(29,185,84,0.12)",
             }}
           >
-            {data.events.length === 0 ? (
+            {loading ? (
+              <div className="p-4 space-y-3">
+                <Skeleton className="h-12 bg-white/5" />
+                <Skeleton className="h-12 bg-white/5" />
+              </div>
+            ) : data.events.length === 0 ? (
               <div
                 className="px-4 py-8 flex flex-col items-center gap-2 text-center"
                 style={{ color: COLORS.dim }}
