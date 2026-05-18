@@ -4,7 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Leaf, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import eloopLogo from "@/assets/eloop-logo.png";
 import { toast } from "sonner";
 
 type Tipo = "PF" | "PJ" | "Cooperativa" | "Reciclador";
