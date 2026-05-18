@@ -42,6 +42,8 @@ function firstDayOfMonth() {
 
 function ConformidadePage() {
   const generate = useServerFn(generateSinirReport);
+  const genCert = useServerFn(generateCertificate);
+  const [certifying, setCertifying] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [events, setEvents] = useState<EventRow[]>([]);
   const [exporting, setExporting] = useState(false);
