@@ -37,6 +37,10 @@ function CarteiraPage() {
   const [beta, setBeta] = useState(1);
   const [events, setEvents] = useState<EventRow[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [supply, setSupply] = useState<{ total: number; cap: number }>({
+    total: 0,
+    cap: 250_000_000,
+  });
 
   useEffect(() => {
     let cancel = false;
@@ -44,7 +48,7 @@ function CarteiraPage() {
       try {
         const { data: auth } = await supabase.auth.getUser();
         if (!auth.user) return;
-        const [w, o, ev] = await Promise.all([
+        const [w, o, ev, ts] = await Promise.all([
           supabase
             .from("wallets")
             .select("saldo_elp, wallet_address")
@@ -62,12 +66,22 @@ function CarteiraPage() {
             )
             .order("created_at", { ascending: false })
             .limit(20),
+          supabase
+            .from("token_supply")
+            .select("total_emitido, hard_cap")
+            .maybeSingle(),
         ]);
         if (cancel) return;
         setSaldo(Number(w.data?.saldo_elp ?? 0));
         setWalletAddr(w.data?.wallet_address ?? null);
         setBeta(Number(o.data?.beta_score ?? 1));
         setEvents((ev.data ?? []) as EventRow[]);
+        if (ts.data) {
+          setSupply({
+            total: Number(ts.data.total_emitido ?? 0),
+            cap: Number(ts.data.hard_cap ?? 250_000_000),
+          });
+        }
       } catch (e) {
         if (!cancel)
           setError(e instanceof Error ? e.message : "Erro ao carregar carteira");
