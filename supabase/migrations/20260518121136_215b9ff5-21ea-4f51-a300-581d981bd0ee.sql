@@ -1,0 +1,1 @@
+revoke execute on function public.sync_wallet_on_event() from anon, authenticated;
