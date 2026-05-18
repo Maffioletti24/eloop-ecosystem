@@ -9,28 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as RegistroRouteImport } from './routes/registro'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as EsgRouteImport } from './routes/esg'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ConformidadeRouteImport } from './routes/conformidade'
 import { Route as CarteiraRouteImport } from './routes/carteira'
+import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as IndexRouteImport } from './routes/index'
 
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CadastroRoute = CadastroRouteImport.update({
-  id: '/cadastro',
-  path: '/cadastro',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const RegistroRoute = RegistroRouteImport.update({
   id: '/registro',
   path: '/registro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EsgRoute = EsgRouteImport.update({
@@ -53,6 +48,11 @@ const CarteiraRoute = CarteiraRouteImport.update({
   path: '/carteira',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CadastroRoute = CadastroRouteImport.update({
+  id: '/cadastro',
+  path: '/cadastro',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -61,100 +61,93 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cadastro': typeof CadastroRoute
   '/carteira': typeof CarteiraRoute
   '/conformidade': typeof ConformidadeRoute
   '/dashboard': typeof DashboardRoute
   '/esg': typeof EsgRoute
-  '/registro': typeof RegistroRoute
-  '/cadastro': typeof CadastroRoute
   '/login': typeof LoginRoute
+  '/registro': typeof RegistroRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cadastro': typeof CadastroRoute
   '/carteira': typeof CarteiraRoute
   '/conformidade': typeof ConformidadeRoute
   '/dashboard': typeof DashboardRoute
   '/esg': typeof EsgRoute
-  '/registro': typeof RegistroRoute
-  '/cadastro': typeof CadastroRoute
   '/login': typeof LoginRoute
+  '/registro': typeof RegistroRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/cadastro': typeof CadastroRoute
   '/carteira': typeof CarteiraRoute
   '/conformidade': typeof ConformidadeRoute
   '/dashboard': typeof DashboardRoute
   '/esg': typeof EsgRoute
-  '/registro': typeof RegistroRoute
-  '/cadastro': typeof CadastroRoute
   '/login': typeof LoginRoute
+  '/registro': typeof RegistroRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/cadastro'
     | '/carteira'
     | '/conformidade'
     | '/dashboard'
     | '/esg'
-    | '/registro'
-    | '/cadastro'
     | '/login'
+    | '/registro'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/cadastro'
     | '/carteira'
     | '/conformidade'
     | '/dashboard'
     | '/esg'
-    | '/registro'
-    | '/cadastro'
     | '/login'
+    | '/registro'
   id:
     | '__root__'
     | '/'
+    | '/cadastro'
     | '/carteira'
     | '/conformidade'
     | '/dashboard'
     | '/esg'
-    | '/registro'
-    | '/cadastro'
     | '/login'
+    | '/registro'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CadastroRoute: typeof CadastroRoute
   CarteiraRoute: typeof CarteiraRoute
   ConformidadeRoute: typeof ConformidadeRoute
   DashboardRoute: typeof DashboardRoute
   EsgRoute: typeof EsgRoute
-  RegistroRoute: typeof RegistroRoute
-  CadastroRoute: typeof CadastroRoute
   LoginRoute: typeof LoginRoute
+  RegistroRoute: typeof RegistroRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cadastro': {
-      id: '/cadastro'
-      path: '/cadastro'
-      fullPath: '/cadastro'
-      preLoaderRoute: typeof CadastroRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/registro': {
       id: '/registro'
       path: '/registro'
       fullPath: '/registro'
       preLoaderRoute: typeof RegistroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/esg': {
@@ -185,6 +178,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CarteiraRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cadastro': {
+      id: '/cadastro'
+      path: '/cadastro'
+      fullPath: '/cadastro'
+      preLoaderRoute: typeof CadastroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -197,13 +197,13 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CadastroRoute: CadastroRoute,
   CarteiraRoute: CarteiraRoute,
   ConformidadeRoute: ConformidadeRoute,
   DashboardRoute: DashboardRoute,
   EsgRoute: EsgRoute,
-  RegistroRoute: RegistroRoute,
-  CadastroRoute: CadastroRoute,
   LoginRoute: LoginRoute,
+  RegistroRoute: RegistroRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
