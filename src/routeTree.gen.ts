@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RegistroRouteImport } from './routes/registro'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CadastroRouteImport } from './routes/cadastro'
 
+const RegistroRoute = RegistroRouteImport.update({
+  id: '/registro',
+  path: '/registro',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -33,34 +39,45 @@ export interface FileRoutesByFullPath {
   '/cadastro': typeof CadastroRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/registro': typeof RegistroRoute
 }
 export interface FileRoutesByTo {
   '/cadastro': typeof CadastroRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/registro': typeof RegistroRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/cadastro': typeof CadastroRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/registro': typeof RegistroRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/cadastro' | '/dashboard' | '/login'
+  fullPaths: '/cadastro' | '/dashboard' | '/login' | '/registro'
   fileRoutesByTo: FileRoutesByTo
-  to: '/cadastro' | '/dashboard' | '/login'
-  id: '__root__' | '/cadastro' | '/dashboard' | '/login'
+  to: '/cadastro' | '/dashboard' | '/login' | '/registro'
+  id: '__root__' | '/cadastro' | '/dashboard' | '/login' | '/registro'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   CadastroRoute: typeof CadastroRoute
   DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
+  RegistroRoute: typeof RegistroRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/registro': {
+      id: '/registro'
+      path: '/registro'
+      fullPath: '/registro'
+      preLoaderRoute: typeof RegistroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   CadastroRoute: CadastroRoute,
   DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
+  RegistroRoute: RegistroRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
