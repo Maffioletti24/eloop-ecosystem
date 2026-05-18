@@ -19,20 +19,29 @@ export function PageShell({
       style={{ background: "#0A0F0A", color: "#E8F5E8" }}
     >
       <header
-        className="flex items-center gap-3 px-5 pt-6 pb-4 sticky top-0 z-30"
+        className="sticky top-0 z-30 grid grid-cols-[2rem_2.25rem_1fr] items-center gap-3 px-4 pt-5 pb-3"
         style={{ background: "#0A0F0A" }}
       >
-        {showBack && (
-          <Link to="/dashboard" className="-ml-2 p-2" style={{ color: "#E8F5E8" }}>
-            <ArrowLeft className="h-5 w-5" />
-          </Link>
-        )}
+        <div className="flex items-center justify-start">
+          {showBack ? (
+            <Link
+              to="/dashboard"
+              aria-label="Voltar"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-full"
+              style={{ color: "#E8F5E8" }}
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Link>
+          ) : null}
+        </div>
         <img
           src={eloopLogo}
           alt="Eloop"
-          className="h-9 w-9 object-contain shrink-0"
+          className="h-9 w-9 object-contain"
         />
-        <h1 className="text-lg font-bold truncate">{title}</h1>
+        <h1 className="text-base font-bold leading-tight truncate min-w-0">
+          {title}
+        </h1>
       </header>
       <main className="px-5">{children}</main>
       <BottomNav />
