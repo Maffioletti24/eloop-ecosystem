@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ReactNode } from "react";
 import { ArrowLeft } from "lucide-react";
 import { BottomNav } from "./BottomNav";
+import eloopLogo from "@/assets/eloop-logo.png";
 
 export function PageShell({
   title,
@@ -26,10 +27,16 @@ export function PageShell({
             <ArrowLeft className="h-5 w-5" />
           </Link>
         )}
-        <h1 className="text-lg font-bold">{title}</h1>
+        <img
+          src={eloopLogo}
+          alt="Eloop"
+          className="h-9 w-9 object-contain shrink-0"
+        />
+        <h1 className="text-lg font-bold truncate">{title}</h1>
       </header>
       <main className="px-5">{children}</main>
       <BottomNav />
     </div>
   );
 }
+
