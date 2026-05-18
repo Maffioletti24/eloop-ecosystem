@@ -377,12 +377,13 @@ function RegistroPage() {
               />
             ) : null}
             <p className="text-xs" style={{ color: MUTED }}>
-              Foto registrada · aguardando validação INMETRO
+              Pesagem manual · fallback Nível 1 (ABNT NBR 16156).
+              Integração balança INMETRO promove auto Nível 2.
             </p>
             <ul className="space-y-1.5 text-xs">
-              <li style={{ color: GREEN }}>✓ QR validado</li>
-              <li style={{ color: GREEN }}>✓ Peso registrado</li>
-              <li style={{ color: "#f59e0b" }}>⏳ Hash pendente</li>
+              <li style={{ color: GREEN }}>✓ QR validado · uso único</li>
+              <li style={{ color: GREEN }}>✓ Peso registrado · evidência fotográfica</li>
+              <li style={{ color: "#f59e0b" }}>⏳ Hash SHA-256 pendente</li>
             </ul>
           </div>
           <PrimaryBtn onClick={handleGenerateHash}>Gerar Hash</PrimaryBtn>
@@ -402,15 +403,23 @@ function RegistroPage() {
             >
               {hashHex}
             </div>
-            <p className="text-xs" style={{ color: MUTED }}>
-              Registrado na Polygon Mainnet
-            </p>
+            <div className="flex items-center gap-1.5">
+              <span
+                className="text-[9px] font-bold tracking-wider px-2 py-1 rounded-md"
+                style={{ background: `${GREEN}22`, color: GREEN }}
+              >
+                ON-CHAIN · POLYGON
+              </span>
+              <span className="text-[10px]" style={{ color: MUTED }}>
+                prova de integridade imutável
+              </span>
+            </div>
             <div
               className="rounded-xl px-3 py-2 text-xs flex items-center gap-2"
               style={{ background: `${GREEN}11`, color: TEXT }}
             >
               <Loader2 className="h-3.5 w-3.5 animate-spin" style={{ color: "#f59e0b" }} />
-              <span>Transação pendente…</span>
+              <span>Ancoragem em curso…</span>
             </div>
           </div>
           <PrimaryBtn onClick={handleEmit} loading={loading}>

@@ -46,10 +46,10 @@ function CadastroPage() {
   }
 
   const tipos: Array<{ v: Tipo; label: string; sub: string }> = [
+    { v: "Cooperativa", label: "Cooperativa", sub: "Nível 1 · coleta certificada" },
+    { v: "Reciclador", label: "Reciclador", sub: "Nível 2 · logística reversa" },
+    { v: "PJ", label: "Indústria / Gerador", sub: "Nível 3 · obrigado PNRS" },
     { v: "PF", label: "Pessoa Física", sub: "Cidadão / autônomo" },
-    { v: "PJ", label: "Empresa", sub: "Indústria / comércio" },
-    { v: "Cooperativa", label: "Cooperativa", sub: "Catadores associados" },
-    { v: "Reciclador", label: "Reciclador", sub: "Logística reversa" },
   ];
 
   return (
@@ -57,8 +57,11 @@ function CadastroPage() {
       <div className="flex flex-col items-center mb-6">
         <EloopLogo size={88} withText />
       </div>
-      <h1 className="text-3xl font-bold leading-tight">Criar conta</h1>
-      <p className="text-sm text-dim mt-2">Selecione o perfil que melhor descreve sua operação.</p>
+      <h1 className="text-3xl font-bold leading-tight">Habilitar operação</h1>
+      <p className="text-sm text-dim mt-2">
+        Selecione o nível operacional. A escolha define obrigações PNRS aplicáveis
+        e o tipo de certificado SINIR gerado.
+      </p>
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-5">
         <div>

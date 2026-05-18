@@ -11,13 +11,17 @@ export const Route = createFileRoute("/esg")({
 
 function EsgPage() {
   const metrics = [
-    { label: "REEE reciclado", value: "— kg" },
-    { label: "CO₂e evitado", value: "— kg" },
-    { label: "ELP gerado", value: "—" },
-    { label: "Eventos validados", value: "—" },
+    { label: "REEE rastreado", value: "— kg", sub: "PNRS Art. 33" },
+    { label: "CO₂e evitado", value: "— kg", sub: "ISO 14064-2" },
+    { label: "ELP emitido", value: "—", sub: "lastro auditável" },
+    { label: "Eventos validados", value: "—", sub: "hash on-chain" },
   ];
   return (
-    <PageShell title="Impacto ESG">
+    <PageShell title="Indicadores ESG">
+      <p className="text-xs mb-4" style={{ color: "#7a8a7a" }}>
+        Métricas de impacto calculadas com metodologia ISO 14064-2 sobre
+        eventos REEE rastreados em Polygon.
+      </p>
       <div className="grid grid-cols-2 gap-3">
         {metrics.map((m) => (
           <div
@@ -31,6 +35,12 @@ function EsgPage() {
             <div className="text-lg font-bold mt-1" style={{ color: "#1DB954" }}>
               {m.value}
             </div>
+            <div
+              className="text-[9px] font-semibold tracking-wider mt-1"
+              style={{ color: "#7A9E7A" }}
+            >
+              {m.sub}
+            </div>
           </div>
         ))}
       </div>
@@ -38,9 +48,9 @@ function EsgPage() {
         className="mt-6 rounded-2xl border p-5"
         style={{ borderColor: "#1f2a1f", background: "#0F1A0F" }}
       >
-        <div className="text-sm font-semibold mb-1">Volume mensal</div>
+        <div className="text-sm font-semibold mb-1">Volume mensal por categoria</div>
         <div className="text-xs" style={{ color: "#7a8a7a" }}>
-          Gráfico será exibido aqui.
+          Série histórica disponível após primeiro mês fechado.
         </div>
       </div>
     </PageShell>

@@ -47,10 +47,22 @@ function LoginPage() {
       </div>
 
       <div className="mt-4">
-        <h1 className="text-3xl font-bold leading-tight">Acessar conta</h1>
+        <h1 className="text-3xl font-bold leading-tight">Acessar plataforma</h1>
         <p className="text-sm text-dim mt-2">
-          Entre para registrar descartes, gerar certificados e acompanhar seu impacto.
+          Infraestrutura de conformidade REEE — rastreabilidade auditável,
+          relatórios SINIR e prova on-chain Polygon.
         </p>
+        <div className="mt-3 flex flex-wrap gap-1.5">
+          {["PNRS", "SINIR", "INMETRO", "ABNT NBR 16156", "ISO 14064-2"].map((b) => (
+            <span
+              key={b}
+              className="text-[9px] font-semibold tracking-wider px-2 py-1 rounded-md border"
+              style={{ borderColor: "rgba(29,185,84,0.30)", color: "#7A9E7A" }}
+            >
+              {b}
+            </span>
+          ))}
+        </div>
       </div>
 
       <form onSubmit={handleEmailLogin} className="mt-8 space-y-4">
