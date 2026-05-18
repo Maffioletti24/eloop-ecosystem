@@ -79,12 +79,12 @@ export const decideEvent = createServerFn({ method: "POST" })
       }
     }
 
-    const patch: Record<string, unknown> = {
+    const patch = {
       status: data.decision,
       validator_id: validator.id,
       updated_at: new Date().toISOString(),
+      ...(txHash ? { polygon_tx_hash: txHash } : {}),
     };
-    if (txHash) patch.polygon_tx_hash = txHash;
 
     const { error } = await supabase
       .from("disposal_events")
