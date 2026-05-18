@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-import { supabaseAdmin } from "@/integrations/supabase/client.server";
+
 
 /**
  * Gera certificado PNRS (PF) em PDF e faz upload no bucket `certificates`.
@@ -37,12 +37,8 @@ export const generateCertificate = createServerFn({ method: "POST" })
       .eq("id", evento.category_id)
       .single();
 
-    // 2) Sequencial
-    const { data: seqRow } = await supabaseAdmin.rpc("nextval", {
-      sequence_name: "certificate_seq",
-    } as never);
-    const numero =
-      `ELP-PF-${new Date().getFullYear()}-${String(seqRow ?? Date.now()).padStart(6, "0")}`;
+    // 2) Sequencial baseado em timestamp (curto e único)
+    const numero = `ELP-PF-${new Date().getFullYear()}-${Date.now().toString(36).toUpperCase()}`;
 
     // 3) Monta PDF
     const pdfDoc = await PDFDocument.create();
