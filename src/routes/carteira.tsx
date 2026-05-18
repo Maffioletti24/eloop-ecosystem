@@ -197,6 +197,19 @@ function CarteiraPage() {
             />
           ))}
         </div>
+        <div className="grid grid-cols-2 gap-2 mt-3">
+          {POOLS.map((p) => (
+            <div key={p.label} className="flex items-center gap-2 text-[11px]">
+              <span
+                className="h-2 w-2 rounded-full"
+                style={{ background: p.color }}
+              />
+              <span style={{ color: "#E8F5E8" }}>{p.label}</span>
+              <span style={{ color: "#7a8a7a" }}>{p.pct}%</span>
+            </div>
+          ))}
+        </div>
+      </div>
 
       <div className="mt-4">
         <div className="flex items-center justify-between mb-2 px-1">
