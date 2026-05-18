@@ -211,6 +211,7 @@ function ConformidadePage() {
                 <th className="text-left px-3 py-2 font-medium">CATEGORIA</th>
                 <th className="text-right px-3 py-2 font-medium">KG</th>
                 <th className="text-right px-3 py-2 font-medium">STATUS</th>
+                <th className="text-right px-2 py-2 font-medium">PDF</th>
               </tr>
             </thead>
             <tbody>
@@ -232,6 +233,26 @@ function ConformidadePage() {
                     >
                       {e.status.toUpperCase()}
                     </span>
+                  </td>
+                  <td className="px-2 py-2 text-right">
+                    {e.status === "aprovado" ? (
+                      <button
+                        type="button"
+                        onClick={() => handleCertificate(e.id)}
+                        disabled={certifying === e.id}
+                        className="inline-flex items-center justify-center h-6 w-6 rounded-md disabled:opacity-40"
+                        style={{ background: "rgba(29,185,84,0.12)", color: "#1DB954" }}
+                        aria-label="Gerar certificado PNRS"
+                      >
+                        {certifying === e.id ? (
+                          <Loader2 className="h-3 w-3 animate-spin" />
+                        ) : (
+                          <FileBadge className="h-3 w-3" />
+                        )}
+                      </button>
+                    ) : (
+                      <span className="text-[10px]" style={{ color: "#3a4a3a" }}>—</span>
+                    )}
                   </td>
                 </tr>
               ))}
