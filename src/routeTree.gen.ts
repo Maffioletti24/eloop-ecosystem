@@ -10,118 +10,52 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as CadastroRouteImport } from './routes/cadastro'
-import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
-import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
-import { Route as AuthenticatedRegistroRouteImport } from './routes/_authenticated/registro'
-import { Route as AuthenticatedEsgRouteImport } from './routes/_authenticated/esg'
-import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
-import { Route as AuthenticatedConformidadeRouteImport } from './routes/_authenticated/conformidade'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as IndexRouteImport } from './routes/index'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CadastroRoute = CadastroRouteImport.update({
-  id: '/cadastro',
-  path: '/cadastro',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedRoute = AuthenticatedRouteImport.update({
-  id: '/_authenticated',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-const AuthenticatedRegistroRoute = AuthenticatedRegistroRouteImport.update({
-  id: '/registro',
-  path: '/registro',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-const AuthenticatedEsgRoute = AuthenticatedEsgRouteImport.update({
-  id: '/esg',
-  path: '/esg',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
-  getParentRoute: () => AuthenticatedRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedConformidadeRoute =
-  AuthenticatedConformidadeRouteImport.update({
-    id: '/conformidade',
-    path: '/conformidade',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof AuthenticatedIndexRoute
-  '/cadastro': typeof CadastroRoute
+  '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
-  '/conformidade': typeof AuthenticatedConformidadeRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
-  '/esg': typeof AuthenticatedEsgRoute
-  '/registro': typeof AuthenticatedRegistroRoute
 }
 export interface FileRoutesByTo {
-  '/cadastro': typeof CadastroRoute
+  '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
-  '/conformidade': typeof AuthenticatedConformidadeRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
-  '/esg': typeof AuthenticatedEsgRoute
-  '/registro': typeof AuthenticatedRegistroRoute
-  '/': typeof AuthenticatedIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/_authenticated': typeof AuthenticatedRouteWithChildren
-  '/cadastro': typeof CadastroRoute
+  '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
-  '/_authenticated/conformidade': typeof AuthenticatedConformidadeRoute
-  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
-  '/_authenticated/esg': typeof AuthenticatedEsgRoute
-  '/_authenticated/registro': typeof AuthenticatedRegistroRoute
-  '/_authenticated/': typeof AuthenticatedIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/cadastro'
-    | '/login'
-    | '/conformidade'
-    | '/dashboard'
-    | '/esg'
-    | '/registro'
+  fullPaths: '/' | '/dashboard' | '/login'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/cadastro'
-    | '/login'
-    | '/conformidade'
-    | '/dashboard'
-    | '/esg'
-    | '/registro'
-    | '/'
-  id:
-    | '__root__'
-    | '/_authenticated'
-    | '/cadastro'
-    | '/login'
-    | '/_authenticated/conformidade'
-    | '/_authenticated/dashboard'
-    | '/_authenticated/esg'
-    | '/_authenticated/registro'
-    | '/_authenticated/'
+  to: '/' | '/dashboard' | '/login'
+  id: '__root__' | '/' | '/dashboard' | '/login'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
-  CadastroRoute: typeof CadastroRoute
+  IndexRoute: typeof IndexRoute
+  DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
 }
 
@@ -134,81 +68,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/cadastro': {
-      id: '/cadastro'
-      path: '/cadastro'
-      fullPath: '/cadastro'
-      preLoaderRoute: typeof CadastroRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_authenticated': {
-      id: '/_authenticated'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_authenticated/': {
-      id: '/_authenticated/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedIndexRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/registro': {
-      id: '/_authenticated/registro'
-      path: '/registro'
-      fullPath: '/registro'
-      preLoaderRoute: typeof AuthenticatedRegistroRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/esg': {
-      id: '/_authenticated/esg'
-      path: '/esg'
-      fullPath: '/esg'
-      preLoaderRoute: typeof AuthenticatedEsgRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/dashboard': {
-      id: '/_authenticated/dashboard'
+    '/dashboard': {
+      id: '/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/conformidade': {
-      id: '/_authenticated/conformidade'
-      path: '/conformidade'
-      fullPath: '/conformidade'
-      preLoaderRoute: typeof AuthenticatedConformidadeRouteImport
-      parentRoute: typeof AuthenticatedRoute
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface AuthenticatedRouteChildren {
-  AuthenticatedConformidadeRoute: typeof AuthenticatedConformidadeRoute
-  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
-  AuthenticatedEsgRoute: typeof AuthenticatedEsgRoute
-  AuthenticatedRegistroRoute: typeof AuthenticatedRegistroRoute
-  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
-}
-
-const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
-  AuthenticatedConformidadeRoute: AuthenticatedConformidadeRoute,
-  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
-  AuthenticatedEsgRoute: AuthenticatedEsgRoute,
-  AuthenticatedRegistroRoute: AuthenticatedRegistroRoute,
-  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
-}
-
-const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
-  AuthenticatedRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
-  AuthenticatedRoute: AuthenticatedRouteWithChildren,
-  CadastroRoute: CadastroRoute,
+  IndexRoute: IndexRoute,
+  DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
