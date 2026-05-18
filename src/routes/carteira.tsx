@@ -164,6 +164,31 @@ function CarteiraPage() {
             v2026.1
           </span>
         </div>
+
+        <div className="mb-3">
+          <div className="flex items-center justify-between text-[11px] mb-1">
+            <span style={{ color: "#7a8a7a" }}>Supply emitido</span>
+            <span style={{ color: "#E8F5E8" }}>
+              {formatELP(supply.total)} / {formatELP(supply.cap)} ELP
+            </span>
+          </div>
+          <div
+            className="h-1.5 rounded-full overflow-hidden"
+            style={{ background: "#1f2a1f" }}
+          >
+            <div
+              className="h-full"
+              style={{
+                width: `${Math.min(100, (supply.total / supply.cap) * 100).toFixed(2)}%`,
+                background: "#1DB954",
+              }}
+            />
+          </div>
+          <div className="text-[10px] mt-1" style={{ color: "#7a8a7a" }}>
+            Guard on-chain — emissões além do cap são revertidas.
+          </div>
+        </div>
+
         <div className="flex h-2 rounded-full overflow-hidden">
           {POOLS.map((p) => (
             <div
@@ -172,19 +197,6 @@ function CarteiraPage() {
             />
           ))}
         </div>
-        <div className="grid grid-cols-2 gap-2 mt-3">
-          {POOLS.map((p) => (
-            <div key={p.label} className="flex items-center gap-2 text-[11px]">
-              <span
-                className="h-2 w-2 rounded-full"
-                style={{ background: p.color }}
-              />
-              <span style={{ color: "#E8F5E8" }}>{p.label}</span>
-              <span style={{ color: "#7a8a7a" }}>{p.pct}%</span>
-            </div>
-          ))}
-        </div>
-      </div>
 
       <div className="mt-4">
         <div className="flex items-center justify-between mb-2 px-1">
