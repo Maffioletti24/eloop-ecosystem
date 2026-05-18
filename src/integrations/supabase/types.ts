@@ -247,6 +247,7 @@ export type Database = {
           created_at: string
           id: string
           nome: string
+          operation_level: number
           tipo: Database["public"]["Enums"]["operator_type"]
           updated_at: string
           user_id: string
@@ -258,6 +259,7 @@ export type Database = {
           created_at?: string
           id?: string
           nome: string
+          operation_level?: number
           tipo?: Database["public"]["Enums"]["operator_type"]
           updated_at?: string
           user_id: string
@@ -269,6 +271,7 @@ export type Database = {
           created_at?: string
           id?: string
           nome?: string
+          operation_level?: number
           tipo?: Database["public"]["Enums"]["operator_type"]
           updated_at?: string
           user_id?: string
@@ -322,6 +325,27 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      token_supply: {
+        Row: {
+          hard_cap: number
+          id: boolean
+          total_emitido: number
+          updated_at: string
+        }
+        Insert: {
+          hard_cap?: number
+          id?: boolean
+          total_emitido?: number
+          updated_at?: string
+        }
+        Update: {
+          hard_cap?: number
+          id?: boolean
+          total_emitido?: number
+          updated_at?: string
+        }
+        Relationships: []
       }
       validators: {
         Row: {
