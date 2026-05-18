@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ValidadorRouteImport } from './routes/validador'
 import { Route as RegistroRouteImport } from './routes/registro'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as EsgRouteImport } from './routes/esg'
@@ -18,6 +19,11 @@ import { Route as CarteiraRouteImport } from './routes/carteira'
 import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ValidadorRoute = ValidadorRouteImport.update({
+  id: '/validador',
+  path: '/validador',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegistroRoute = RegistroRouteImport.update({
   id: '/registro',
   path: '/registro',
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/esg': typeof EsgRoute
   '/login': typeof LoginRoute
   '/registro': typeof RegistroRoute
+  '/validador': typeof ValidadorRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByTo {
   '/esg': typeof EsgRoute
   '/login': typeof LoginRoute
   '/registro': typeof RegistroRoute
+  '/validador': typeof ValidadorRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -89,6 +97,7 @@ export interface FileRoutesById {
   '/esg': typeof EsgRoute
   '/login': typeof LoginRoute
   '/registro': typeof RegistroRoute
+  '/validador': typeof ValidadorRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,6 +110,7 @@ export interface FileRouteTypes {
     | '/esg'
     | '/login'
     | '/registro'
+    | '/validador'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -111,6 +121,7 @@ export interface FileRouteTypes {
     | '/esg'
     | '/login'
     | '/registro'
+    | '/validador'
   id:
     | '__root__'
     | '/'
@@ -121,6 +132,7 @@ export interface FileRouteTypes {
     | '/esg'
     | '/login'
     | '/registro'
+    | '/validador'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -132,10 +144,18 @@ export interface RootRouteChildren {
   EsgRoute: typeof EsgRoute
   LoginRoute: typeof LoginRoute
   RegistroRoute: typeof RegistroRoute
+  ValidadorRoute: typeof ValidadorRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/validador': {
+      id: '/validador'
+      path: '/validador'
+      fullPath: '/validador'
+      preLoaderRoute: typeof ValidadorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/registro': {
       id: '/registro'
       path: '/registro'
@@ -204,6 +224,7 @@ const rootRouteChildren: RootRouteChildren = {
   EsgRoute: EsgRoute,
   LoginRoute: LoginRoute,
   RegistroRoute: RegistroRoute,
+  ValidadorRoute: ValidadorRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
