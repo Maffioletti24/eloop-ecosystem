@@ -73,6 +73,7 @@ function timeAgo(iso: string): string {
 function DashboardPage() {
   const [email, setEmail] = useState<string>("");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<DashboardData>({
     saldo: 0,
     totalEventos: 0,
