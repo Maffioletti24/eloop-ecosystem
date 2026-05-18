@@ -191,6 +191,19 @@ function DashboardPage() {
       </header>
 
       <div className="px-5 space-y-4">
+        {error && (
+          <Alert
+            variant="destructive"
+            className="border-red-500/30 bg-red-500/10 text-red-200"
+          >
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Erro ao carregar dashboard</AlertTitle>
+            <AlertDescription className="text-red-200/80 text-xs">
+              {error}
+            </AlertDescription>
+          </Alert>
+        )}
+
         {/* BALANCE CARD */}
         <section
           className="rounded-2xl border p-5"
@@ -202,21 +215,27 @@ function DashboardPage() {
           >
             SALDO ELP · CARTEIRA DE CONFORMIDADE
           </div>
-          <div
-            className="mt-2 font-bold leading-none"
-            style={{ color: COLORS.text, fontSize: 36 }}
-          >
-            {loading ? "—" : formatELP(data.saldo)}{" "}
-            <span
-              className="text-2xl font-semibold"
-              style={{ color: COLORS.greenMuted }}
+          {loading ? (
+            <Skeleton className="mt-2 h-9 w-40 bg-white/5" />
+          ) : (
+            <div
+              className="mt-2 font-bold leading-none"
+              style={{ color: COLORS.text, fontSize: 36 }}
             >
-              ELP
-            </span>
-          </div>
+              {formatELP(data.saldo)}{" "}
+              <span
+                className="text-2xl font-semibold"
+                style={{ color: COLORS.greenMuted }}
+              >
+                ELP
+              </span>
+            </div>
+          )}
           <div className="mt-2 text-xs" style={{ color: COLORS.dim }}>
             α = 2.0 ELP/kg
-            {data.saldo > 0 ? ` · R$ ${formatELP(data.saldo * 8)}` : ""}
+            {!loading && data.saldo > 0
+              ? ` · R$ ${formatELP(data.saldo * 8)}`
+              : ""}
           </div>
 
           <div
@@ -224,23 +243,31 @@ function DashboardPage() {
             style={{ background: "rgba(29,185,84,0.15)" }}
           />
 
-          <div className="grid grid-cols-3 gap-2 text-center">
-            <Stat
-              value={String(data.totalEventos)}
-              unit="eventos"
-              color={COLORS.green}
-            />
-            <Stat
-              value={formatKg(data.totalKg)}
-              unit="kg"
-              color={COLORS.green}
-            />
-            <Stat
-              value={`${(data.totalCO2e / 1000).toFixed(1)}t`}
-              unit="CO₂e"
-              color={COLORS.amber}
-            />
-          </div>
+          {loading ? (
+            <div className="grid grid-cols-3 gap-2">
+              <Skeleton className="h-10 bg-white/5" />
+              <Skeleton className="h-10 bg-white/5" />
+              <Skeleton className="h-10 bg-white/5" />
+            </div>
+          ) : (
+            <div className="grid grid-cols-3 gap-2 text-center">
+              <Stat
+                value={String(data.totalEventos)}
+                unit="eventos"
+                color={COLORS.green}
+              />
+              <Stat
+                value={formatKg(data.totalKg)}
+                unit="kg"
+                color={COLORS.green}
+              />
+              <Stat
+                value={`${(data.totalCO2e / 1000).toFixed(1)}t`}
+                unit="CO₂e"
+                color={COLORS.amber}
+              />
+            </div>
+          )}
         </section>
 
         {/* QUICK ACTIONS */}
