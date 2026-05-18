@@ -86,57 +86,68 @@ function DashboardPage() {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const { data: userData } = await supabase.auth.getUser();
-      const user = userData.user;
-      if (!user) return;
-      if (!cancelled) setEmail(user.email ?? "");
+      try {
+        const { data: userData, error: authErr } = await supabase.auth.getUser();
+        if (authErr) throw authErr;
+        const user = userData.user;
+        if (!user) return;
+        if (!cancelled) setEmail(user.email ?? "");
 
-      const [walletRes, eventsRes, kpiRes, allEventsRes] = await Promise.all([
-        supabase
-          .from("wallets")
-          .select("saldo_elp")
-          .eq("user_id", user.id)
-          .maybeSingle(),
-        supabase
-          .from("disposal_events")
-          .select(
-            "id, weight_kg, elp_amount, created_at, categories(nome, risk_level)",
-          )
-          .order("created_at", { ascending: false })
-          .limit(5),
-        supabase
-          .from("kpis")
-          .select("scan_rate, uptime, tx_custo, beta_score")
-          .order("periodo", { ascending: false })
-          .limit(1)
-          .maybeSingle(),
-        supabase
-          .from("disposal_events")
-          .select("weight_kg, categories(risk_level)"),
-      ]);
+        const [walletRes, eventsRes, kpiRes, allEventsRes] = await Promise.all([
+          supabase
+            .from("wallets")
+            .select("saldo_elp")
+            .eq("user_id", user.id)
+            .maybeSingle(),
+          supabase
+            .from("disposal_events")
+            .select(
+              "id, weight_kg, elp_amount, created_at, categories(nome, risk_level)",
+            )
+            .order("created_at", { ascending: false })
+            .limit(5),
+          supabase
+            .from("kpis")
+            .select("scan_rate, uptime, tx_custo, beta_score")
+            .order("periodo", { ascending: false })
+            .limit(1)
+            .maybeSingle(),
+          supabase
+            .from("disposal_events")
+            .select("weight_kg, categories(risk_level)"),
+        ]);
 
-      const totalEventos = allEventsRes.data?.length ?? 0;
-      const totalKg =
-        allEventsRes.data?.reduce((s, e) => s + Number(e.weight_kg ?? 0), 0) ??
-        0;
-      const totalCO2e =
-        allEventsRes.data?.reduce((s, e) => {
-          const risk =
-            (e.categories as { risk_level?: "alto" | "medio" | "baixo" } | null)
-              ?.risk_level ?? "baixo";
-          return s + estimarCO2e(Number(e.weight_kg ?? 0), risk);
-        }, 0) ?? 0;
+        const firstErr =
+          walletRes.error ?? eventsRes.error ?? kpiRes.error ?? allEventsRes.error;
+        if (firstErr) throw firstErr;
 
-      if (cancelled) return;
-      setData({
-        saldo: Number(walletRes.data?.saldo_elp ?? 0),
-        totalEventos,
-        totalKg,
-        totalCO2e,
-        events: (eventsRes.data ?? []) as RecentEvent[],
-        kpi: kpiRes.data ?? null,
-      });
-      setLoading(false);
+        const totalEventos = allEventsRes.data?.length ?? 0;
+        const totalKg =
+          allEventsRes.data?.reduce((s, e) => s + Number(e.weight_kg ?? 0), 0) ??
+          0;
+        const totalCO2e =
+          allEventsRes.data?.reduce((s, e) => {
+            const risk =
+              (e.categories as { risk_level?: "alto" | "medio" | "baixo" } | null)
+                ?.risk_level ?? "baixo";
+            return s + estimarCO2e(Number(e.weight_kg ?? 0), risk);
+          }, 0) ?? 0;
+
+        if (cancelled) return;
+        setData({
+          saldo: Number(walletRes.data?.saldo_elp ?? 0),
+          totalEventos,
+          totalKg,
+          totalCO2e,
+          events: (eventsRes.data ?? []) as RecentEvent[],
+          kpi: kpiRes.data ?? null,
+        });
+      } catch (e) {
+        if (!cancelled)
+          setError(e instanceof Error ? e.message : "Erro ao carregar dados");
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
     })();
     return () => {
       cancelled = true;
