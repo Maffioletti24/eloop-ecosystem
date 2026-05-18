@@ -42,14 +42,9 @@ function LoginPage() {
 
   return (
     <div className="app-shell flex flex-col px-6 py-10">
-      <div className="flex items-center gap-2 mb-12">
-        <div className="h-9 w-9 rounded-xl bg-primary/15 grid place-items-center">
-          <Leaf className="h-5 w-5 text-primary" />
-        </div>
-        <div>
-          <div className="text-base font-bold tracking-tight">Eloop Token</div>
-          <div className="text-[11px] text-dim -mt-0.5">Compliance REEE on-chain</div>
-        </div>
+      <div className="flex flex-col items-center mb-8">
+        <img src={eloopLogo} alt="Eloop" className="h-32 w-32 object-contain" />
+        <div className="text-[11px] text-dim mt-1">Compliance REEE on-chain</div>
       </div>
 
       <div className="mt-4">
