@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
 import { requireAuth } from "@/lib/require-auth";
-import eloopLogo from "@/assets/eloop-logo.png";
+import { EloopLogo } from "@/components/EloopLogo";
 
 export const Route = createFileRoute("/dashboard")({
   beforeLoad: requireAuth,
@@ -13,7 +13,7 @@ function DashboardPage() {
   return (
     <PageShell title="Dashboard ELP" showBack={false}>
       <div className="flex justify-center mb-4">
-        <img src={eloopLogo} alt="Eloop" className="h-20 w-20 object-contain" />
+        <EloopLogo size={80} />
       </div>
       <div className="grid grid-cols-2 gap-3">
         {[
