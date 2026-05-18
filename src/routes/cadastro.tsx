@@ -55,7 +55,7 @@ function CadastroPage() {
   return (
     <div className="app-shell flex flex-col px-6 py-10 pb-16">
       <div className="flex flex-col items-center mb-6">
-        <img src={eloopLogo} alt="Eloop" className="h-24 w-24 object-contain" />
+        <EloopLogo size={88} withText />
       </div>
       <h1 className="text-3xl font-bold leading-tight">Criar conta</h1>
       <p className="text-sm text-dim mt-2">Selecione o perfil que melhor descreve sua operação.</p>
