@@ -1,8 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
 
+import { createFileRoute } from "@tanstack/react-router";
+import { PageShell } from "@/components/PageShell";
+import { requireAuth } from "@/lib/require-auth";
+
 export const Route = createFileRoute("/carteira")({
-  head: () => ({ meta: [{ title: "Carteira ELP" }] }),
+  beforeLoad: requireAuth,
+  head: () => ({ meta: [{ title: "Carteira ELP — Eloop Token" }] }),
   component: CarteiraPage,
 });
 

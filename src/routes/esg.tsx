@@ -1,8 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
 
+import { createFileRoute } from "@tanstack/react-router";
+import { PageShell } from "@/components/PageShell";
+import { requireAuth } from "@/lib/require-auth";
+
 export const Route = createFileRoute("/esg")({
-  head: () => ({ meta: [{ title: "Impacto ESG" }] }),
+  beforeLoad: requireAuth,
+  head: () => ({ meta: [{ title: "Impacto ESG — Eloop Token" }] }),
   component: EsgPage,
 });
 
