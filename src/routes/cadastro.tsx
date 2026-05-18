@@ -4,7 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Leaf, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import eloopLogo from "@/assets/eloop-logo.png";
 import { toast } from "sonner";
 
 type Tipo = "PF" | "PJ" | "Cooperativa" | "Reciclador";
@@ -53,13 +54,9 @@ function CadastroPage() {
 
   return (
     <div className="app-shell flex flex-col px-6 py-10 pb-16">
-      <div className="flex items-center gap-2 mb-8">
-        <div className="h-9 w-9 rounded-xl bg-primary/15 grid place-items-center">
-          <Leaf className="h-5 w-5 text-primary" />
-        </div>
-        <div className="text-base font-bold tracking-tight">Eloop Token</div>
+      <div className="flex flex-col items-center mb-6">
+        <img src={eloopLogo} alt="Eloop" className="h-24 w-24 object-contain" />
       </div>
-
       <h1 className="text-3xl font-bold leading-tight">Criar conta</h1>
       <p className="text-sm text-dim mt-2">Selecione o perfil que melhor descreve sua operação.</p>
 

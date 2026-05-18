@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
+import eloopLogo from "@/assets/eloop-logo.png";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({ meta: [{ title: "Dashboard ELP" }] }),
@@ -9,6 +10,9 @@ export const Route = createFileRoute("/dashboard")({
 function DashboardPage() {
   return (
     <PageShell title="Dashboard ELP" showBack={false}>
+      <div className="flex justify-center mb-4">
+        <img src={eloopLogo} alt="Eloop" className="h-20 w-20 object-contain" />
+      </div>
       <div className="grid grid-cols-2 gap-3">
         {[
           { label: "Saldo ELP", value: "—" },
