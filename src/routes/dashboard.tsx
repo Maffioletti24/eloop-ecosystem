@@ -384,7 +384,12 @@ function DashboardPage() {
               borderColor: "rgba(29,185,84,0.12)",
             }}
           >
-            {data.events.length === 0 ? (
+            {loading ? (
+              <div className="p-4 space-y-3">
+                <Skeleton className="h-12 bg-white/5" />
+                <Skeleton className="h-12 bg-white/5" />
+              </div>
+            ) : data.events.length === 0 ? (
               <div
                 className="px-4 py-8 flex flex-col items-center gap-2 text-center"
                 style={{ color: COLORS.dim }}
