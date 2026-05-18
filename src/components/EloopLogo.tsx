@@ -17,41 +17,20 @@ export function EloopLogo({
       <svg
         width={size}
         height={size}
-        viewBox="0 0 100 100"
-        fill="none"
+        viewBox="0 0 80 80"
         xmlns="http://www.w3.org/2000/svg"
         aria-label="Eloop Token"
         role="img"
       >
-        {/* Outer ring */}
-        <circle cx="50" cy="50" r="38" stroke="#1DB954" strokeWidth="3" />
-        {/* Inner disc */}
-        <circle cx="50" cy="50" r="30" fill="#162016" />
-
-        {/* Recycling arrows — 3 curved arms rotated 120° */}
-        <g stroke="#1DB954" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" fill="none">
-          <g>
-            <path d="M50 28 A22 22 0 0 1 69.05 39" />
-            <path d="M64 35 L69.5 39.2 L65.3 44.7" />
-          </g>
-          <g transform="rotate(120 50 50)">
-            <path d="M50 28 A22 22 0 0 1 69.05 39" />
-            <path d="M64 35 L69.5 39.2 L65.3 44.7" />
-          </g>
-          <g transform="rotate(240 50 50)">
-            <path d="M50 28 A22 22 0 0 1 69.05 39" />
-            <path d="M64 35 L69.5 39.2 L65.3 44.7" />
-          </g>
-        </g>
-
-        {/* Circuit dots at arrow tails */}
-        <g fill="#1DB954">
-          <circle cx="50" cy="28" r="2.4" />
-          <circle cx="30.9" cy="61" r="2.4" />
-          <circle cx="69.1" cy="61" r="2.4" />
-          {/* center pulse */}
-          <circle cx="50" cy="50" r="2.6" />
-        </g>
+        <circle cx="40" cy="40" r="38" fill="none" stroke="#1DB954" strokeWidth="1.5" />
+        <circle cx="40" cy="40" r="28" fill="#162016" />
+        <path d="M26 40 A14 14 0 0 1 54 40" fill="none" stroke="#1DB954" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M54 40 A14 14 0 0 1 26 40" fill="none" stroke="#1DB954" strokeWidth="2.5" strokeLinecap="round" strokeDasharray="4 3" />
+        <line x1="26" y1="37" x2="36" y2="37" stroke="#1DB954" strokeWidth="2" strokeLinecap="round" />
+        <line x1="26" y1="43" x2="36" y2="43" stroke="#1DB954" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="36" cy="37" r="2" fill="#1DB954" />
+        <circle cx="36" cy="43" r="2" fill="#1DB954" />
+        <path d="M52 36 L56 40 L52 44" fill="none" stroke="#1DB954" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
 
       {withText && (
