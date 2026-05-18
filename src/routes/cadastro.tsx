@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
-import eloopLogo from "@/assets/eloop-logo.png";
+import { EloopLogo } from "@/components/EloopLogo";
 import { toast } from "sonner";
 
 type Tipo = "PF" | "PJ" | "Cooperativa" | "Reciclador";

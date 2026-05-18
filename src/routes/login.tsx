@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
-import eloopLogo from "@/assets/eloop-logo.png";
+import { EloopLogo } from "@/components/EloopLogo";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/login")({
@@ -43,8 +43,7 @@ function LoginPage() {
   return (
     <div className="app-shell flex flex-col px-6 py-10">
       <div className="flex flex-col items-center mb-8">
-        <img src={eloopLogo} alt="Eloop" className="h-32 w-32 object-contain" />
-        <div className="text-[11px] text-dim mt-1">Compliance REEE on-chain</div>
+        <EloopLogo size={120} withText subtitle />
       </div>
 
       <div className="mt-4">

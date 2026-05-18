@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ReactNode } from "react";
 import { ArrowLeft } from "lucide-react";
 import { BottomNav } from "./BottomNav";
-import eloopLogo from "@/assets/eloop-logo.png";
+import { EloopMark } from "./EloopLogo";
 
 export function PageShell({
   title,
@@ -19,7 +19,7 @@ export function PageShell({
       style={{ background: "#0A0F0A", color: "#E8F5E8" }}
     >
       <header
-        className="sticky top-0 z-30 grid grid-cols-[2rem_2.25rem_1fr] items-center gap-3 px-4 pt-5 pb-3"
+        className="sticky top-0 z-30 grid grid-cols-[2rem_1.75rem_1fr] items-center gap-3 px-4 pt-5 pb-3"
         style={{ background: "#0A0F0A" }}
       >
         <div className="flex items-center justify-start">
@@ -34,11 +34,7 @@ export function PageShell({
             </Link>
           ) : null}
         </div>
-        <img
-          src={eloopLogo}
-          alt="Eloop"
-          className="h-9 w-9 object-contain"
-        />
+        <EloopMark size={24} />
         <h1 className="text-base font-bold leading-tight truncate min-w-0">
           {title}
         </h1>
@@ -48,4 +44,3 @@ export function PageShell({
     </div>
   );
 }
-
