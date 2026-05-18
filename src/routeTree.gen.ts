@@ -16,6 +16,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ConformidadeRouteImport } from './routes/conformidade'
 import { Route as CarteiraRouteImport } from './routes/carteira'
 import { Route as CadastroRouteImport } from './routes/cadastro'
+import { Route as IndexRouteImport } from './routes/index'
 
 const RegistroRoute = RegistroRouteImport.update({
   id: '/registro',
@@ -52,8 +53,14 @@ const CadastroRoute = CadastroRouteImport.update({
   path: '/cadastro',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
   '/carteira': typeof CarteiraRoute
   '/conformidade': typeof ConformidadeRoute
@@ -63,6 +70,7 @@ export interface FileRoutesByFullPath {
   '/registro': typeof RegistroRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
   '/carteira': typeof CarteiraRoute
   '/conformidade': typeof ConformidadeRoute
@@ -73,6 +81,7 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
   '/carteira': typeof CarteiraRoute
   '/conformidade': typeof ConformidadeRoute
@@ -84,6 +93,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/cadastro'
     | '/carteira'
     | '/conformidade'
@@ -93,6 +103,7 @@ export interface FileRouteTypes {
     | '/registro'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/cadastro'
     | '/carteira'
     | '/conformidade'
@@ -102,6 +113,7 @@ export interface FileRouteTypes {
     | '/registro'
   id:
     | '__root__'
+    | '/'
     | '/cadastro'
     | '/carteira'
     | '/conformidade'
@@ -112,6 +124,7 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   CadastroRoute: typeof CadastroRoute
   CarteiraRoute: typeof CarteiraRoute
   ConformidadeRoute: typeof ConformidadeRoute
@@ -172,10 +185,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CadastroRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   CadastroRoute: CadastroRoute,
   CarteiraRoute: CarteiraRoute,
   ConformidadeRoute: ConformidadeRoute,
