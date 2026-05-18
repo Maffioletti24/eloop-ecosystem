@@ -15,6 +15,9 @@ import { BottomNav } from "@/components/BottomNav";
 import { EloopLogo } from "@/components/EloopLogo";
 import { requireAuth } from "@/lib/require-auth";
 import { formatELP, formatKg, estimarCO2e } from "@/lib/elp";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard")({
   beforeLoad: requireAuth,
