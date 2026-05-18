@@ -207,6 +207,39 @@ export type Database = {
           },
         ]
       }
+      kpis: {
+        Row: {
+          beta_score: number | null
+          created_at: string
+          id: string
+          periodo: string
+          scan_rate: number | null
+          tx_custo: number | null
+          uptime: number | null
+          user_id: string
+        }
+        Insert: {
+          beta_score?: number | null
+          created_at?: string
+          id?: string
+          periodo?: string
+          scan_rate?: number | null
+          tx_custo?: number | null
+          uptime?: number | null
+          user_id: string
+        }
+        Update: {
+          beta_score?: number | null
+          created_at?: string
+          id?: string
+          periodo?: string
+          scan_rate?: number | null
+          tx_custo?: number | null
+          uptime?: number | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       operators: {
         Row: {
           beta_score: number
@@ -317,6 +350,33 @@ export type Database = {
           licenca?: string | null
           nome?: string
           tipo?: Database["public"]["Enums"]["validator_type"]
+        }
+        Relationships: []
+      }
+      wallets: {
+        Row: {
+          created_at: string
+          id: string
+          saldo_elp: number
+          updated_at: string
+          user_id: string
+          wallet_address: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          saldo_elp?: number
+          updated_at?: string
+          user_id: string
+          wallet_address?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          saldo_elp?: number
+          updated_at?: string
+          user_id?: string
+          wallet_address?: string | null
         }
         Relationships: []
       }
