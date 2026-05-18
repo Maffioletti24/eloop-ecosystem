@@ -28,20 +28,24 @@ function CadastroPage() {
   const [senha, setSenha] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const operationLevelFor = (t: Tipo): 1 | 2 | 3 | 4 =>
+    t === "Cooperativa" ? 1 : t === "Reciclador" ? 2 : t === "PJ" ? 3 : 4;
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
+    const operation_level = operationLevelFor(tipo);
     const { error } = await supabase.auth.signUp({
       email,
       password: senha,
       options: {
         emailRedirectTo: `${window.location.origin}/dashboard`,
-        data: { nome, cpf_cnpj: cpfCnpj, tipo },
+        data: { nome, cpf_cnpj: cpfCnpj, tipo, operation_level },
       },
     });
     setLoading(false);
     if (error) return toast.error(error.message);
-    toast.success("Conta criada!");
+    toast.success(`Conta criada — Nível ${operation_level} habilitado.`);
     navigate({ to: "/dashboard" });
   }
 

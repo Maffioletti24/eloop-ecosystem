@@ -37,6 +37,10 @@ function CarteiraPage() {
   const [beta, setBeta] = useState(1);
   const [events, setEvents] = useState<EventRow[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [supply, setSupply] = useState<{ total: number; cap: number }>({
+    total: 0,
+    cap: 250_000_000,
+  });
 
   useEffect(() => {
     let cancel = false;
@@ -44,7 +48,7 @@ function CarteiraPage() {
       try {
         const { data: auth } = await supabase.auth.getUser();
         if (!auth.user) return;
-        const [w, o, ev] = await Promise.all([
+        const [w, o, ev, ts] = await Promise.all([
           supabase
             .from("wallets")
             .select("saldo_elp, wallet_address")
@@ -62,12 +66,22 @@ function CarteiraPage() {
             )
             .order("created_at", { ascending: false })
             .limit(20),
+          supabase
+            .from("token_supply")
+            .select("total_emitido, hard_cap")
+            .maybeSingle(),
         ]);
         if (cancel) return;
         setSaldo(Number(w.data?.saldo_elp ?? 0));
         setWalletAddr(w.data?.wallet_address ?? null);
         setBeta(Number(o.data?.beta_score ?? 1));
         setEvents((ev.data ?? []) as EventRow[]);
+        if (ts.data) {
+          setSupply({
+            total: Number(ts.data.total_emitido ?? 0),
+            cap: Number(ts.data.hard_cap ?? 250_000_000),
+          });
+        }
       } catch (e) {
         if (!cancel)
           setError(e instanceof Error ? e.message : "Erro ao carregar carteira");
@@ -150,6 +164,31 @@ function CarteiraPage() {
             v2026.1
           </span>
         </div>
+
+        <div className="mb-3">
+          <div className="flex items-center justify-between text-[11px] mb-1">
+            <span style={{ color: "#7a8a7a" }}>Supply emitido</span>
+            <span style={{ color: "#E8F5E8" }}>
+              {formatELP(supply.total)} / {formatELP(supply.cap)} ELP
+            </span>
+          </div>
+          <div
+            className="h-1.5 rounded-full overflow-hidden"
+            style={{ background: "#1f2a1f" }}
+          >
+            <div
+              className="h-full"
+              style={{
+                width: `${Math.min(100, (supply.total / supply.cap) * 100).toFixed(2)}%`,
+                background: "#1DB954",
+              }}
+            />
+          </div>
+          <div className="text-[10px] mt-1" style={{ color: "#7a8a7a" }}>
+            Guard on-chain — emissões além do cap são revertidas.
+          </div>
+        </div>
+
         <div className="flex h-2 rounded-full overflow-hidden">
           {POOLS.map((p) => (
             <div
