@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Download, FileText, Loader2 } from "lucide-react";
+import { Download, FileText, Loader2, FileBadge } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { requireAuth } from "@/lib/require-auth";
 import { supabase } from "@/integrations/supabase/client";
 import { useServerFn } from "@tanstack/react-start";
 import { generateSinirReport } from "@/lib/sinir.functions";
+import { generateCertificate } from "@/lib/certificate.functions";
 import { formatKg, formatELP, estimarCO2e } from "@/lib/elp";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
@@ -41,6 +42,8 @@ function firstDayOfMonth() {
 
 function ConformidadePage() {
   const generate = useServerFn(generateSinirReport);
+  const genCert = useServerFn(generateCertificate);
+  const [certifying, setCertifying] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [events, setEvents] = useState<EventRow[]>([]);
   const [exporting, setExporting] = useState(false);
@@ -100,6 +103,24 @@ function ConformidadePage() {
       setExporting(false);
     }
   }
+
+  async function handleCertificate(eventId: string) {
+    setCertifying(eventId);
+    try {
+      const r = await genCert({ data: { eventId } });
+      if (r.pdfUrl) {
+        window.open(r.pdfUrl, "_blank");
+        toast.success(`Certificado ${r.numero} gerado`);
+      } else {
+        toast.error("PDF gerado mas URL indisponível");
+      }
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Falha ao gerar certificado");
+    } finally {
+      setCertifying(null);
+    }
+  }
+
 
   return (
     <PageShell title="Conformidade & SINIR">
@@ -190,6 +211,7 @@ function ConformidadePage() {
                 <th className="text-left px-3 py-2 font-medium">CATEGORIA</th>
                 <th className="text-right px-3 py-2 font-medium">KG</th>
                 <th className="text-right px-3 py-2 font-medium">STATUS</th>
+                <th className="text-right px-2 py-2 font-medium">PDF</th>
               </tr>
             </thead>
             <tbody>
@@ -211,6 +233,26 @@ function ConformidadePage() {
                     >
                       {e.status.toUpperCase()}
                     </span>
+                  </td>
+                  <td className="px-2 py-2 text-right">
+                    {e.status === "aprovado" ? (
+                      <button
+                        type="button"
+                        onClick={() => handleCertificate(e.id)}
+                        disabled={certifying === e.id}
+                        className="inline-flex items-center justify-center h-6 w-6 rounded-md disabled:opacity-40"
+                        style={{ background: "rgba(29,185,84,0.12)", color: "#1DB954" }}
+                        aria-label="Gerar certificado PNRS"
+                      >
+                        {certifying === e.id ? (
+                          <Loader2 className="h-3 w-3 animate-spin" />
+                        ) : (
+                          <FileBadge className="h-3 w-3" />
+                        )}
+                      </button>
+                    ) : (
+                      <span className="text-[10px]" style={{ color: "#3a4a3a" }}>—</span>
+                    )}
                   </td>
                 </tr>
               ))}

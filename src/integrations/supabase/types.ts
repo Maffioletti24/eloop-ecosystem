@@ -356,6 +356,7 @@ export type Database = {
           licenca: string | null
           nome: string
           tipo: Database["public"]["Enums"]["validator_type"]
+          user_id: string | null
         }
         Insert: {
           ativo?: boolean
@@ -365,6 +366,7 @@ export type Database = {
           licenca?: string | null
           nome: string
           tipo: Database["public"]["Enums"]["validator_type"]
+          user_id?: string | null
         }
         Update: {
           ativo?: boolean
@@ -374,6 +376,7 @@ export type Database = {
           licenca?: string | null
           nome?: string
           tipo?: Database["public"]["Enums"]["validator_type"]
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -409,7 +412,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_validator: { Args: { _uid: string }; Returns: boolean }
     }
     Enums: {
       batch_status: "pendente" | "validado" | "cancelado"
