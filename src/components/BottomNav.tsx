@@ -1,8 +1,9 @@
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
-import { LayoutDashboard, PlusCircle, FileText, Leaf, LogOut } from "lucide-react";
+import { useEffect, useState } from "react";
+import { LayoutDashboard, PlusCircle, FileText, Leaf, LogOut, ShieldCheck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
-const items = [
+const baseItems = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/registro", label: "Descarte", icon: PlusCircle },
   { to: "/conformidade", label: "Relatório", icon: FileText },
@@ -12,11 +13,36 @@ const items = [
 export function BottomNav() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const [isValidator, setIsValidator] = useState(false);
+
+  useEffect(() => {
+    let cancel = false;
+    (async () => {
+      const { data: u } = await supabase.auth.getUser();
+      if (!u.user) return;
+      const { data } = await supabase
+        .from("validators")
+        .select("id")
+        .eq("user_id", u.user.id)
+        .eq("ativo", true)
+        .maybeSingle();
+      if (!cancel) setIsValidator(!!data);
+    })();
+    return () => {
+      cancel = true;
+    };
+  }, [pathname]);
 
   async function handleLogout() {
     await supabase.auth.signOut();
     navigate({ to: "/login" });
   }
+
+  const items = isValidator
+    ? [...baseItems.slice(0, 3), { to: "/validador" as const, label: "Validar", icon: ShieldCheck }, baseItems[3]]
+    : baseItems;
+
+  const cols = items.length + 1;
 
   return (
     <nav
@@ -27,7 +53,7 @@ export function BottomNav() {
         height: 72,
       }}
     >
-      <div className="grid grid-cols-5 h-full">
+      <div className="grid h-full" style={{ gridTemplateColumns: `repeat(${cols}, minmax(0,1fr))` }}>
         {items.map(({ to, label, icon: Icon }) => {
           const active = pathname === to || pathname.startsWith(to + "/");
           return (
@@ -50,7 +76,7 @@ export function BottomNav() {
           aria-label="Sair"
         >
           <LogOut className="h-5 w-5" />
-          Perfil
+          Sair
         </button>
       </div>
     </nav>
