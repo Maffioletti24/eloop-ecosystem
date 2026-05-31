@@ -7,7 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useServerFn } from "@tanstack/react-start";
 import { createDisposalEvent, getCategories } from "@/lib/events.functions";
 import { generateQrCode, sha256Hex, buildEventPayload } from "@/lib/hash";
-import { calcularELP, ALPHA_DEFAULT, formatELP } from "@/lib/elp";
+import { formatELP } from "@/lib/elp";
 import { Camera, Check, Loader2, QrCode as QrIcon, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/registro")({
