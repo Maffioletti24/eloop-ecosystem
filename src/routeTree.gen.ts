@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ValidadorRouteImport } from './routes/validador'
 import { Route as RegistroRouteImport } from './routes/registro'
+import { Route as LotesRouteImport } from './routes/lotes'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as EsgRouteImport } from './routes/esg'
 import { Route as DashboardRouteImport } from './routes/dashboard'
@@ -28,6 +29,11 @@ const ValidadorRoute = ValidadorRouteImport.update({
 const RegistroRoute = RegistroRouteImport.update({
   id: '/registro',
   path: '/registro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LotesRoute = LotesRouteImport.update({
+  id: '/lotes',
+  path: '/lotes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/esg': typeof EsgRoute
   '/login': typeof LoginRoute
+  '/lotes': typeof LotesRoute
   '/registro': typeof RegistroRoute
   '/validador': typeof ValidadorRoute
 }
@@ -92,6 +99,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/esg': typeof EsgRoute
   '/login': typeof LoginRoute
+  '/lotes': typeof LotesRoute
   '/registro': typeof RegistroRoute
   '/validador': typeof ValidadorRoute
 }
@@ -105,6 +113,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/esg': typeof EsgRoute
   '/login': typeof LoginRoute
+  '/lotes': typeof LotesRoute
   '/registro': typeof RegistroRoute
   '/validador': typeof ValidadorRoute
 }
@@ -119,6 +128,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/esg'
     | '/login'
+    | '/lotes'
     | '/registro'
     | '/validador'
   fileRoutesByTo: FileRoutesByTo
@@ -131,6 +141,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/esg'
     | '/login'
+    | '/lotes'
     | '/registro'
     | '/validador'
   id:
@@ -143,6 +154,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/esg'
     | '/login'
+    | '/lotes'
     | '/registro'
     | '/validador'
   fileRoutesById: FileRoutesById
@@ -156,6 +168,7 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   EsgRoute: typeof EsgRoute
   LoginRoute: typeof LoginRoute
+  LotesRoute: typeof LotesRoute
   RegistroRoute: typeof RegistroRoute
   ValidadorRoute: typeof ValidadorRoute
 }
@@ -174,6 +187,13 @@ declare module '@tanstack/react-router' {
       path: '/registro'
       fullPath: '/registro'
       preLoaderRoute: typeof RegistroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lotes': {
+      id: '/lotes'
+      path: '/lotes'
+      fullPath: '/lotes'
+      preLoaderRoute: typeof LotesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -244,6 +264,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   EsgRoute: EsgRoute,
   LoginRoute: LoginRoute,
+  LotesRoute: LotesRoute,
   RegistroRoute: RegistroRoute,
   ValidadorRoute: ValidadorRoute,
 }
