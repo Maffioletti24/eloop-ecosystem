@@ -16,6 +16,7 @@ type Item = { to: string; label: string; icon: typeof LayoutDashboard };
 
 const baseDashboard: Item = { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard };
 const itemRegistro: Item = { to: "/registro", label: "Descarte", icon: PlusCircle };
+const itemLotes: Item = { to: "/lotes", label: "Lotes", icon: Package };
 const itemRelatorio: Item = { to: "/conformidade", label: "Relatório", icon: FileText };
 const itemESG: Item = { to: "/esg", label: "ESG", icon: Leaf };
 const itemValidar: Item = { to: "/validador", label: "Validar", icon: ShieldCheck };
