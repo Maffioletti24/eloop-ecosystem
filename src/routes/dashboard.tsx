@@ -55,6 +55,7 @@ type DashboardData = {
   totalKg: number;
   totalCO2e: number;
   events: RecentEvent[];
+  role: AppRole;
   kpi: {
     scan_rate: number | null;
     uptime: number | null;
