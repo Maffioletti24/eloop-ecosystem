@@ -163,6 +163,9 @@ function DashboardPage() {
     };
   }, []);
 
+  const hasWallet = data.role === "donor_pf" || data.role === "donor_pj" || data.role === "buyer" || data.role === "admin";
+  const isBuyer = data.role === "buyer" || data.role === "admin";
+
   return (
     <div
       className="min-h-screen mx-auto max-w-[390px] pb-24"
