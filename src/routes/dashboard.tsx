@@ -17,7 +17,8 @@ import { requireAuth } from "@/lib/require-auth";
 import { formatELP, formatKg, estimarCO2e } from "@/lib/elp";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Flame } from "lucide-react";
+import type { AppRole } from "@/lib/require-role";
 
 export const Route = createFileRoute("/dashboard")({
   beforeLoad: requireAuth,
