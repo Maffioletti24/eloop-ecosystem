@@ -9,6 +9,7 @@ import {
   ShieldCheck,
   Wallet,
   Flame,
+  Package,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -16,6 +17,7 @@ type Item = { to: string; label: string; icon: typeof LayoutDashboard };
 
 const baseDashboard: Item = { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard };
 const itemRegistro: Item = { to: "/registro", label: "Descarte", icon: PlusCircle };
+const itemLotes: Item = { to: "/lotes", label: "Lotes", icon: Package };
 const itemRelatorio: Item = { to: "/conformidade", label: "Relatório", icon: FileText };
 const itemESG: Item = { to: "/esg", label: "ESG", icon: Leaf };
 const itemValidar: Item = { to: "/validador", label: "Validar", icon: ShieldCheck };
@@ -58,11 +60,11 @@ export function BottomNav() {
     items = [baseDashboard, itemCarteira, itemCompensar, itemRelatorio];
   } else if (role === "donor_pf" || role === "donor_pj") {
     // Doador: carteira (recibo + certificado) + ESG
-    items = [baseDashboard, itemRegistro, itemCarteira, itemESG];
+    items = [baseDashboard, itemRegistro, itemLotes, itemCarteira, itemESG];
   } else {
     // Operador / validador / admin: visão logística — sem carteira
-    items = [baseDashboard, itemRegistro, itemRelatorio, itemESG];
-    if (isValidator) items.splice(3, 0, itemValidar);
+    items = [baseDashboard, itemRegistro, itemLotes, itemRelatorio, itemESG];
+    if (isValidator) items.splice(4, 0, itemValidar);
   }
 
   const cols = items.length + 1;
