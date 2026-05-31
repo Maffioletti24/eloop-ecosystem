@@ -343,17 +343,6 @@ function RegistroPage() {
               )}
             </div>
 
-            {weightNum > 0 && gamma > 0 ? (
-              <div
-                className="rounded-xl p-3 text-xs font-mono"
-                style={{ background: "#0A0F0A", color: TEXT }}
-              >
-                <div style={{ color: MUTED }}>Prévia ELP</div>
-                <div className="mt-1" style={{ color: GREEN }}>
-                  {weightNum} × {gamma} × 2.0 × 1.0 = {formatELP(elpPreview)} ELP
-                </div>
-              </div>
-            ) : null}
           </div>
           <PrimaryBtn
             onClick={() => setStep(2)}
