@@ -174,3 +174,27 @@ export const getCategories = createServerFn({ method: "GET" })
       .order("gamma_factor", { ascending: false });
     return data ?? [];
   });
+
+/** Lista lotes do operador autenticado com evento vinculado (se houver). */
+export const listBatches = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { supabase, userId } = context;
+    const { data: op } = await supabase
+      .from("operators")
+      .select("id")
+      .eq("user_id", userId)
+      .single();
+    if (!op) return [];
+
+    const { data: batches } = await supabase
+      .from("batches")
+      .select(
+        "id, qr_code, status, created_at, expires_at, disposal_events(id, weight_kg, elp_amount, status, photo_url, hash_sha256, polygon_tx_hash, created_at, categories(nome, risk_level))",
+      )
+      .eq("operator_id", op.id)
+      .order("created_at", { ascending: false })
+      .limit(100);
+
+    return batches ?? [];
+  });
