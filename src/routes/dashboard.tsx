@@ -337,7 +337,7 @@ function DashboardPage() {
               tint={COLORS.purple}
             />
           )}
-          {(["buyer", "admin"] as AppRole[]).includes(data.role) && (
+          {isBuyer && (
             <ActionCard
               to="/compensar"
               label="Compensar ELP"
