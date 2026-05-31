@@ -96,7 +96,7 @@ function DashboardPage() {
         if (!user) return;
         if (!cancelled) setEmail(user.email ?? "");
 
-        const [walletRes, eventsRes, kpiRes, allEventsRes] = await Promise.all([
+        const [walletRes, eventsRes, kpiRes, allEventsRes, opRes] = await Promise.all([
           supabase
             .from("wallets")
             .select("saldo_elp")
@@ -118,6 +118,11 @@ function DashboardPage() {
           supabase
             .from("disposal_events")
             .select("weight_kg, categories(risk_level)"),
+          supabase
+            .from("operators")
+            .select("role")
+            .eq("user_id", user.id)
+            .maybeSingle(),
         ]);
 
         const firstErr =
@@ -143,6 +148,7 @@ function DashboardPage() {
           totalKg,
           totalCO2e,
           events: (eventsRes.data ?? []) as RecentEvent[],
+          role: ((opRes.data?.role as AppRole | undefined) ?? "operator"),
           kpi: kpiRes.data ?? null,
         });
       } catch (e) {
