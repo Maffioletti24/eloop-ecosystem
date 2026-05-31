@@ -82,6 +82,7 @@ function DashboardPage() {
     totalKg: 0,
     totalCO2e: 0,
     events: [],
+    role: "operator",
     kpi: null,
   });
 
