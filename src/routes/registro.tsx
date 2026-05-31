@@ -430,15 +430,6 @@ function RegistroPage() {
               <Sparkles className="h-5 w-5" />
               +{formatELP(result.elp)} ELP emitido!
             </div>
-            <div
-              className="rounded-xl p-3 text-xs font-mono w-full"
-              style={{ background: "#0A0F0A", color: TEXT }}
-            >
-              <div style={{ color: MUTED }}>Cálculo</div>
-              <div className="mt-1" style={{ color: GREEN }}>
-                {weightNum} × {gamma} × 2.0 × 1.0 = {formatELP(result.elp)} ELP
-              </div>
-            </div>
             <div className="text-[11px]" style={{ color: MUTED }}>
               Status: {result.status}
               {result.txHash ? ` · tx ${result.txHash.slice(0, 10)}…` : ""}
