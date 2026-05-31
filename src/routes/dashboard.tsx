@@ -299,23 +299,28 @@ function DashboardPage() {
             </div>
           )}
         </section>
+        )}
 
-        {/* QUICK ACTIONS */}
+        {/* QUICK ACTIONS — role-aware */}
         <section className="grid grid-cols-2 gap-3">
-          <ActionCard
-            to="/registro"
-            label="Registrar Descarte"
-            sub="Novo evento REEE"
-            icon={<PlusCircle className="h-5 w-5" />}
-            tint={COLORS.green}
-          />
-          <ActionCard
-            to="/conformidade"
-            label="Relatório SINIR"
-            sub="Conformidade mensal"
-            icon={<FileText className="h-5 w-5" />}
-            tint={COLORS.amber}
-          />
+          {data.role !== "buyer" && (
+            <ActionCard
+              to="/registro"
+              label="Registrar Descarte"
+              sub="Novo evento REEE"
+              icon={<PlusCircle className="h-5 w-5" />}
+              tint={COLORS.green}
+            />
+          )}
+          {data.role !== "buyer" && (
+            <ActionCard
+              to="/conformidade"
+              label="Relatório SINIR"
+              sub="Conformidade mensal"
+              icon={<FileText className="h-5 w-5" />}
+              tint={COLORS.amber}
+            />
+          )}
           <ActionCard
             to="/esg"
             label="Indicadores ESG"
@@ -323,14 +328,26 @@ function DashboardPage() {
             icon={<Leaf className="h-5 w-5" />}
             tint={COLORS.blue}
           />
-          <ActionCard
-            to="/carteira"
-            label="Minha Carteira ELP"
-            sub="Saldo & histórico"
-            icon={<Wallet className="h-5 w-5" />}
-            tint={COLORS.purple}
-          />
+          {(["donor_pf", "donor_pj", "buyer", "admin"] as AppRole[]).includes(data.role) && (
+            <ActionCard
+              to="/carteira"
+              label="Minha Carteira ELP"
+              sub="Saldo & histórico"
+              icon={<Wallet className="h-5 w-5" />}
+              tint={COLORS.purple}
+            />
+          )}
+          {(["buyer", "admin"] as AppRole[]).includes(data.role) && (
+            <ActionCard
+              to="/compensar"
+              label="Compensar ELP"
+              sub="Queimar & certificar"
+              icon={<Flame className="h-5 w-5" />}
+              tint={COLORS.amber}
+            />
+          )}
         </section>
+
 
         {/* KPI STRIP */}
         <section
