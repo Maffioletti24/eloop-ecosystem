@@ -17,7 +17,8 @@ import { requireAuth } from "@/lib/require-auth";
 import { formatELP, formatKg, estimarCO2e } from "@/lib/elp";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Flame } from "lucide-react";
+import type { AppRole } from "@/lib/require-role";
 
 export const Route = createFileRoute("/dashboard")({
   beforeLoad: requireAuth,
@@ -54,6 +55,7 @@ type DashboardData = {
   totalKg: number;
   totalCO2e: number;
   events: RecentEvent[];
+  role: AppRole;
   kpi: {
     scan_rate: number | null;
     uptime: number | null;
@@ -80,6 +82,7 @@ function DashboardPage() {
     totalKg: 0,
     totalCO2e: 0,
     events: [],
+    role: "operator",
     kpi: null,
   });
 
@@ -93,7 +96,7 @@ function DashboardPage() {
         if (!user) return;
         if (!cancelled) setEmail(user.email ?? "");
 
-        const [walletRes, eventsRes, kpiRes, allEventsRes] = await Promise.all([
+        const [walletRes, eventsRes, kpiRes, allEventsRes, opRes] = await Promise.all([
           supabase
             .from("wallets")
             .select("saldo_elp")
@@ -115,6 +118,11 @@ function DashboardPage() {
           supabase
             .from("disposal_events")
             .select("weight_kg, categories(risk_level)"),
+          supabase
+            .from("operators")
+            .select("role")
+            .eq("user_id", user.id)
+            .maybeSingle(),
         ]);
 
         const firstErr =
@@ -140,6 +148,7 @@ function DashboardPage() {
           totalKg,
           totalCO2e,
           events: (eventsRes.data ?? []) as RecentEvent[],
+          role: ((opRes.data?.role as AppRole | undefined) ?? "operator"),
           kpi: kpiRes.data ?? null,
         });
       } catch (e) {
@@ -204,7 +213,8 @@ function DashboardPage() {
           </Alert>
         )}
 
-        {/* BALANCE CARD */}
+        {/* BALANCE CARD — só doadores/compradores/admin */}
+        {(["donor_pf", "donor_pj", "buyer", "admin"] as AppRole[]).includes(data.role) && (
         <section
           className="rounded-2xl border p-5"
           style={{ background: COLORS.surface, borderColor: COLORS.ring }}
@@ -289,23 +299,28 @@ function DashboardPage() {
             </div>
           )}
         </section>
+        )}
 
-        {/* QUICK ACTIONS */}
+        {/* QUICK ACTIONS — role-aware */}
         <section className="grid grid-cols-2 gap-3">
-          <ActionCard
-            to="/registro"
-            label="Registrar Descarte"
-            sub="Novo evento REEE"
-            icon={<PlusCircle className="h-5 w-5" />}
-            tint={COLORS.green}
-          />
-          <ActionCard
-            to="/conformidade"
-            label="Relatório SINIR"
-            sub="Conformidade mensal"
-            icon={<FileText className="h-5 w-5" />}
-            tint={COLORS.amber}
-          />
+          {data.role !== "buyer" && (
+            <ActionCard
+              to="/registro"
+              label="Registrar Descarte"
+              sub="Novo evento REEE"
+              icon={<PlusCircle className="h-5 w-5" />}
+              tint={COLORS.green}
+            />
+          )}
+          {data.role !== "buyer" && (
+            <ActionCard
+              to="/conformidade"
+              label="Relatório SINIR"
+              sub="Conformidade mensal"
+              icon={<FileText className="h-5 w-5" />}
+              tint={COLORS.amber}
+            />
+          )}
           <ActionCard
             to="/esg"
             label="Indicadores ESG"
@@ -313,14 +328,26 @@ function DashboardPage() {
             icon={<Leaf className="h-5 w-5" />}
             tint={COLORS.blue}
           />
-          <ActionCard
-            to="/carteira"
-            label="Minha Carteira ELP"
-            sub="Saldo & histórico"
-            icon={<Wallet className="h-5 w-5" />}
-            tint={COLORS.purple}
-          />
+          {(["donor_pf", "donor_pj", "buyer", "admin"] as AppRole[]).includes(data.role) && (
+            <ActionCard
+              to="/carteira"
+              label="Minha Carteira ELP"
+              sub="Saldo & histórico"
+              icon={<Wallet className="h-5 w-5" />}
+              tint={COLORS.purple}
+            />
+          )}
+          {(["buyer", "admin"] as AppRole[]).includes(data.role) && (
+            <ActionCard
+              to="/compensar"
+              label="Compensar ELP"
+              sub="Queimar & certificar"
+              icon={<Flame className="h-5 w-5" />}
+              tint={COLORS.amber}
+            />
+          )}
         </section>
+
 
         {/* KPI STRIP */}
         <section
@@ -482,7 +509,7 @@ function ActionCard({
   icon,
   tint,
 }: {
-  to: "/registro" | "/conformidade" | "/esg" | "/carteira";
+  to: "/registro" | "/conformidade" | "/esg" | "/carteira" | "/compensar";
   label: string;
   sub: string;
   icon: React.ReactNode;
