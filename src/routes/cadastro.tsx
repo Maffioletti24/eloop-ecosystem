@@ -9,7 +9,74 @@ import { EloopLogo } from "@/components/EloopLogo";
 import { toast } from "sonner";
 import { ensureCustodialWallet } from "@/lib/wallet.functions";
 
-type Tipo = "PF" | "PJ" | "Cooperativa" | "Reciclador";
+// Perfis de cadastro — cada um mapeia explicitamente para um user_role + operator_type
+type Perfil =
+  | "cooperativa"
+  | "reciclador"
+  | "gerador"
+  | "doador_pf"
+  | "doador_pj"
+  | "comprador";
+
+type PerfilConfig = {
+  label: string;
+  sub: string;
+  role: "operator" | "donor_pf" | "donor_pj" | "buyer";
+  tipo: "PF" | "PJ" | "Cooperativa" | "Reciclador";
+  operation_level: 1 | 2 | 3 | 4;
+  docPF: boolean; // pede CPF (true) ou CNPJ (false)
+};
+
+const PERFIS: Record<Perfil, PerfilConfig> = {
+  cooperativa: {
+    label: "Cooperativa",
+    sub: "Nível 1 · coleta certificada",
+    role: "operator",
+    tipo: "Cooperativa",
+    operation_level: 1,
+    docPF: false,
+  },
+  reciclador: {
+    label: "Reciclador",
+    sub: "Nível 2 · logística reversa",
+    role: "operator",
+    tipo: "Reciclador",
+    operation_level: 2,
+    docPF: false,
+  },
+  gerador: {
+    label: "Indústria / Gerador",
+    sub: "Nível 3 · obrigado PNRS",
+    role: "operator",
+    tipo: "PJ",
+    operation_level: 3,
+    docPF: false,
+  },
+  doador_pf: {
+    label: "Doador — Pessoa Física",
+    sub: "Cidadão que descarta REE",
+    role: "donor_pf",
+    tipo: "PF",
+    operation_level: 4,
+    docPF: true,
+  },
+  doador_pj: {
+    label: "Doador — Pessoa Jurídica",
+    sub: "Empresa que doa REE",
+    role: "donor_pj",
+    tipo: "PJ",
+    operation_level: 3,
+    docPF: false,
+  },
+  comprador: {
+    label: "Comprador de ELP",
+    sub: "Compensa REE rastreáveis",
+    role: "buyer",
+    tipo: "PJ",
+    operation_level: 3,
+    docPF: false,
+  },
+};
 
 export const Route = createFileRoute("/cadastro")({
   beforeLoad: async () => {
@@ -22,49 +89,52 @@ export const Route = createFileRoute("/cadastro")({
 
 function CadastroPage() {
   const navigate = useNavigate();
+  const [perfil, setPerfil] = useState<Perfil>("doador_pf");
   const [nome, setNome] = useState("");
-  const [tipo, setTipo] = useState<Tipo>("PF");
   const [cpfCnpj, setCpfCnpj] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const operationLevelFor = (t: Tipo): 1 | 2 | 3 | 4 =>
-    t === "Cooperativa" ? 1 : t === "Reciclador" ? 2 : t === "PJ" ? 3 : 4;
+  const cfg = PERFIS[perfil];
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    const operation_level = operationLevelFor(tipo);
     const { error } = await supabase.auth.signUp({
       email,
       password: senha,
       options: {
         emailRedirectTo: `${window.location.origin}/dashboard`,
-        data: { nome, cpf_cnpj: cpfCnpj, tipo, operation_level },
+        data: {
+          nome,
+          cpf_cnpj: cpfCnpj,
+          tipo: cfg.tipo,
+          operation_level: cfg.operation_level,
+          role: cfg.role,
+        },
       },
     });
     if (error) {
       setLoading(false);
       return toast.error(error.message);
     }
-    // Provisiona carteira custodial invisível (apenas perfis que verão saldo precisarão,
-    // mas geramos para todos para manter rastreabilidade futura sem reentrada).
+    // Provisiona carteira custodial invisível (necessária para doador/comprador;
+    // operadores não verão saldo via RLS, mas mantemos rastreabilidade).
     try {
       await ensureCustodialWallet();
     } catch (e) {
       console.warn("wallet provisioning falhou", e);
     }
     setLoading(false);
-    toast.success(`Conta criada — Nível ${operation_level} habilitado.`);
+    toast.success(`Conta criada — perfil ${cfg.label}.`);
     navigate({ to: "/dashboard" });
   }
 
-  const tipos: Array<{ v: Tipo; label: string; sub: string }> = [
-    { v: "Cooperativa", label: "Cooperativa", sub: "Nível 1 · coleta certificada" },
-    { v: "Reciclador", label: "Reciclador", sub: "Nível 2 · logística reversa" },
-    { v: "PJ", label: "Indústria / Gerador", sub: "Nível 3 · obrigado PNRS" },
-    { v: "PF", label: "Pessoa Física", sub: "Cidadão / autônomo" },
+  const grupos: Array<{ titulo: string; itens: Perfil[] }> = [
+    { titulo: "Operadores logísticos", itens: ["cooperativa", "reciclador", "gerador"] },
+    { titulo: "Doadores de REE", itens: ["doador_pf", "doador_pj"] },
+    { titulo: "Compradores de crédito", itens: ["comprador"] },
   ];
 
   return (
@@ -74,53 +144,80 @@ function CadastroPage() {
       </div>
       <h1 className="text-3xl font-bold leading-tight">Habilitar operação</h1>
       <p className="text-sm text-dim mt-2">
-        Selecione o nível operacional. A escolha define obrigações PNRS aplicáveis
-        e o tipo de certificado SINIR gerado.
+        Selecione seu perfil. A escolha define obrigações PNRS aplicáveis,
+        certificado SINIR gerado e visibilidade de carteira ELP.
       </p>
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-5">
-        <div>
-          <Label className="mb-2 block">Perfil</Label>
-          <div className="grid grid-cols-2 gap-2">
-            {tipos.map((t) => (
-              <button
-                key={t.v}
-                type="button"
-                onClick={() => setTipo(t.v)}
-                className={`text-left rounded-xl border p-3 transition ${
-                  tipo === t.v
-                    ? "border-primary bg-primary/10"
-                    : "border-border bg-surface hover:bg-surface-2"
-                }`}
-              >
-                <div className="text-sm font-semibold">{t.label}</div>
-                <div className="text-[11px] text-dim mt-0.5">{t.sub}</div>
-              </button>
-            ))}
-          </div>
+        <div className="space-y-4">
+          {grupos.map((g) => (
+            <div key={g.titulo}>
+              <div className="text-[11px] uppercase tracking-wide text-dim mb-2">
+                {g.titulo}
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                {g.itens.map((v) => {
+                  const p = PERFIS[v];
+                  const active = perfil === v;
+                  return (
+                    <button
+                      key={v}
+                      type="button"
+                      onClick={() => setPerfil(v)}
+                      className={`text-left rounded-xl border p-3 transition ${
+                        active
+                          ? "border-primary bg-primary/10"
+                          : "border-border bg-surface hover:bg-surface-2"
+                      }`}
+                    >
+                      <div className="text-sm font-semibold">{p.label}</div>
+                      <div className="text-[11px] text-dim mt-0.5">{p.sub}</div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="nome">{tipo === "PF" ? "Nome completo" : "Razão social"}</Label>
+          <Label htmlFor="nome">{cfg.docPF ? "Nome completo" : "Razão social"}</Label>
           <Input id="nome" required value={nome} onChange={(e) => setNome(e.target.value)} />
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="doc">{tipo === "PF" ? "CPF" : "CNPJ"}</Label>
-          <Input id="doc" required value={cpfCnpj} onChange={(e) => setCpfCnpj(e.target.value)}
-            placeholder={tipo === "PF" ? "000.000.000-00" : "00.000.000/0000-00"} />
+          <Label htmlFor="doc">{cfg.docPF ? "CPF" : "CNPJ"}</Label>
+          <Input
+            id="doc"
+            required
+            value={cpfCnpj}
+            onChange={(e) => setCpfCnpj(e.target.value)}
+            placeholder={cfg.docPF ? "000.000.000-00" : "00.000.000/0000-00"}
+          />
         </div>
 
         <div className="space-y-1.5">
           <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" required value={email}
-            onChange={(e) => setEmail(e.target.value)} />
+          <Input
+            id="email"
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
 
         <div className="space-y-1.5">
           <Label htmlFor="senha">Senha</Label>
-          <Input id="senha" type="password" required minLength={6} value={senha}
-            onChange={(e) => setSenha(e.target.value)} placeholder="Mínimo 6 caracteres" />
+          <Input
+            id="senha"
+            type="password"
+            required
+            minLength={6}
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+            placeholder="Mínimo 6 caracteres"
+          />
         </div>
 
         <Button type="submit" className="w-full h-11" disabled={loading}>
