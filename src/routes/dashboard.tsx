@@ -509,7 +509,7 @@ function ActionCard({
   icon,
   tint,
 }: {
-  to: "/registro" | "/conformidade" | "/esg" | "/carteira";
+  to: "/registro" | "/conformidade" | "/esg" | "/carteira" | "/compensar";
   label: string;
   sub: string;
   icon: React.ReactNode;
