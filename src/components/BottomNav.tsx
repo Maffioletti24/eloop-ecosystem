@@ -60,11 +60,11 @@ export function BottomNav() {
     items = [baseDashboard, itemCarteira, itemCompensar, itemRelatorio];
   } else if (role === "donor_pf" || role === "donor_pj") {
     // Doador: carteira (recibo + certificado) + ESG
-    items = [baseDashboard, itemRegistro, itemCarteira, itemESG];
+    items = [baseDashboard, itemRegistro, itemLotes, itemCarteira, itemESG];
   } else {
     // Operador / validador / admin: visão logística — sem carteira
-    items = [baseDashboard, itemRegistro, itemRelatorio, itemESG];
-    if (isValidator) items.splice(3, 0, itemValidar);
+    items = [baseDashboard, itemRegistro, itemLotes, itemRelatorio, itemESG];
+    if (isValidator) items.splice(4, 0, itemValidar);
   }
 
   const cols = items.length + 1;
