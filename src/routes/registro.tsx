@@ -158,7 +158,6 @@ function RegistroPage() {
   const selectedCat = categories.find((c) => c.id === categoryId);
   const gamma = selectedCat ? Number(selectedCat.gamma_factor) : 0;
   const weightNum = Number(weight.replace(",", ".")) || 0;
-  const elpPreview = calcularELP(weightNum, gamma, ALPHA_DEFAULT, 1.0);
 
   function onPickPhoto(file: File) {
     const reader = new FileReader();
