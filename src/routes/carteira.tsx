@@ -8,8 +8,8 @@ import { formatELP, formatKg } from "@/lib/elp";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export const Route = createFileRoute("/carteira")({
-  beforeLoad: async (ctx) => {
-    await requireAuth(ctx);
+  beforeLoad: async () => {
+    await requireAuth();
     const { data: u } = await supabase.auth.getUser();
     if (!u.user) return;
     const { data: op } = await supabase
