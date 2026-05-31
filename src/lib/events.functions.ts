@@ -41,13 +41,28 @@ export const createDisposalEvent = createServerFn({ method: "POST" })
       .single();
     if (catErr || !cat) throw new Error("Categoria inválida");
 
+    // QR uso único: rejeita se já existe lote com este código
+    const { data: existingBatch } = await supabase
+      .from("batches")
+      .select("id, expires_at, status")
+      .eq("qr_code", data.qrCode)
+      .maybeSingle();
+    if (existingBatch) {
+      throw new Error("QR já utilizado — gere um novo lote.");
+    }
+
     // batch
     const { data: batch, error: bErr } = await supabase
       .from("batches")
       .insert({ qr_code: data.qrCode, operator_id: op.id })
-      .select("id")
+      .select("id, expires_at")
       .single();
     if (bErr || !batch) throw new Error("Falha ao criar lote: " + bErr?.message);
+
+    // Expiração defensiva (24h default; rejeita se relógio estiver torto)
+    if (new Date(batch.expires_at) <= new Date()) {
+      throw new Error("Lote expirado — gere novo QR.");
+    }
 
     // photo upload (opcional)
     let photoUrl: string | null = null;
