@@ -163,6 +163,9 @@ function DashboardPage() {
     };
   }, []);
 
+  const hasWallet = data.role === "donor_pf" || data.role === "donor_pj" || data.role === "buyer" || data.role === "admin";
+  const isBuyer = data.role === "buyer" || data.role === "admin";
+
   return (
     <div
       className="min-h-screen mx-auto max-w-[390px] pb-24"
@@ -214,7 +217,7 @@ function DashboardPage() {
         )}
 
         {/* BALANCE CARD — só doadores/compradores/admin */}
-        {(["donor_pf", "donor_pj", "buyer", "admin"] as AppRole[]).includes(data.role) && (
+        {hasWallet && (
         <section
           className="rounded-2xl border p-5"
           style={{ background: COLORS.surface, borderColor: COLORS.ring }}
@@ -328,7 +331,7 @@ function DashboardPage() {
             icon={<Leaf className="h-5 w-5" />}
             tint={COLORS.blue}
           />
-          {(["donor_pf", "donor_pj", "buyer", "admin"] as AppRole[]).includes(data.role) && (
+          {hasWallet && (
             <ActionCard
               to="/carteira"
               label="Minha Carteira ELP"
@@ -337,7 +340,7 @@ function DashboardPage() {
               tint={COLORS.purple}
             />
           )}
-          {(["buyer", "admin"] as AppRole[]).includes(data.role) && (
+          {isBuyer && (
             <ActionCard
               to="/compensar"
               label="Compensar ELP"
