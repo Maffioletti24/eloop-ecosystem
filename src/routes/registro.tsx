@@ -7,7 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useServerFn } from "@tanstack/react-start";
 import { createDisposalEvent, getCategories } from "@/lib/events.functions";
 import { generateQrCode, sha256Hex, buildEventPayload } from "@/lib/hash";
-import { calcularELP, ALPHA_DEFAULT, formatELP } from "@/lib/elp";
+import { formatELP } from "@/lib/elp";
 import { Camera, Check, Loader2, QrCode as QrIcon, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/registro")({
@@ -158,7 +158,6 @@ function RegistroPage() {
   const selectedCat = categories.find((c) => c.id === categoryId);
   const gamma = selectedCat ? Number(selectedCat.gamma_factor) : 0;
   const weightNum = Number(weight.replace(",", ".")) || 0;
-  const elpPreview = calcularELP(weightNum, gamma, ALPHA_DEFAULT, 1.0);
 
   function onPickPhoto(file: File) {
     const reader = new FileReader();
@@ -344,17 +343,6 @@ function RegistroPage() {
               )}
             </div>
 
-            {weightNum > 0 && gamma > 0 ? (
-              <div
-                className="rounded-xl p-3 text-xs font-mono"
-                style={{ background: "#0A0F0A", color: TEXT }}
-              >
-                <div style={{ color: MUTED }}>Prévia ELP</div>
-                <div className="mt-1" style={{ color: GREEN }}>
-                  {weightNum} × {gamma} × 2.0 × 1.0 = {formatELP(elpPreview)} ELP
-                </div>
-              </div>
-            ) : null}
           </div>
           <PrimaryBtn
             onClick={() => setStep(2)}
@@ -441,15 +429,6 @@ function RegistroPage() {
             <div className="text-2xl font-bold flex items-center gap-1.5" style={{ color: GREEN }}>
               <Sparkles className="h-5 w-5" />
               +{formatELP(result.elp)} ELP emitido!
-            </div>
-            <div
-              className="rounded-xl p-3 text-xs font-mono w-full"
-              style={{ background: "#0A0F0A", color: TEXT }}
-            >
-              <div style={{ color: MUTED }}>Cálculo</div>
-              <div className="mt-1" style={{ color: GREEN }}>
-                {weightNum} × {gamma} × 2.0 × 1.0 = {formatELP(result.elp)} ELP
-              </div>
             </div>
             <div className="text-[11px]" style={{ color: MUTED }}>
               Status: {result.status}
