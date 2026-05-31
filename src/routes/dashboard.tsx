@@ -328,7 +328,7 @@ function DashboardPage() {
             icon={<Leaf className="h-5 w-5" />}
             tint={COLORS.blue}
           />
-          {(["donor_pf", "donor_pj", "buyer", "admin"] as AppRole[]).includes(data.role) && (
+          {hasWallet && (
             <ActionCard
               to="/carteira"
               label="Minha Carteira ELP"
