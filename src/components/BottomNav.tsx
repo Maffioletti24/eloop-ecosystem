@@ -1,18 +1,31 @@
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { LayoutDashboard, PlusCircle, FileText, Leaf, LogOut, ShieldCheck } from "lucide-react";
+import {
+  LayoutDashboard,
+  PlusCircle,
+  FileText,
+  Leaf,
+  LogOut,
+  ShieldCheck,
+  Wallet,
+  Flame,
+} from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
-const baseItems = [
-  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/registro", label: "Descarte", icon: PlusCircle },
-  { to: "/conformidade", label: "Relatório", icon: FileText },
-  { to: "/esg", label: "ESG", icon: Leaf },
-] as const;
+type Item = { to: string; label: string; icon: typeof LayoutDashboard };
+
+const baseDashboard: Item = { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard };
+const itemRegistro: Item = { to: "/registro", label: "Descarte", icon: PlusCircle };
+const itemRelatorio: Item = { to: "/conformidade", label: "Relatório", icon: FileText };
+const itemESG: Item = { to: "/esg", label: "ESG", icon: Leaf };
+const itemValidar: Item = { to: "/validador", label: "Validar", icon: ShieldCheck };
+const itemCarteira: Item = { to: "/carteira", label: "Carteira", icon: Wallet };
+const itemCompensar: Item = { to: "/compensar", label: "Compensar", icon: Flame };
 
 export function BottomNav() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const [role, setRole] = useState<string>("operator");
   const [isValidator, setIsValidator] = useState(false);
 
   useEffect(() => {
@@ -20,29 +33,44 @@ export function BottomNav() {
     (async () => {
       const { data: u } = await supabase.auth.getUser();
       if (!u.user) return;
-      const { data } = await supabase
-        .from("validators")
-        .select("id")
-        .eq("user_id", u.user.id)
-        .eq("ativo", true)
-        .maybeSingle();
-      if (!cancel) setIsValidator(!!data);
+      const [{ data: op }, { data: val }] = await Promise.all([
+        supabase.from("operators").select("role").eq("user_id", u.user.id).maybeSingle(),
+        supabase
+          .from("validators")
+          .select("id")
+          .eq("user_id", u.user.id)
+          .eq("ativo", true)
+          .maybeSingle(),
+      ]);
+      if (cancel) return;
+      setRole(op?.role ?? "operator");
+      setIsValidator(!!val);
     })();
     return () => {
       cancel = true;
     };
   }, [pathname]);
 
+  // Monta navegação conforme perfil
+  let items: Item[] = [];
+  if (role === "buyer") {
+    // Comprador: foca em saldo e compensação; sem registro de descarte
+    items = [baseDashboard, itemCarteira, itemCompensar, itemRelatorio];
+  } else if (role === "donor_pf" || role === "donor_pj") {
+    // Doador: carteira (recibo + certificado) + ESG
+    items = [baseDashboard, itemRegistro, itemCarteira, itemESG];
+  } else {
+    // Operador / validador / admin: visão logística — sem carteira
+    items = [baseDashboard, itemRegistro, itemRelatorio, itemESG];
+    if (isValidator) items.splice(3, 0, itemValidar);
+  }
+
+  const cols = items.length + 1;
+
   async function handleLogout() {
     await supabase.auth.signOut();
     navigate({ to: "/login" });
   }
-
-  const items = isValidator
-    ? [...baseItems.slice(0, 3), { to: "/validador" as const, label: "Validar", icon: ShieldCheck }, baseItems[3]]
-    : baseItems;
-
-  const cols = items.length + 1;
 
   return (
     <nav
