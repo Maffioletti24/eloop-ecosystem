@@ -1,4 +1,4 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { Flame, ExternalLink, FileDown, Loader2 } from "lucide-react";
@@ -7,26 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { requireAuth } from "@/lib/require-auth";
-import { supabase } from "@/integrations/supabase/client";
+import { requireRole, BUYER_ROLES } from "@/lib/require-role";
 import { burnElpForCompensation, listCompensations } from "@/lib/compensar.functions";
 import { formatELP } from "@/lib/elp";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/compensar")({
-  beforeLoad: async () => {
-    await requireAuth();
-    const { data: u } = await supabase.auth.getUser();
-    if (!u.user) return;
-    const { data: op } = await supabase
-      .from("operators")
-      .select("role")
-      .eq("user_id", u.user.id)
-      .maybeSingle();
-    if (op?.role !== "buyer" && op?.role !== "admin") {
-      throw redirect({ to: "/dashboard" });
-    }
-  },
+  beforeLoad: () => requireRole(BUYER_ROLES),
   head: () => ({ meta: [{ title: "Compensar ELP — Eloop Token" }] }),
   component: CompensarPage,
 });
