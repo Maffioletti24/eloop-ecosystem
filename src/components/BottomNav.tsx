@@ -9,6 +9,7 @@ import {
   ShieldCheck,
   Wallet,
   Flame,
+  Package,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
