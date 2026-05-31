@@ -248,6 +248,7 @@ export type Database = {
           id: string
           nome: string
           operation_level: number
+          role: Database["public"]["Enums"]["user_role"]
           tipo: Database["public"]["Enums"]["operator_type"]
           updated_at: string
           user_id: string
@@ -260,6 +261,7 @@ export type Database = {
           id?: string
           nome: string
           operation_level?: number
+          role?: Database["public"]["Enums"]["user_role"]
           tipo?: Database["public"]["Enums"]["operator_type"]
           updated_at?: string
           user_id: string
@@ -272,6 +274,7 @@ export type Database = {
           id?: string
           nome?: string
           operation_level?: number
+          role?: Database["public"]["Enums"]["user_role"]
           tipo?: Database["public"]["Enums"]["operator_type"]
           updated_at?: string
           user_id?: string
@@ -383,6 +386,8 @@ export type Database = {
       wallets: {
         Row: {
           created_at: string
+          custody: string
+          encrypted_pk: string | null
           id: string
           saldo_elp: number
           updated_at: string
@@ -391,6 +396,8 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          custody?: string
+          encrypted_pk?: string | null
           id?: string
           saldo_elp?: number
           updated_at?: string
@@ -399,6 +406,8 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          custody?: string
+          encrypted_pk?: string | null
           id?: string
           saldo_elp?: number
           updated_at?: string
@@ -412,6 +421,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      current_user_role: {
+        Args: never
+        Returns: Database["public"]["Enums"]["user_role"]
+      }
       is_validator: { Args: { _uid: string }; Returns: boolean }
     }
     Enums: {
@@ -420,6 +433,13 @@ export type Database = {
       event_status: "pendente" | "aprovado" | "rejeitado"
       operator_type: "PF" | "PJ" | "Cooperativa" | "Reciclador"
       risk_level: "alto" | "medio" | "baixo"
+      user_role:
+        | "operator"
+        | "donor_pf"
+        | "donor_pj"
+        | "buyer"
+        | "validator"
+        | "admin"
       validator_type: "Cooperativa" | "Transportadora" | "Reciclador"
     }
     CompositeTypes: {
@@ -553,6 +573,14 @@ export const Constants = {
       event_status: ["pendente", "aprovado", "rejeitado"],
       operator_type: ["PF", "PJ", "Cooperativa", "Reciclador"],
       risk_level: ["alto", "medio", "baixo"],
+      user_role: [
+        "operator",
+        "donor_pf",
+        "donor_pj",
+        "buyer",
+        "validator",
+        "admin",
+      ],
       validator_type: ["Cooperativa", "Transportadora", "Reciclador"],
     },
   },

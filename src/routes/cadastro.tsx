@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { EloopLogo } from "@/components/EloopLogo";
 import { toast } from "sonner";
+import { ensureCustodialWallet } from "@/lib/wallet.functions";
 
 type Tipo = "PF" | "PJ" | "Cooperativa" | "Reciclador";
 
@@ -43,8 +44,18 @@ function CadastroPage() {
         data: { nome, cpf_cnpj: cpfCnpj, tipo, operation_level },
       },
     });
+    if (error) {
+      setLoading(false);
+      return toast.error(error.message);
+    }
+    // Provisiona carteira custodial invisível (apenas perfis que verão saldo precisarão,
+    // mas geramos para todos para manter rastreabilidade futura sem reentrada).
+    try {
+      await ensureCustodialWallet();
+    } catch (e) {
+      console.warn("wallet provisioning falhou", e);
+    }
     setLoading(false);
-    if (error) return toast.error(error.message);
     toast.success(`Conta criada — Nível ${operation_level} habilitado.`);
     navigate({ to: "/dashboard" });
   }
