@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import QRCode from "qrcode";
 import { PageShell } from "@/components/PageShell";
-import { requireAuth } from "@/lib/require-auth";
+import { requireRole, DISPOSAL_ROLES } from "@/lib/require-role";
 import { supabase } from "@/integrations/supabase/client";
 import { useServerFn } from "@tanstack/react-start";
 import { createDisposalEvent, getCategories } from "@/lib/events.functions";
@@ -11,7 +11,7 @@ import { calcularELP, ALPHA_DEFAULT, formatELP } from "@/lib/elp";
 import { Camera, Check, Loader2, QrCode as QrIcon, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/registro")({
-  beforeLoad: requireAuth,
+  beforeLoad: () => requireRole(DISPOSAL_ROLES),
   head: () => ({ meta: [{ title: "Registrar Descarte — Eloop Token" }] }),
   component: RegistroPage,
 });
