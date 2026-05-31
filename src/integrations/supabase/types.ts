@@ -124,6 +124,47 @@ export type Database = {
           },
         ]
       }
+      compensations: {
+        Row: {
+          created_at: string
+          elp_burned: number
+          finalidade: string | null
+          id: string
+          numero_sequencial: string
+          operator_id: string
+          pdf_url: string | null
+          polygon_tx_hash: string | null
+        }
+        Insert: {
+          created_at?: string
+          elp_burned: number
+          finalidade?: string | null
+          id?: string
+          numero_sequencial: string
+          operator_id: string
+          pdf_url?: string | null
+          polygon_tx_hash?: string | null
+        }
+        Update: {
+          created_at?: string
+          elp_burned?: number
+          finalidade?: string | null
+          id?: string
+          numero_sequencial?: string
+          operator_id?: string
+          pdf_url?: string | null
+          polygon_tx_hash?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "compensations_operator_id_fkey"
+            columns: ["operator_id"]
+            isOneToOne: false
+            referencedRelation: "operators"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       disposal_events: {
         Row: {
           alpha: number

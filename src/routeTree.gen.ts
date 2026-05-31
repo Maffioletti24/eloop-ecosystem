@@ -15,6 +15,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as EsgRouteImport } from './routes/esg'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ConformidadeRouteImport } from './routes/conformidade'
+import { Route as CompensarRouteImport } from './routes/compensar'
 import { Route as CarteiraRouteImport } from './routes/carteira'
 import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as IndexRouteImport } from './routes/index'
@@ -49,6 +50,11 @@ const ConformidadeRoute = ConformidadeRouteImport.update({
   path: '/conformidade',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompensarRoute = CompensarRouteImport.update({
+  id: '/compensar',
+  path: '/compensar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CarteiraRoute = CarteiraRouteImport.update({
   id: '/carteira',
   path: '/carteira',
@@ -69,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
   '/carteira': typeof CarteiraRoute
+  '/compensar': typeof CompensarRoute
   '/conformidade': typeof ConformidadeRoute
   '/dashboard': typeof DashboardRoute
   '/esg': typeof EsgRoute
@@ -80,6 +87,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
   '/carteira': typeof CarteiraRoute
+  '/compensar': typeof CompensarRoute
   '/conformidade': typeof ConformidadeRoute
   '/dashboard': typeof DashboardRoute
   '/esg': typeof EsgRoute
@@ -92,6 +100,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
   '/carteira': typeof CarteiraRoute
+  '/compensar': typeof CompensarRoute
   '/conformidade': typeof ConformidadeRoute
   '/dashboard': typeof DashboardRoute
   '/esg': typeof EsgRoute
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
     | '/'
     | '/cadastro'
     | '/carteira'
+    | '/compensar'
     | '/conformidade'
     | '/dashboard'
     | '/esg'
@@ -116,6 +126,7 @@ export interface FileRouteTypes {
     | '/'
     | '/cadastro'
     | '/carteira'
+    | '/compensar'
     | '/conformidade'
     | '/dashboard'
     | '/esg'
@@ -127,6 +138,7 @@ export interface FileRouteTypes {
     | '/'
     | '/cadastro'
     | '/carteira'
+    | '/compensar'
     | '/conformidade'
     | '/dashboard'
     | '/esg'
@@ -139,6 +151,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CadastroRoute: typeof CadastroRoute
   CarteiraRoute: typeof CarteiraRoute
+  CompensarRoute: typeof CompensarRoute
   ConformidadeRoute: typeof ConformidadeRoute
   DashboardRoute: typeof DashboardRoute
   EsgRoute: typeof EsgRoute
@@ -191,6 +204,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConformidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compensar': {
+      id: '/compensar'
+      path: '/compensar'
+      fullPath: '/compensar'
+      preLoaderRoute: typeof CompensarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/carteira': {
       id: '/carteira'
       path: '/carteira'
@@ -219,6 +239,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CadastroRoute: CadastroRoute,
   CarteiraRoute: CarteiraRoute,
+  CompensarRoute: CompensarRoute,
   ConformidadeRoute: ConformidadeRoute,
   DashboardRoute: DashboardRoute,
   EsgRoute: EsgRoute,
