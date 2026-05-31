@@ -213,6 +213,8 @@ function DashboardPage() {
           </Alert>
         )}
 
+        {/* BALANCE CARD — só doadores/compradores/admin */}
+        {(["donor_pf", "donor_pj", "buyer", "admin"] as AppRole[]).includes(data.role) && (
         {/* BALANCE CARD */}
         <section
           className="rounded-2xl border p-5"
