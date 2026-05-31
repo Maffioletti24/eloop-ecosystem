@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ExternalLink, Inbox, Loader2 } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
@@ -8,7 +8,20 @@ import { formatELP, formatKg } from "@/lib/elp";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export const Route = createFileRoute("/carteira")({
-  beforeLoad: requireAuth,
+  beforeLoad: async (ctx) => {
+    await requireAuth(ctx);
+    const { data: u } = await supabase.auth.getUser();
+    if (!u.user) return;
+    const { data: op } = await supabase
+      .from("operators")
+      .select("role")
+      .eq("user_id", u.user.id)
+      .maybeSingle();
+    const role = op?.role ?? "operator";
+    if (!["donor_pf", "donor_pj", "buyer", "admin"].includes(role)) {
+      throw redirect({ to: "/dashboard" });
+    }
+  },
   head: () => ({ meta: [{ title: "Carteira ELP — Eloop Token" }] }),
   component: CarteiraPage,
 });
