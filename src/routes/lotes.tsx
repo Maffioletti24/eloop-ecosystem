@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { PageShell } from "@/components/PageShell";
+import { AuditExpander } from "@/components/AuditExpander";
 import { requireRole, DISPOSAL_ROLES } from "@/lib/require-role";
 import { listBatches } from "@/lib/events.functions";
 import { formatELP } from "@/lib/elp";
@@ -203,6 +204,8 @@ function LotesPage() {
                     </div>
                   </div>
                 ) : null}
+
+                {evt ? <AuditExpander eventId={evt.id} /> : null}
               </div>
             );
           })}
