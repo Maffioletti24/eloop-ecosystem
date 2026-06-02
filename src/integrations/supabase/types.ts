@@ -248,6 +248,60 @@ export type Database = {
           },
         ]
       }
+      elp_audit_log: {
+        Row: {
+          algorithm: string
+          alpha: number
+          beta: number
+          category_id: string
+          created_at: string
+          elp_amount: number
+          event_id: string
+          gamma_factor: number
+          id: string
+          input_hash: string
+          operator_id: string
+          signature: string | null
+          signed_at: string
+          signed_by_user_id: string
+          weight_kg: number
+        }
+        Insert: {
+          algorithm?: string
+          alpha: number
+          beta: number
+          category_id: string
+          created_at?: string
+          elp_amount: number
+          event_id: string
+          gamma_factor: number
+          id?: string
+          input_hash: string
+          operator_id: string
+          signature?: string | null
+          signed_at?: string
+          signed_by_user_id: string
+          weight_kg: number
+        }
+        Update: {
+          algorithm?: string
+          alpha?: number
+          beta?: number
+          category_id?: string
+          created_at?: string
+          elp_amount?: number
+          event_id?: string
+          gamma_factor?: number
+          id?: string
+          input_hash?: string
+          operator_id?: string
+          signature?: string | null
+          signed_at?: string
+          signed_by_user_id?: string
+          weight_kg?: number
+        }
+        Relationships: []
+      }
       kpis: {
         Row: {
           beta_score: number | null
