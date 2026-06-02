@@ -28,6 +28,7 @@ export const createDisposalEvent = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
 
+    // 1) Verifica operador via cliente autenticado (RLS garante que userId == auth.uid())
     const { data: op, error: opErr } = await supabase
       .from("operators")
       .select("id, beta_score")
@@ -35,37 +36,37 @@ export const createDisposalEvent = createServerFn({ method: "POST" })
       .single();
     if (opErr || !op) throw new Error("Operador não encontrado");
 
-    const { data: cat, error: catErr } = await supabase
+    // 2) Categoria + γ vêm do banco — cliente nunca envia gamma
+    const { data: cat, error: catErr } = await supabaseAdmin
       .from("categories")
       .select("id, gamma_factor")
       .eq("id", data.categoryId)
       .single();
     if (catErr || !cat) throw new Error("Categoria inválida");
 
-    // QR uso único: rejeita se já existe lote com este código
-    const { data: existingBatch } = await supabase
+    // 3) QR uso único
+    const { data: existingBatch } = await supabaseAdmin
       .from("batches")
-      .select("id, expires_at, status")
+      .select("id")
       .eq("qr_code", data.qrCode)
       .maybeSingle();
     if (existingBatch) {
       throw new Error("QR já utilizado — gere um novo lote.");
     }
 
-    // batch
-    const { data: batch, error: bErr } = await supabase
+    // 4) Cria batch via admin (operador não tem mais INSERT direto)
+    const { data: batch, error: bErr } = await supabaseAdmin
       .from("batches")
       .insert({ qr_code: data.qrCode, operator_id: op.id })
       .select("id, expires_at")
       .single();
     if (bErr || !batch) throw new Error("Falha ao criar lote: " + bErr?.message);
 
-    // Expiração defensiva (24h default; rejeita se relógio estiver torto)
     if (new Date(batch.expires_at) <= new Date()) {
       throw new Error("Lote expirado — gere novo QR.");
     }
 
-    // photo upload (opcional)
+    // 5) Upload de foto continua via cliente autenticado (storage RLS por pasta = userId)
     let photoUrl: string | null = null;
     if (data.photoBase64) {
       const b64 = data.photoBase64.replace(/^data:image\/[a-z]+;base64,/, "");
@@ -82,11 +83,13 @@ export const createDisposalEvent = createServerFn({ method: "POST" })
       }
     }
 
+    // 6) ELP calculado AQUI no servidor com γ do banco e β do registro do operador.
+    //    Cliente não envia nem influencia o valor final.
     const beta = Number(op.beta_score ?? 1);
     const alpha = 2.0;
     const elp = calcularELP(data.weightKg, Number(cat.gamma_factor), alpha, beta);
 
-    // Ancora on-chain
+    // 7) Ancora hash on-chain
     let txHash: string | null = null;
     try {
       const r = await anchorHashOnPolygon({ data: { hashHex: data.hashHex } });
@@ -95,7 +98,8 @@ export const createDisposalEvent = createServerFn({ method: "POST" })
       console.error("anchor failed", e);
     }
 
-    const { data: evento, error: eErr } = await supabase
+    // 8) Insert do evento via admin — única via possível (RLS bloqueia operador)
+    const { data: evento, error: eErr } = await supabaseAdmin
       .from("disposal_events")
       .insert({
         operator_id: op.id,
@@ -115,7 +119,7 @@ export const createDisposalEvent = createServerFn({ method: "POST" })
     if (eErr || !evento) throw new Error("Falha ao criar evento: " + eErr?.message);
 
     if (txHash) {
-      await supabase
+      await supabaseAdmin
         .from("batches")
         .update({ status: "validado" })
         .eq("id", batch.id);
