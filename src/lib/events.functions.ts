@@ -242,3 +242,18 @@ export const listBatches = createServerFn({ method: "GET" })
 
     return batches ?? [];
   });
+
+/** Retorna a trilha de auditoria de um evento (RLS já filtra por dono/validator). */
+export const getEventAudit = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input) => z.object({ eventId: z.string().uuid() }).parse(input))
+  .handler(async ({ data, context }) => {
+    const { data: rows } = await context.supabase
+      .from("elp_audit_log")
+      .select(
+        "id, algorithm, weight_kg, gamma_factor, alpha, beta, elp_amount, input_hash, signature, signed_at, signed_by_user_id",
+      )
+      .eq("event_id", data.eventId)
+      .order("signed_at", { ascending: false });
+    return rows ?? [];
+  });
