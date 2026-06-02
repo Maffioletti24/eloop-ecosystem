@@ -118,6 +118,45 @@ export const createDisposalEvent = createServerFn({ method: "POST" })
       .single();
     if (eErr || !evento) throw new Error("Falha ao criar evento: " + eErr?.message);
 
+    // 9) Trilha de auditoria — append-only, assinada por trigger (HMAC no DB).
+    //    Registra inputs, resultado, quem disparou e quando.
+    const inputPayload = [
+      "elp.v1",
+      evento.id,
+      op.id,
+      cat.id,
+      data.weightKg.toFixed(3),
+      Number(cat.gamma_factor).toString(),
+      alpha.toString(),
+      beta.toString(),
+      elp.toString(),
+    ].join("|");
+    const inputHash = Array.from(
+      new Uint8Array(
+        await crypto.subtle.digest("SHA-256", new TextEncoder().encode(inputPayload)),
+      ),
+    )
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
+
+    const { error: auditErr } = await supabaseAdmin.from("elp_audit_log").insert({
+      event_id: evento.id,
+      operator_id: op.id,
+      signed_by_user_id: userId,
+      algorithm: "elp.v1",
+      weight_kg: data.weightKg,
+      category_id: cat.id,
+      gamma_factor: Number(cat.gamma_factor),
+      alpha,
+      beta,
+      elp_amount: elp,
+      input_hash: inputHash,
+    });
+    if (auditErr) {
+      // Não falha a emissão, mas registra: auditoria é log paralelo.
+      console.error("audit insert failed", auditErr);
+    }
+
     if (txHash) {
       await supabaseAdmin
         .from("batches")
