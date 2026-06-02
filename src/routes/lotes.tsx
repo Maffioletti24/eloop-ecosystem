@@ -162,50 +162,52 @@ function LotesPage() {
                   </div>
                 </div>
 
-                {evt ? (
-                  <div className="mt-3 pt-3 border-t flex items-center gap-2" style={{ borderColor: "#1f2a1f" }}>
-                    {evt.photo_url ? (
-                      <button
-                        type="button"
-                        onClick={() => setOpenPhoto(evt.photo_url)}
-                        className="h-14 w-14 rounded-lg overflow-hidden border shrink-0"
-                        style={{ borderColor: `${GREEN}44` }}
-                      >
-                        <img src={evt.photo_url} alt="" className="h-full w-full object-cover" />
-                      </button>
-                    ) : (
-                      <div
-                        className="h-14 w-14 rounded-lg flex items-center justify-center shrink-0"
-                        style={{ background: "#0A0F0A", color: MUTED }}
-                      >
-                        <ImageIcon className="h-5 w-5" />
-                      </div>
-                    )}
-                    <div className="flex-1 min-w-0 text-[10px] space-y-0.5" style={{ color: MUTED }}>
-                      {evt.hash_sha256 ? (
-                        <div className="font-mono truncate">
-                          <span style={{ color: GREEN }}>hash</span> {evt.hash_sha256.slice(0, 24)}…
-                        </div>
-                      ) : null}
-                      {evt.polygon_tx_hash ? (
-                        <a
-                          href={`https://polygonscan.com/tx/${evt.polygon_tx_hash}`}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="flex items-center gap-1 font-mono"
-                          style={{ color: GREEN }}
+                {evt && (
+                  <>
+                    <div className="mt-3 pt-3 border-t flex items-center gap-2" style={{ borderColor: "#1f2a1f" }}>
+                      {evt.photo_url ? (
+                        <button
+                          type="button"
+                          onClick={() => setOpenPhoto(evt.photo_url)}
+                          className="h-14 w-14 rounded-lg overflow-hidden border shrink-0"
+                          style={{ borderColor: `${GREEN}44` }}
                         >
-                          tx {evt.polygon_tx_hash.slice(0, 14)}…
-                          <ExternalLink className="h-3 w-3" />
-                        </a>
+                          <img src={evt.photo_url} alt="" className="h-full w-full object-cover" />
+                        </button>
                       ) : (
-                        <div style={{ color: "#f59e0b" }}>aguardando ancoragem on-chain</div>
+                        <div
+                          className="h-14 w-14 rounded-lg flex items-center justify-center shrink-0"
+                          style={{ background: "#0A0F0A", color: MUTED }}
+                        >
+                          <ImageIcon className="h-5 w-5" />
+                        </div>
                       )}
+                      <div className="flex-1 min-w-0 text-[10px] space-y-0.5" style={{ color: MUTED }}>
+                        {evt.hash_sha256 ? (
+                          <div className="font-mono truncate">
+                            <span style={{ color: GREEN }}>hash</span> {evt.hash_sha256.slice(0, 24)}…
+                          </div>
+                        ) : null}
+                        {evt.polygon_tx_hash ? (
+                          <a
+                            href={`https://polygonscan.com/tx/${evt.polygon_tx_hash}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex items-center gap-1 font-mono"
+                            style={{ color: GREEN }}
+                          >
+                            tx {evt.polygon_tx_hash.slice(0, 14)}…
+                            <ExternalLink className="h-3 w-3" />
+                          </a>
+                        ) : (
+                          <div style={{ color: "#f59e0b" }}>aguardando ancoragem on-chain</div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ) : null}
+                    <AuditExpander eventId={evt.id} />
+                  </>
+                )}
 
-                {evt ? <AuditExpander eventId={evt.id} /> : null}
               </div>
             );
           })}
