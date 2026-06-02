@@ -202,7 +202,6 @@ function LotesPage() {
                         <div style={{ color: "#f59e0b" }}>aguardando ancoragem on-chain</div>
                       )}
                     </div>
-                    </div>
                   </div>
                 ) : null}
 
