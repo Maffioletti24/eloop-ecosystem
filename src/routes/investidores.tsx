@@ -51,21 +51,25 @@ const SITE_URL = "https://eloop.token";
 function InvestidoresLanding() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [isPending, setIsPending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const submitLead = useServerFn(submitInvestorLead);
 
-  const mutation = useMutation({
-    mutationFn: submitLead,
-    onSuccess: () => {
-      setSubmitted(true);
-      setForm({ name: "", email: "", message: "" });
-    },
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name.trim() || !form.email.trim() || !form.message.trim()) return;
-    mutation.mutate({ name: form.name, email: form.email, message: form.message });
+    setIsPending(true);
+    setError(null);
+    try {
+      await submitLead({ name: form.name, email: form.email, message: form.message });
+      setSubmitted(true);
+      setForm({ name: "", email: "", message: "" });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Erro ao enviar. Tente novamente.");
+    } finally {
+      setIsPending(false);
+    }
   };
 
   return (
