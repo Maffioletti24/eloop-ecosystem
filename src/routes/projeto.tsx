@@ -178,30 +178,29 @@ function ProjetoPage() {
                 GHG Protocol · Escopo 3
               </span>
               <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
-                Métrica de carbono integrada à cadeia de valor
+                Transforme resíduos em crédito de carbono mensurável
               </h2>
               <p className="mt-4 text-muted-foreground">
-                O Escopo 3 do GHG Protocol obriga empresas a reportarem emissões
-                indiretas da cadeia de valor — incluindo resíduos de produtos
-                vendidos. O Eloop transforma cada quilograma de REEE coletado em
-                dados de CO₂e mitigado, com rastreabilidade desde o gerador até
-                a destinação final.
+                O Escopo 3 do GHG Protocol exige que empresas contabilizem emissões
+                indiretas da cadeia — incluindo resíduos de produtos vendidos.
+                O Eloop converte cada coleta de REEE em métrica de CO₂e mitigado,
+                pronta para relatórios ESG, CDP e Science Based Targets.
               </p>
 
               <div className="mt-8 grid gap-4 sm:grid-cols-3">
                 <div className="rounded-xl border border-border bg-card p-4">
                   <TreePine className="h-5 w-5 text-primary" />
-                  <p className="mt-2 text-sm font-semibold">CO₂e evitado</p>
-                  <p className="text-xs text-muted-foreground">até 3,5 kg / kg REEE</p>
+                  <p className="mt-2 text-sm font-semibold">Emissões evitadas por tonelada</p>
+                  <p className="text-xs text-muted-foreground">até 3,5 tCO₂e / t REEE</p>
                 </div>
                 <div className="rounded-xl border border-border bg-card p-4">
                   <BarChart3 className="h-5 w-5 text-primary" />
-                  <p className="mt-2 text-sm font-semibold">Mensuração automatizada</p>
-                  <p className="text-xs text-muted-foreground">kg → tCO₂e em tempo real</p>
+                  <p className="mt-2 text-sm font-semibold">Cálculo automático de carbono</p>
+                  <p className="text-xs text-muted-foreground">Peso → tCO₂e em tempo real</p>
                 </div>
                 <div className="rounded-xl border border-border bg-card p-4">
                   <Leaf className="h-5 w-5 text-primary" />
-                  <p className="mt-2 text-sm font-semibold">Lastro auditável</p>
+                  <p className="mt-2 text-sm font-semibold">Prova verificável</p>
                   <p className="text-xs text-muted-foreground">Hash on-chain + MTR</p>
                 </div>
               </div>
