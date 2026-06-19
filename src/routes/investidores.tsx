@@ -378,17 +378,17 @@ function InvestidoresLanding() {
                     className="mt-1.5"
                   />
                 </div>
-                {mutation.isError && (
+                {error && (
                   <p className="text-sm text-destructive">
-                    {mutation.error instanceof Error ? mutation.error.message : "Erro ao enviar. Tente novamente."}
+                    {error}
                   </p>
                 )}
                 <Button
                   type="submit"
                   className="w-full"
-                  disabled={mutation.isPending}
+                  disabled={isPending}
                 >
-                  {mutation.isPending ? (
+                  {isPending ? (
                     <>
                       <Loader2 className="h-4 w-4 animate-spin" /> Enviando…
                     </>
