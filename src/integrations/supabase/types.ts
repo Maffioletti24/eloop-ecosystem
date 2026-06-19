@@ -14,6 +14,134 @@ export type Database = {
   }
   public: {
     Tables: {
+      ad_slots: {
+        Row: {
+          adsense_slot_id: string | null
+          description: string | null
+          enabled: boolean
+          slot_key: string
+          updated_at: string
+        }
+        Insert: {
+          adsense_slot_id?: string | null
+          description?: string | null
+          enabled?: boolean
+          slot_key: string
+          updated_at?: string
+        }
+        Update: {
+          adsense_slot_id?: string | null
+          description?: string | null
+          enabled?: boolean
+          slot_key?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      article_views: {
+        Row: {
+          article_id: string
+          country: string | null
+          created_at: string
+          id: number
+          ip_hash: string | null
+          referrer: string | null
+          ua_hash: string | null
+        }
+        Insert: {
+          article_id: string
+          country?: string | null
+          created_at?: string
+          id?: number
+          ip_hash?: string | null
+          referrer?: string | null
+          ua_hash?: string | null
+        }
+        Update: {
+          article_id?: string
+          country?: string | null
+          created_at?: string
+          id?: number
+          ip_hash?: string | null
+          referrer?: string | null
+          ua_hash?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "article_views_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "articles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      articles: {
+        Row: {
+          author_id: string | null
+          author_name: string
+          category: string | null
+          content_md: string
+          cover_url: string | null
+          created_at: string
+          excerpt: string | null
+          id: string
+          published_at: string | null
+          reading_minutes: number
+          scheduled_at: string | null
+          seo_description: string | null
+          seo_title: string | null
+          slug: string
+          status: Database["public"]["Enums"]["article_status"]
+          tags: string[]
+          title: string
+          updated_at: string
+          views_count: number
+        }
+        Insert: {
+          author_id?: string | null
+          author_name?: string
+          category?: string | null
+          content_md?: string
+          cover_url?: string | null
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          published_at?: string | null
+          reading_minutes?: number
+          scheduled_at?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
+          slug: string
+          status?: Database["public"]["Enums"]["article_status"]
+          tags?: string[]
+          title: string
+          updated_at?: string
+          views_count?: number
+        }
+        Update: {
+          author_id?: string | null
+          author_name?: string
+          category?: string | null
+          content_md?: string
+          cover_url?: string | null
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          published_at?: string | null
+          reading_minutes?: number
+          scheduled_at?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
+          slug?: string
+          status?: Database["public"]["Enums"]["article_status"]
+          tags?: string[]
+          title?: string
+          updated_at?: string
+          views_count?: number
+        }
+        Relationships: []
+      }
       batches: {
         Row: {
           created_at: string
@@ -562,6 +690,36 @@ export type Database = {
           },
         ]
       }
+      site_visits: {
+        Row: {
+          country: string | null
+          created_at: string
+          id: number
+          ip_hash: string | null
+          path: string
+          referrer: string | null
+          ua_hash: string | null
+        }
+        Insert: {
+          country?: string | null
+          created_at?: string
+          id?: number
+          ip_hash?: string | null
+          path: string
+          referrer?: string | null
+          ua_hash?: string | null
+        }
+        Update: {
+          country?: string | null
+          created_at?: string
+          id?: number
+          ip_hash?: string | null
+          path?: string
+          referrer?: string | null
+          ua_hash?: string | null
+        }
+        Relationships: []
+      }
       suppressed_emails: {
         Row: {
           created_at: string
@@ -708,8 +866,13 @@ export type Database = {
           read_ct: number
         }[]
       }
+      user_has_role: {
+        Args: { _role: Database["public"]["Enums"]["user_role"]; _uid: string }
+        Returns: boolean
+      }
     }
     Enums: {
+      article_status: "draft" | "scheduled" | "published" | "archived"
       batch_status: "pendente" | "validado" | "cancelado"
       certificate_type: "PF" | "PJ"
       event_status: "pendente" | "aprovado" | "rejeitado"
@@ -850,6 +1013,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      article_status: ["draft", "scheduled", "published", "archived"],
       batch_status: ["pendente", "validado", "cancelado"],
       certificate_type: ["PF", "PJ"],
       event_status: ["pendente", "aprovado", "rejeitado"],
