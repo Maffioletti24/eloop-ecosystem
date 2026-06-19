@@ -14,6 +14,10 @@ import {
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import heroImage from "@/assets/eloop-hero.jpg";
+import processImage from "@/assets/eloop-process.jpg";
+import appImage from "@/assets/eloop-app.jpg";
+import dashboardImage from "@/assets/eloop-dashboard.jpg";
+import materialsImage from "@/assets/eloop-materials.jpg";
 
 const SITE_URL = "https://eloop-investidores.lovable.app";
 
@@ -172,15 +176,104 @@ function HomePage() {
           </div>
         </section>
 
+        {/* PROCESSO */}
+        <section className="mx-auto max-w-6xl px-4 py-16 md:py-20">
+          <div className="max-w-2xl">
+            <span className="text-xs font-semibold uppercase tracking-wider text-primary">
+              Operação
+            </span>
+            <h2 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">
+              Do ponto de coleta ao registro on-chain
+            </h2>
+            <p className="mt-3 text-muted-foreground">
+              Pesagem certificada, leitura de QR no operador e hash imutável na
+              rede Polygon — em segundos, sem digitação manual.
+            </p>
+          </div>
+
+          <div className="mt-10 grid items-center gap-8 md:grid-cols-2">
+            <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
+              <img
+                src={processImage}
+                alt="Operador pesando eletroeletrônicos em balança INMETRO e escaneando QR code para registro de coleta"
+                width={1536}
+                height={1024}
+                loading="lazy"
+                className="h-auto w-full"
+              />
+            </div>
+            <ol className="space-y-5">
+              {[
+                { n: "01", t: "Coleta identificada", d: "Operador escaneia QR no ponto de origem (OEM, varejo ou ecoponto)." },
+                { n: "02", t: "Pesagem certificada", d: "Balança INMETRO envia o peso direto para o app — sem chance de adulteração." },
+                { n: "03", t: "Assinatura digital", d: "Responsável assina o lote no aplicativo e gera MTR automaticamente." },
+                { n: "04", t: "Registro on-chain", d: "Hash do lote é gravado em Polygon e exportado para SINIR e ISO 14001." },
+              ].map((s) => (
+                <li key={s.n} className="flex gap-4 rounded-xl border border-border bg-card p-4">
+                  <div className="text-lg font-bold text-primary">{s.n}</div>
+                  <div>
+                    <div className="font-semibold">{s.t}</div>
+                    <p className="mt-1 text-sm text-muted-foreground">{s.d}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        {/* APP + DASHBOARD */}
+        <section className="border-y border-border/40 bg-surface/40">
+          <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 md:grid-cols-2 md:py-20">
+            <div className="order-2 md:order-1">
+              <span className="text-xs font-semibold uppercase tracking-wider text-primary">
+                App e Dashboard
+              </span>
+              <h2 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">
+                Mobile para o campo, web para o gestor
+              </h2>
+              <p className="mt-3 text-muted-foreground">
+                O operador usa o app para escanear, pesar e fechar o lote em
+                poucos toques. O gestor acompanha volumes, KPIs ESG e
+                rastreabilidade por OEM em um dashboard auditável.
+              </p>
+              <ul className="mt-6 space-y-3 text-sm">
+                {[
+                  "Fluxo guiado para coleta em segundos",
+                  "Histórico completo por OEM, beneficiador e período",
+                  "Exportação direta SINIR / ISO 14001 / GRI",
+                  "Verificação pública do hash on-chain",
+                ].map((i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                    <span className="text-muted-foreground">{i}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="order-1 md:order-2">
+              <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-2xl">
+                <img
+                  src={appImage}
+                  alt="App mobile Eloop mostrando coleta de resíduos eletrônicos com peso, QR code e registro blockchain"
+                  width={1280}
+                  height={1280}
+                  loading="lazy"
+                  className="h-auto w-full"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* COMO FUNCIONA */}
         <section className="mx-auto max-w-6xl px-4 py-16 md:py-20">
           <div className="max-w-2xl">
             <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-              Como a Eloop funciona
+              Os 8 pilares da plataforma
             </h2>
             <p className="mt-3 text-muted-foreground">
-              Oito pilares conectados em um único fluxo, do ponto de coleta ao
-              relatório regulatório.
+              Conectados em um único fluxo, do ponto de coleta ao relatório
+              regulatório.
             </p>
           </div>
 
@@ -197,6 +290,29 @@ function HomePage() {
                 <p className="mt-1.5 text-sm text-muted-foreground">{desc}</p>
               </div>
             ))}
+          </div>
+
+          <div className="mt-10 grid gap-4 md:grid-cols-2">
+            <div className="overflow-hidden rounded-2xl border border-border">
+              <img
+                src={dashboardImage}
+                alt="Dashboard web Eloop com KPIs ESG, mapa de pontos de coleta no Brasil e materiais recuperados"
+                width={1536}
+                height={1024}
+                loading="lazy"
+                className="h-auto w-full"
+              />
+            </div>
+            <div className="overflow-hidden rounded-2xl border border-border">
+              <img
+                src={materialsImage}
+                alt="Componentes eletrônicos recuperados — placas, cobre e contatos dourados retornando à cadeia produtiva"
+                width={1536}
+                height={1024}
+                loading="lazy"
+                className="h-auto w-full"
+              />
+            </div>
           </div>
         </section>
 
