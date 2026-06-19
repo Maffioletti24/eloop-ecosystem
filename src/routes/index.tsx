@@ -358,13 +358,13 @@ function HomePage() {
               GHG Protocol · Escopo 3
             </span>
             <h2 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">
-              Métrica de carbono integrada à cadeia de valor
+              Transforme resíduos em crédito de carbono mensurável
             </h2>
             <p className="mt-3 text-muted-foreground">
-              O Escopo 3 do GHG Protocol cobre emissões indiretas da cadeia de
-              valor, incluindo resíduos gerados em operações. A Eloop transforma
-              a logística reversa de REEE em dados de carbono auditáveis para
-              reportes ESG, CDP e Science Based Targets.
+              O Escopo 3 do GHG Protocol exige que empresas contabilizem emissões
+              indiretas da cadeia — incluindo resíduos de produtos vendidos.
+              A Eloop converte cada coleta de REEE em métrica de CO₂e mitigado,
+              pronta para relatórios ESG, CDP e Science Based Targets.
             </p>
           </div>
 
@@ -373,21 +373,21 @@ function HomePage() {
               {[
                 {
                   icon: TreePine,
-                  k: "CO₂e evitado",
-                  v: "até 3,5 kg / kg REEE",
-                  d: "Fator variável por categoria de risco (ISO 14064-2). Alto risco = maior potencial de mitigação.",
+                  k: "Emissões evitadas por tonelada",
+                  v: "até 3,5 tCO₂e / t REEE",
+                  d: "Cada tonelada reciclada gera crédito de carbono quantificável. Quanto mais complexo o resíduo, maior o potencial de mitigação.",
                 },
                 {
                   icon: BarChart3,
-                  k: "Mensuração automatizada",
-                  v: "kg → tCO₂e em tempo real",
-                  d: "Cada pesagem gera estimativa de emissão evitada vinculada ao lote, pronta para GRI 305 e CDP.",
+                  k: "Cálculo automático de carbono",
+                  v: "Peso → tCO₂e em tempo real",
+                  d: "A balança alimenta o dashboard ESG diretamente. Sem planilhas, sem retrabalho — a métrica nasce no momento da coleta.",
                 },
                 {
                   icon: Leaf,
-                  k: "Lastro auditável",
+                  k: "Prova verificável",
                   v: "Hash on-chain + MTR",
-                  d: "Prova imutável de que o material foi efetivamente recuperado, não apenas declarado.",
+                  d: "Documento de transporte e registro blockchain comprovam que o material foi efetivamente recuperado — não apenas declarado.",
                 },
               ].map(({ icon: Icon, k, v, d }) => (
                 <div
