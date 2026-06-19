@@ -120,15 +120,39 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Eloop Token" },
-      { name: "description", content: "Eloop Token — Compliance REEE on-chain" },
-      { property: "og:title", content: "Eloop Token" },
-      { property: "og:description", content: "Compliance REEE on-chain" },
+      { title: "Eloop Token — Compliance REEE on-chain" },
+      {
+        name: "description",
+        content:
+          "Eloop Token — Plataforma de conformidade REEE com rastreabilidade auditável, MTR e CDF on-chain na rede Polygon e relatórios SINIR.",
+      },
+      { property: "og:title", content: "Eloop Token — Compliance REEE on-chain" },
+      {
+        property: "og:description",
+        content:
+          "Infraestrutura de conformidade REEE com rastreabilidade auditável, MTR/CDF on-chain e relatórios SINIR para OEMs e recicladores.",
+      },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Eloop Token" },
+      { property: "og:url", content: "https://eloop-investidores.lovable.app/" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Eloop Token",
+          url: "https://eloop-investidores.lovable.app/",
+          logo: "https://eloop-investidores.lovable.app/favicon.svg",
+          description:
+            "Plataforma de conformidade REEE com rastreabilidade auditável e prova on-chain.",
+        }),
+      },
     ],
   }),
   shellComponent: RootShell,

@@ -24,22 +24,48 @@ import { submitInvestorLead } from "@/lib/investor-leads.functions";
 export const Route = createFileRoute("/investidores")({
   head: () => ({
     meta: [
-      {
-        title:
-          "Eloop Token — Captação de Investidores e Co Founders | Logística reversa REEE",
-      },
+      { title: "Eloop Token — Investidores e Co Founders REEE" },
       {
         name: "description",
         content:
-          "Buscamos investidores e Co Founders para acelerar a plataforma Eloop Token: balança INMETRO + on-chain MTR/CDF para logística reversa de eletroeletrônicos no Brasil.",
+          "Climatetech B2B SaaS para logística reversa REEE no Brasil. MVP em finalização, pipeline de 3 beneficiadores para piloto remunerado.",
       },
-      { property: "og:title", content: "Eloop Token — Captação de Investidores" },
+      { property: "og:title", content: "Eloop Token — Investidores e Co Founders REEE" },
       {
         property: "og:description",
         content:
-          "Climatetech B2B SaaS. MVP em finalização, pipeline de 3 beneficiadores para piloto remunerado. Mercado REEE Brasil com 70% de volume informal.",
+          "Climatetech B2B SaaS para logística reversa REEE. Balança INMETRO + MTR/CDF on-chain. Buscamos investidores e Co Founders.",
       },
       { property: "og:type", content: "website" },
+      {
+        property: "og:url",
+        content: "https://eloop-investidores.lovable.app/investidores",
+      },
+    ],
+    links: [
+      {
+        rel: "canonical",
+        href: "https://eloop-investidores.lovable.app/investidores",
+      },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: "Eloop Token — Compliance REEE",
+          provider: {
+            "@type": "Organization",
+            name: "Eloop Token",
+            url: "https://eloop-investidores.lovable.app/",
+          },
+          areaServed: "BR",
+          serviceType:
+            "Plataforma B2B SaaS para logística reversa de eletroeletrônicos com MTR e CDF on-chain.",
+          url: "https://eloop-investidores.lovable.app/investidores",
+        }),
+      },
     ],
   }),
   component: InvestidoresLanding,
@@ -91,6 +117,8 @@ function InvestidoresLanding() {
           </a>
         </div>
       </header>
+
+      <main>
 
       {/* Hero */}
       <section className="relative overflow-hidden">
@@ -403,6 +431,7 @@ function InvestidoresLanding() {
           </div>
         </div>
       </section>
+      </main>
 
       <footer className="border-t border-border/40 py-8">
         <div className="mx-auto max-w-6xl px-4 text-xs text-muted-foreground">
