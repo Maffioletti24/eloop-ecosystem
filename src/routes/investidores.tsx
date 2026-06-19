@@ -282,12 +282,12 @@ function InvestidoresLanding() {
 
         <div className="mt-6 flex flex-wrap gap-3 text-sm text-muted-foreground">
           <a
-            href="https://www.linkedin.com/"
+            href="https://www.linkedin.com/company/eloop-token"
             target="_blank"
             rel="noreferrer noopener"
             className="inline-flex items-center gap-2 rounded-md border border-border bg-surface px-3 py-2 hover:bg-surface-2"
           >
-            <Linkedin className="h-4 w-4" /> LinkedIn (em breve)
+            <Linkedin className="h-4 w-4" /> LinkedIn — Eloop Token
           </a>
         </div>
       </section>
