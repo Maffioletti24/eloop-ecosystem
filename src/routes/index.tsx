@@ -351,6 +351,75 @@ function HomePage() {
           </div>
         </section>
 
+        {/* GHG PROTOCOL · ESCOPO 3 */}
+        <section className="mx-auto max-w-6xl px-4 py-16 md:py-20">
+          <div className="max-w-2xl">
+            <span className="text-xs font-semibold uppercase tracking-wider text-primary">
+              GHG Protocol · Escopo 3
+            </span>
+            <h2 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">
+              Métrica de carbono integrada à cadeia de valor
+            </h2>
+            <p className="mt-3 text-muted-foreground">
+              O Escopo 3 do GHG Protocol cobre emissões indiretas da cadeia de
+              valor, incluindo resíduos gerados em operações. A Eloop transforma
+              a logística reversa de REEE em dados de carbono auditáveis para
+              reportes ESG, CDP e Science Based Targets.
+            </p>
+          </div>
+
+          <div className="mt-10 grid items-center gap-8 md:grid-cols-2">
+            <div className="order-2 md:order-1 space-y-4">
+              {[
+                {
+                  icon: TreePine,
+                  k: "CO₂e evitado",
+                  v: "até 3,5 kg / kg REEE",
+                  d: "Fator variável por categoria de risco (ISO 14064-2). Alto risco = maior potencial de mitigação.",
+                },
+                {
+                  icon: BarChart3,
+                  k: "Mensuração automatizada",
+                  v: "kg → tCO₂e em tempo real",
+                  d: "Cada pesagem gera estimativa de emissão evitada vinculada ao lote, pronta para GRI 305 e CDP.",
+                },
+                {
+                  icon: Leaf,
+                  k: "Lastro auditável",
+                  v: "Hash on-chain + MTR",
+                  d: "Prova imutável de que o material foi efetivamente recuperado, não apenas declarado.",
+                },
+              ].map(({ icon: Icon, k, v, d }) => (
+                <div
+                  key={k}
+                  className="flex gap-4 rounded-xl border border-border bg-card p-5"
+                >
+                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-primary/15 text-primary">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-primary">{k}</div>
+                    <div className="mt-0.5 text-lg font-bold">{v}</div>
+                    <p className="mt-1 text-sm text-muted-foreground">{d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="order-1 md:order-2">
+              <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
+                <img
+                  src={carbonImage}
+                  alt="Visualização de métricas de carbono e compensação de CO2 com dados de logística reversa de REEE"
+                  width={1536}
+                  height={1024}
+                  loading="lazy"
+                  className="h-auto w-full"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* CTA */}
         <section className="mx-auto max-w-6xl px-4 py-16 md:py-20">
           <div className="rounded-2xl border border-primary/30 bg-primary/10 p-8 md:p-12">
