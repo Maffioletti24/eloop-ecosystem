@@ -1,7 +1,269 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import {
+  ArrowRight,
+  ShieldCheck,
+  Cpu,
+  Recycle,
+  TrendingUp,
+  ScrollText,
+  Layers,
+  FileCheck2,
+  Users,
+  CheckCircle2,
+} from "lucide-react";
+import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
+import heroImage from "@/assets/eloop-hero.jpg";
+
+const SITE_URL = "https://eloop-investidores.lovable.app";
 
 export const Route = createFileRoute("/")({
-  beforeLoad: () => {
-    throw redirect({ to: "/login" });
-  },
+  head: () => ({
+    meta: [
+      { title: "Eloop — Compliance Digital para Logística Reversa de REEE | PNRS" },
+      {
+        name: "description",
+        content:
+          "Plataforma de conformidade PNRS para resíduos eletrônicos: balança INMETRO, QR no ponto de coleta, MTR/CDF on-chain e relatórios SINIR/ISO 14001 automatizados.",
+      },
+      { property: "og:title", content: "Eloop — Compliance Digital para REEE | PNRS" },
+      {
+        property: "og:description",
+        content:
+          "Infraestrutura B2B SaaS para logística reversa de eletroeletrônicos no Brasil: rastreabilidade auditável e prova on-chain.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: `${SITE_URL}/` },
+      { property: "og:image", content: `${SITE_URL}/og-eloop.jpg` },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Eloop — Compliance Digital para REEE" },
+      {
+        name: "twitter:description",
+        content: "PNRS, SINIR e ISO 14001 com prova on-chain.",
+      },
+    ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/` }],
+  }),
+  component: HomePage,
 });
+
+const PILARES = [
+  {
+    icon: ScrollText,
+    title: "O Ponto Crítico",
+    desc: "PNRS (Lei 12.305/2010) obriga rastreabilidade, mas ~70% dos REEE no Brasil ainda circulam fora da cadeia formal.",
+  },
+  {
+    icon: Layers,
+    title: "Cadeia de Custódia Formal",
+    desc: "Cada coleta gera registro auditável: geradora, transportador, beneficiador e destinador final — todos identificados.",
+  },
+  {
+    icon: Cpu,
+    title: "Tecnologia Eloop Token",
+    desc: "Balança INMETRO + QR code + assinatura digital + registro on-chain em Polygon. Sem digitação manual.",
+  },
+  {
+    icon: FileCheck2,
+    title: "Interface Digital",
+    desc: "App e dashboard com fluxo guiado para o operador, monitoramento para o gestor e área de auditoria para o regulador.",
+  },
+  {
+    icon: Recycle,
+    title: "Impacto Socioambiental",
+    desc: "Formalização de cooperativas e catadores, redução de contaminação e devolução de materiais críticos à economia.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Mercado de Reciclagem",
+    desc: "62 milhões de toneladas de REEE geradas/ano no mundo, com CAGR de 12% em logística reversa.",
+  },
+  {
+    icon: Users,
+    title: "Modelo de Negócio",
+    desc: "B2B SaaS com cobrança por tonelada rastreada — receita previsível alinhada ao volume operacional das OEMs.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Diferencial Competitivo",
+    desc: "Único stack no Brasil que une pesagem certificada + on-chain + exportação automatizada para SINIR e ISO 14001.",
+  },
+];
+
+function HomePage() {
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <SiteHeader />
+
+      <main>
+        {/* HERO */}
+        <section className="relative overflow-hidden border-b border-border/40">
+          <div
+            aria-hidden
+            className="absolute inset-0 -z-10 opacity-70"
+            style={{
+              background:
+                "radial-gradient(60% 50% at 15% 0%, oklch(0.35 0.12 145 / 0.55) 0%, transparent 60%), radial-gradient(45% 35% at 90% 30%, oklch(0.45 0.10 200 / 0.30) 0%, transparent 70%)",
+            }}
+          />
+          <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 pb-20 pt-16 md:grid-cols-2 md:pb-24 md:pt-24">
+            <div>
+              <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                <span className="compliance-dot" /> PNRS · SINIR · ISO 14001 · on-chain
+              </span>
+              <h1 className="mt-5 text-4xl font-bold leading-[1.1] tracking-tight md:text-5xl lg:text-6xl">
+                Infraestrutura de{" "}
+                <span className="text-primary">Compliance</span> para Resíduos
+                Eletrônicos
+              </h1>
+              <p className="mt-5 max-w-xl text-lg text-muted-foreground">
+                Convertemos a obrigação regulatória da logística reversa em
+                registros digitais auditáveis, imutáveis e prontos para
+                fiscalização. PNRS, rastreabilidade de REE e relatórios ESG —
+                em uma única plataforma.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link
+                  to="/contato"
+                  className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
+                >
+                  Solicitar demo <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  to="/projeto"
+                  className="inline-flex items-center gap-2 rounded-md border border-border bg-surface px-5 py-3 text-sm font-semibold hover:bg-surface-2"
+                >
+                  Como funciona
+                </Link>
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-2xl">
+                <img
+                  src={heroImage}
+                  alt="Balança industrial pesando eletroeletrônicos com QR code e registro on-chain de logística reversa no Brasil"
+                  width={1536}
+                  height={1024}
+                  className="h-auto w-full"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* STATS */}
+        <section className="border-b border-border/40 bg-surface/40">
+          <div className="mx-auto grid max-w-6xl gap-4 px-4 py-12 md:grid-cols-4">
+            {[
+              { k: "62M t", v: "REEE gerados/ano no mundo" },
+              { k: "12%", v: "CAGR logística reversa global" },
+              { k: "~70%", v: "REEE Brasil fora da cadeia formal" },
+              { k: "Lei 12.305", v: "PNRS — rastreabilidade obrigatória" },
+            ].map((s) => (
+              <div
+                key={s.k}
+                className="rounded-xl border border-border bg-card p-5 text-center md:text-left"
+              >
+                <div className="text-2xl font-bold text-primary md:text-3xl">{s.k}</div>
+                <div className="mt-1 text-sm text-muted-foreground">{s.v}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* COMO FUNCIONA */}
+        <section className="mx-auto max-w-6xl px-4 py-16 md:py-20">
+          <div className="max-w-2xl">
+            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
+              Como a Eloop funciona
+            </h2>
+            <p className="mt-3 text-muted-foreground">
+              Oito pilares conectados em um único fluxo, do ponto de coleta ao
+              relatório regulatório.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {PILARES.map(({ icon: Icon, title, desc }) => (
+              <div
+                key={title}
+                className="group rounded-xl border border-border bg-card p-5 transition-colors hover:border-primary/40"
+              >
+                <div className="grid h-10 w-10 place-items-center rounded-md bg-primary/15 text-primary">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <h3 className="mt-4 font-semibold">{title}</h3>
+                <p className="mt-1.5 text-sm text-muted-foreground">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* PARA QUEM */}
+        <section className="border-y border-border/40 bg-surface/40">
+          <div className="mx-auto max-w-6xl px-4 py-16 md:py-20">
+            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
+              Para quem é a Eloop
+            </h2>
+            <div className="mt-8 grid gap-4 md:grid-cols-3">
+              {[
+                {
+                  t: "OEMs e Fabricantes",
+                  d: "Cumpra PNRS e ISO 14001 com prova auditável por lote. Relatórios SINIR em poucos cliques.",
+                },
+                {
+                  t: "Beneficiadores e Recicladores",
+                  d: "Documente CDF de forma automatizada, integre com balança e exporte para órgão ambiental.",
+                },
+                {
+                  t: "Investidores e Parceiros",
+                  d: "Climatetech B2B com receita por tonelada rastreada e pipeline de pilotos remunerados.",
+                },
+              ].map((b) => (
+                <div key={b.t} className="rounded-xl border border-border bg-card p-6">
+                  <CheckCircle2 className="h-5 w-5 text-primary" />
+                  <h3 className="mt-3 font-semibold">{b.t}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{b.d}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="mx-auto max-w-6xl px-4 py-16 md:py-20">
+          <div className="rounded-2xl border border-primary/30 bg-primary/10 p-8 md:p-12">
+            <div className="flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
+              <div className="max-w-xl">
+                <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">
+                  Pronto para tornar sua logística reversa auditável?
+                </h2>
+                <p className="mt-2 text-muted-foreground">
+                  Agende uma demo gratuita ou converse com nossos fundadores
+                  sobre piloto, parceria e investimento.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <Link
+                  to="/contato"
+                  className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
+                >
+                  Solicitar demo <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  to="/investidores"
+                  className="inline-flex items-center gap-2 rounded-md border border-border bg-surface px-5 py-3 text-sm font-semibold hover:bg-surface-2"
+                >
+                  Para investidores
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <SiteFooter />
+    </div>
+  );
+}
