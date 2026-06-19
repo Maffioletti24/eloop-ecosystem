@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { AdSlot } from "@/components/AdSlot";
 import { listPublishedArticles, listCategories } from "@/lib/blog.functions";
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { Eye, Clock, Tag } from "lucide-react";
 
 const SITE_URL = "https://eloop-investidores.lovable.app";
@@ -94,14 +94,14 @@ function BlogPage() {
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {articles.data!.map((a, idx) => (
-              <>
-                <ArticleCard key={a.id} a={a} />
+              <Fragment key={a.id}>
+                <ArticleCard a={a} />
                 {idx > 0 && (idx + 1) % 4 === 0 && (
-                  <div key={`ad-${idx}`} className="md:col-span-2 lg:col-span-3">
+                  <div className="md:col-span-2 lg:col-span-3">
                     <AdSlot slot={undefined} label="In-feed (responsivo)" />
                   </div>
                 )}
-              </>
+              </Fragment>
             ))}
           </div>
         )}
