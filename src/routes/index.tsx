@@ -10,6 +10,9 @@ import {
   FileCheck2,
   Users,
   CheckCircle2,
+  TreePine,
+  Leaf,
+  BarChart3,
 } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -18,6 +21,7 @@ import processImage from "@/assets/eloop-process.jpg";
 import appImage from "@/assets/eloop-app.jpg";
 import dashboardImage from "@/assets/eloop-dashboard.jpg";
 import materialsImage from "@/assets/eloop-materials.jpg";
+import carbonImage from "@/assets/eloop-carbon.jpg";
 
 const SITE_URL = "https://eloop-investidores.lovable.app";
 
