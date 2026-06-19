@@ -187,7 +187,7 @@ function ProjetoPage() {
                 pronta para relatórios ESG, CDP e Science Based Targets.
               </p>
 
-              <div className="mt-8 grid gap-4 sm:grid-cols-3">
+              <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <div className="rounded-xl border border-border bg-card p-4">
                   <TreePine className="h-5 w-5 text-primary" />
                   <p className="mt-2 text-sm font-semibold">Emissões evitadas por tonelada</p>
@@ -202,6 +202,27 @@ function ProjetoPage() {
                   <Leaf className="h-5 w-5 text-primary" />
                   <p className="mt-2 text-sm font-semibold">Prova verificável</p>
                   <p className="text-xs text-muted-foreground">Hash on-chain + MTR</p>
+                </div>
+                <div className="rounded-xl border border-primary/20 bg-surface/60 p-4">
+                  <p className="text-sm font-semibold text-primary">Glossário rápido</p>
+                  <dl className="mt-2 space-y-2 text-xs">
+                    <div>
+                      <dt className="font-semibold">CO₂e</dt>
+                      <dd className="text-muted-foreground">Dióxido de carbono equivalente — unidade padrão para medir o impacto climático de diferentes gases.</dd>
+                    </div>
+                    <div>
+                      <dt className="font-semibold">Escopo 3</dt>
+                      <dd className="text-muted-foreground">Emissões indiretas da cadeia de valor: fornecedores, transporte e resíduos de produtos vendidos.</dd>
+                    </div>
+                    <div>
+                      <dt className="font-semibold">MTR</dt>
+                      <dd className="text-muted-foreground">Manifesto de Transporte de Resíduos — documento obrigatório que rastreia resíduos do gerador ao destinador.</dd>
+                    </div>
+                    <div>
+                      <dt className="font-semibold">Lastro auditável</dt>
+                      <dd className="text-muted-foreground">Comprovação documental e técnica que sustenta uma métrica ou crédito de carbono.</dd>
+                    </div>
+                  </dl>
                 </div>
               </div>
             </div>
