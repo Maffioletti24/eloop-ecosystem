@@ -5,6 +5,29 @@ import {
 } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import processImage from "@/assets/eloop-process.jpg";
+import appImage from "@/assets/eloop-app.jpg";
+import dashboardImage from "@/assets/eloop-dashboard.jpg";
+import materialsImage from "@/assets/eloop-materials.jpg";
+
+const PILLAR_IMAGES: Record<string, { src: string; alt: string }> = {
+  "Tecnologia Eloop Token": {
+    src: processImage,
+    alt: "Pesagem certificada INMETRO com leitura de QR code no ponto de coleta",
+  },
+  "Interface Digital": {
+    src: appImage,
+    alt: "App Eloop exibindo lote de coleta, peso e hash blockchain",
+  },
+  "Impacto Socioambiental": {
+    src: materialsImage,
+    alt: "Cobre, placas e componentes recuperados retornando à cadeia produtiva",
+  },
+  "Diferencial Competitivo": {
+    src: dashboardImage,
+    alt: "Dashboard ESG com KPIs e mapa de pontos de coleta no Brasil",
+  },
+};
 
 const SITE_URL = "https://eloop-investidores.lovable.app";
 
@@ -95,23 +118,56 @@ function ProjetoPage() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-4xl space-y-12 px-4 py-16 md:py-20">
-          {SECTIONS.map(({ icon: Icon, title, desc }, i) => (
-            <article key={title} className="grid gap-6 md:grid-cols-[64px_1fr]">
-              <div className="grid h-12 w-12 place-items-center rounded-lg bg-primary/15 text-primary">
-                <Icon className="h-5 w-5" />
-              </div>
-              <div>
-                <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  Pilar {String(i + 1).padStart(2, "0")}
+        <section className="mx-auto max-w-5xl space-y-14 px-4 py-16 md:py-20">
+          {SECTIONS.map(({ icon: Icon, title, desc }, i) => {
+            const img = PILLAR_IMAGES[title];
+            const reverse = i % 2 === 1;
+            return (
+              <article
+                key={title}
+                className={`grid gap-8 md:grid-cols-2 md:items-center ${
+                  reverse ? "md:[&>*:first-child]:order-2" : ""
+                }`}
+              >
+                <div>
+                  <div className="mb-3 flex items-center gap-3">
+                    <div className="grid h-10 w-10 place-items-center rounded-lg bg-primary/15 text-primary">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                      Pilar {String(i + 1).padStart(2, "0")}
+                    </div>
+                  </div>
+                  <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">
+                    {title}
+                  </h2>
+                  <p className="mt-3 text-muted-foreground">{desc}</p>
                 </div>
-                <h2 className="mt-1 text-2xl font-semibold tracking-tight">
-                  {title}
-                </h2>
-                <p className="mt-3 text-muted-foreground">{desc}</p>
-              </div>
-            </article>
-          ))}
+                <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-lg">
+                  {img ? (
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      width={1536}
+                      height={1024}
+                      loading="lazy"
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div
+                      aria-hidden
+                      className="relative grid aspect-[4/3] place-items-center bg-gradient-to-br from-primary/20 via-surface to-surface-2"
+                    >
+                      <Icon className="h-20 w-20 text-primary/40" />
+                      <div className="absolute right-4 top-4 rounded-md bg-background/60 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-primary backdrop-blur">
+                        {String(i + 1).padStart(2, "0")} · {title.split(" ")[0]}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </article>
+            );
+          })}
         </section>
 
         <section className="mx-auto max-w-6xl px-4 pb-20">
