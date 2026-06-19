@@ -62,7 +62,7 @@ function InvestidoresLanding() {
     setIsPending(true);
     setError(null);
     try {
-      await submitLead({ name: form.name, email: form.email, message: form.message });
+      await submitLead({ data: { name: form.name, email: form.email, message: form.message } });
       setSubmitted(true);
       setForm({ name: "", email: "", message: "" });
     } catch (err) {
