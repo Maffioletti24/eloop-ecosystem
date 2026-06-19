@@ -13,6 +13,7 @@ import { Route as ValidadorRouteImport } from './routes/validador'
 import { Route as RegistroRouteImport } from './routes/registro'
 import { Route as LotesRouteImport } from './routes/lotes'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as InvestidoresRouteImport } from './routes/investidores'
 import { Route as EsgRouteImport } from './routes/esg'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ConformidadeRouteImport } from './routes/conformidade'
@@ -39,6 +40,11 @@ const LotesRoute = LotesRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InvestidoresRoute = InvestidoresRouteImport.update({
+  id: '/investidores',
+  path: '/investidores',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EsgRoute = EsgRouteImport.update({
@@ -85,6 +91,7 @@ export interface FileRoutesByFullPath {
   '/conformidade': typeof ConformidadeRoute
   '/dashboard': typeof DashboardRoute
   '/esg': typeof EsgRoute
+  '/investidores': typeof InvestidoresRoute
   '/login': typeof LoginRoute
   '/lotes': typeof LotesRoute
   '/registro': typeof RegistroRoute
@@ -98,6 +105,7 @@ export interface FileRoutesByTo {
   '/conformidade': typeof ConformidadeRoute
   '/dashboard': typeof DashboardRoute
   '/esg': typeof EsgRoute
+  '/investidores': typeof InvestidoresRoute
   '/login': typeof LoginRoute
   '/lotes': typeof LotesRoute
   '/registro': typeof RegistroRoute
@@ -112,6 +120,7 @@ export interface FileRoutesById {
   '/conformidade': typeof ConformidadeRoute
   '/dashboard': typeof DashboardRoute
   '/esg': typeof EsgRoute
+  '/investidores': typeof InvestidoresRoute
   '/login': typeof LoginRoute
   '/lotes': typeof LotesRoute
   '/registro': typeof RegistroRoute
@@ -127,6 +136,7 @@ export interface FileRouteTypes {
     | '/conformidade'
     | '/dashboard'
     | '/esg'
+    | '/investidores'
     | '/login'
     | '/lotes'
     | '/registro'
@@ -140,6 +150,7 @@ export interface FileRouteTypes {
     | '/conformidade'
     | '/dashboard'
     | '/esg'
+    | '/investidores'
     | '/login'
     | '/lotes'
     | '/registro'
@@ -153,6 +164,7 @@ export interface FileRouteTypes {
     | '/conformidade'
     | '/dashboard'
     | '/esg'
+    | '/investidores'
     | '/login'
     | '/lotes'
     | '/registro'
@@ -167,6 +179,7 @@ export interface RootRouteChildren {
   ConformidadeRoute: typeof ConformidadeRoute
   DashboardRoute: typeof DashboardRoute
   EsgRoute: typeof EsgRoute
+  InvestidoresRoute: typeof InvestidoresRoute
   LoginRoute: typeof LoginRoute
   LotesRoute: typeof LotesRoute
   RegistroRoute: typeof RegistroRoute
@@ -201,6 +214,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/investidores': {
+      id: '/investidores'
+      path: '/investidores'
+      fullPath: '/investidores'
+      preLoaderRoute: typeof InvestidoresRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/esg': {
@@ -263,6 +283,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConformidadeRoute: ConformidadeRoute,
   DashboardRoute: DashboardRoute,
   EsgRoute: EsgRoute,
+  InvestidoresRoute: InvestidoresRoute,
   LoginRoute: LoginRoute,
   LotesRoute: LotesRoute,
   RegistroRoute: RegistroRoute,
@@ -271,13 +292,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
