@@ -53,8 +53,10 @@ function InvestidoresLanding() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
 
+  const submitLead = useServerFn(submitInvestorLead);
+
   const mutation = useMutation({
-    mutationFn: submitInvestorLead,
+    mutationFn: submitLead,
     onSuccess: () => {
       setSubmitted(true);
       setForm({ name: "", email: "", message: "" });
