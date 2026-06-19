@@ -1,30 +1,20 @@
 # Eloop Token — Investment Opportunity for Foreign Investors
 
-Brazil is one of the world’s largest producers of electronic waste, yet ~70% of it flows through informal channels with zero traceability.
+Brazil produces massive volumes of e-waste — yet ~70% moves through informal channels with zero traceability.
 
-That’s not just an environmental problem. It’s a market gap.
+That’s not just environmental risk. It’s an untapped market.
 
-Eloop Token is a B2B SaaS platform closing that gap with:
-- INMETRO-certified scales + QR-code tracking at the collection point
-- MTR and CDF (waste transport and disposal certificates) recorded on-chain
-- Automated SINIR, ISO 14001 and ESG reporting for OEMs
-- Revenue per tonne tracked — transparent, auditable, scalable
+Eloop Token is a B2B SaaS platform that turns reverse logistics into a revenue stream:
+- INMETRO-certified scales + QR tracking from collection onward
+- MTR/CDF certificates on-chain
+- Automated SINIR, ISO 14001 and ESG reporting
+- Revenue per tonne, fully auditable
 
-**Why now?**
-- Global reverse logistics for e-waste growing at 12% CAGR
-- Brazilian OEMs under increasing PNRS regulatory pressure
-- 3 beneficiadores ready for a paid pilot
-- MVP in final stages
+**Traction today:** 3 beneficiadores ready for paid pilot. MVP in final stages.
 
-**What we are raising**
-Pre-seed round to fund paid pilots, certifications and OEM integrations.
+**Raising:** pre-seed for pilots, certifications and OEM integrations.
 
-We are actively looking for:
-- Climate-tech and impact investors
-- Angels and VCs with appetite for emerging-market infrastructure
-- Co Founders with B2B enterprise or industrial systems experience
-
-If you back viable socio-environmental projects in Latin America, this is a tangible, revenue-generating entry point.
+Looking for climate-tech / impact investors and B2B co-founders ready to build Latin America’s circular infrastructure.
 
 ---
 
