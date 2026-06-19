@@ -368,42 +368,65 @@ function HomePage() {
             </p>
           </div>
 
-          <div className="mt-10 grid items-center gap-8 md:grid-cols-2">
-            <div className="order-2 md:order-1 space-y-4">
-              {[
-                {
-                  icon: TreePine,
-                  k: "Emissões evitadas por tonelada",
-                  v: "até 3,5 tCO₂e / t REEE",
-                  d: "Cada tonelada reciclada gera crédito de carbono quantificável. Quanto mais complexo o resíduo, maior o potencial de mitigação.",
-                },
-                {
-                  icon: BarChart3,
-                  k: "Cálculo automático de carbono",
-                  v: "Peso → tCO₂e em tempo real",
-                  d: "A balança alimenta o dashboard ESG diretamente. Sem planilhas, sem retrabalho — a métrica nasce no momento da coleta.",
-                },
-                {
-                  icon: Leaf,
-                  k: "Prova verificável",
-                  v: "Hash on-chain + MTR",
-                  d: "Documento de transporte e registro blockchain comprovam que o material foi efetivamente recuperado — não apenas declarado.",
-                },
-              ].map(({ icon: Icon, k, v, d }) => (
-                <div
-                  key={k}
-                  className="flex gap-4 rounded-xl border border-border bg-card p-5"
-                >
-                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-primary/15 text-primary">
-                    <Icon className="h-5 w-5" />
+          <div className="mt-10 grid items-start gap-8 md:grid-cols-2">
+            <div className="order-2 md:order-1 grid gap-4 lg:grid-cols-2">
+              <div className="space-y-4">
+                {[
+                  {
+                    icon: TreePine,
+                    k: "Emissões evitadas por tonelada",
+                    v: "até 3,5 tCO₂e / t REEE",
+                    d: "Cada tonelada reciclada gera crédito de carbono quantificável. Quanto mais complexo o resíduo, maior o potencial de mitigação.",
+                  },
+                  {
+                    icon: BarChart3,
+                    k: "Cálculo automático de carbono",
+                    v: "Peso → tCO₂e em tempo real",
+                    d: "A balança alimenta o dashboard ESG diretamente. Sem planilhas, sem retrabalho — a métrica nasce no momento da coleta.",
+                  },
+                  {
+                    icon: Leaf,
+                    k: "Prova verificável",
+                    v: "Hash on-chain + MTR",
+                    d: "Documento de transporte e registro blockchain comprovam que o material foi efetivamente recuperado — não apenas declarado.",
+                  },
+                ].map(({ icon: Icon, k, v, d }) => (
+                  <div
+                    key={k}
+                    className="flex gap-4 rounded-xl border border-border bg-card p-5"
+                  >
+                    <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-primary/15 text-primary">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold text-primary">{k}</div>
+                      <div className="mt-0.5 text-lg font-bold">{v}</div>
+                      <p className="mt-1 text-sm text-muted-foreground">{d}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="rounded-xl border border-primary/20 bg-surface/60 p-5">
+                <h3 className="text-sm font-semibold text-primary">Glossário rápido</h3>
+                <dl className="mt-3 space-y-3 text-sm">
+                  <div>
+                    <dt className="font-semibold">CO₂e</dt>
+                    <dd className="text-muted-foreground">Dióxido de carbono equivalente — unidade padrão para medir o potencial de aquecimento global de diferentes gases.</dd>
                   </div>
                   <div>
-                    <div className="text-sm font-semibold text-primary">{k}</div>
-                    <div className="mt-0.5 text-lg font-bold">{v}</div>
-                    <p className="mt-1 text-sm text-muted-foreground">{d}</p>
+                    <dt className="font-semibold">Escopo 3</dt>
+                    <dd className="text-muted-foreground">Emissões indiretas da cadeia de valor: fornecedores, transporte, resíduos de produtos vendidos e uso final.</dd>
                   </div>
-                </div>
-              ))}
+                  <div>
+                    <dt className="font-semibold">MTR</dt>
+                    <dd className="text-muted-foreground">Manifesto de Transporte de Resíduos — documento obrigatório no Brasil para rastrear resíduos do gerador ao destinador.</dd>
+                  </div>
+                  <div>
+                    <dt className="font-semibold">Lastro auditável</dt>
+                    <dd className="text-muted-foreground">Comprovação documental e técnica que sustenta uma métrica ou crédito de carbono, evitando double counting.</dd>
+                  </div>
+                </dl>
+              </div>
             </div>
             <div className="order-1 md:order-2">
               <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
