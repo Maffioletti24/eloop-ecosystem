@@ -36,7 +36,7 @@ export const Route = createFileRoute("/investidores")({
   component: InvestidoresLanding,
 });
 
-const CONTATO_EMAIL = "contato@eloop.token";
+const CONTATO_EMAIL = "elooptoken.project@elooptoken.com";
 const SITE_URL = "https://eloop.token";
 
 function InvestidoresLanding() {
