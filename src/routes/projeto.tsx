@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ScrollText, Layers, Cpu, FileCheck2, Recycle, TrendingUp, Users, ShieldCheck,
-  ArrowRight,
+  ArrowRight, TreePine, BarChart3, Leaf,
 } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -9,6 +9,7 @@ import processImage from "@/assets/eloop-process.jpg";
 import appImage from "@/assets/eloop-app.jpg";
 import dashboardImage from "@/assets/eloop-dashboard.jpg";
 import materialsImage from "@/assets/eloop-materials.jpg";
+import carbonImage from "@/assets/eloop-carbon.jpg";
 
 const PILLAR_IMAGES: Record<string, { src: string; alt: string }> = {
   "Tecnologia Eloop Token": {
