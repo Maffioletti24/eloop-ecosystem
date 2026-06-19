@@ -21,6 +21,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { submitInvestorLead } from "@/lib/investor-leads.functions";
+import { useServerFn } from "@tanstack/react-start";
 
 export const Route = createFileRoute("/investidores")({
   head: () => ({
