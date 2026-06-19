@@ -10,6 +10,9 @@ import {
 import { useEffect } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { VisitTracker } from "@/components/VisitTracker";
+
+const ADSENSE_CLIENT = (import.meta.env.VITE_ADSENSE_CLIENT_ID as string | undefined) ?? "";
 
 import appCss from "../styles.css?url";
 
@@ -153,6 +156,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
             "Plataforma de conformidade REEE com rastreabilidade auditável e prova on-chain.",
         }),
       },
+      ...(ADSENSE_CLIENT
+        ? [
+            {
+              src: `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`,
+              async: true,
+              crossOrigin: "anonymous",
+            },
+          ]
+        : []),
     ],
   }),
   shellComponent: RootShell,
@@ -180,6 +192,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthSync />
+      <VisitTracker />
       <Outlet />
       <Toaster />
     </QueryClientProvider>
