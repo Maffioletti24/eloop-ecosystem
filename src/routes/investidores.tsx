@@ -36,7 +36,7 @@ export const Route = createFileRoute("/investidores")({
   component: InvestidoresLanding,
 });
 
-const CONTATO_EMAIL = "contato@eloop.token";
+const CONTATO_EMAIL = "elooptoken.project@elooptoken.com";
 const SITE_URL = "https://eloop.token";
 
 function InvestidoresLanding() {
@@ -257,30 +257,37 @@ function InvestidoresLanding() {
             </div>
           </a>
 
-          <div className="flex items-start gap-4 rounded-xl border border-border bg-card p-5">
-            <div className="grid h-11 w-11 place-items-center rounded-md bg-warn/15 text-warn">
+          <a
+            href={SITE_URL}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="group flex items-start gap-4 rounded-xl border border-border bg-card p-5 hover:border-primary/50"
+          >
+            <div className="grid h-11 w-11 place-items-center rounded-md bg-primary/15 text-primary">
               <Globe className="h-5 w-5" />
             </div>
             <div className="min-w-0">
               <div className="text-xs uppercase tracking-wide text-muted-foreground">
                 Site oficial
               </div>
-              <div className="mt-1 truncate font-medium">{SITE_URL}</div>
+              <div className="mt-1 truncate font-medium">
+                Eloop – Compliance Digital para Logística Reversa de Resíduos Eletrônicos | PNRS
+              </div>
               <div className="mt-1 inline-flex items-center gap-1.5 rounded-full bg-warn/15 px-2 py-0.5 text-xs font-medium text-warn">
                 <Construction className="h-3 w-3" /> Em construção
               </div>
             </div>
-          </div>
+          </a>
         </div>
 
         <div className="mt-6 flex flex-wrap gap-3 text-sm text-muted-foreground">
           <a
-            href="https://www.linkedin.com/"
+            href="https://www.linkedin.com/company/eloop-token"
             target="_blank"
             rel="noreferrer noopener"
             className="inline-flex items-center gap-2 rounded-md border border-border bg-surface px-3 py-2 hover:bg-surface-2"
           >
-            <Linkedin className="h-4 w-4" /> LinkedIn (em breve)
+            <Linkedin className="h-4 w-4" /> LinkedIn — Eloop Token
           </a>
         </div>
       </section>
