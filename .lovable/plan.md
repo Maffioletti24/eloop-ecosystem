@@ -1,87 +1,67 @@
-## Diagnóstico do site Squarespace atual (elooptoken.com)
+## Visão geral
 
-**O que existe hoje:**
-- Home única com hero "Infraestrutura de Compliance para Resíduos Eletrônicos"
-- Carrossel "Como a Eloop Funciona" com 8 blocos: Ponto Crítico, Cadeia de Custódia Formal, Tecnologia Eloop Token, Interface Digital, Impacto Socioambiental, Mercado de Reciclagem, Modelo de Negócio, Diferencial Competitivo
-- Stats (62M ton REEE/ano, etc.)
-- Página /contact com formulário
-- Links da nav (Quem somos, Projeto Eloop Token, Política de Privacidade) estão **quebrados (404)**
-- HTML com CSS inline vazado no conteúdo (problema visível no markdown)
-- SEO fraco: sem meta description otimizada, sem OG image dedicada, sem sitemap, sem JSON-LD
+Adicionar à plataforma Eloop um módulo de conteúdo (blog/artigos) com gestão pelo admin, publicação automática agendada, métricas de visitação (pública + dashboard) e espaços comerciais via Google AdSense.
 
-**Problemas que vou corrigir:**
-1. Páginas da navegação inexistentes → criar de verdade
-2. HTML/CSS quebrado renderizando como texto
-3. SEO inexistente (title, description, OG, sitemap, JSON-LD)
-4. Identidade visual fragmentada entre o site institucional e a landing /investidores
+## O que será entregue
 
-## Escopo proposto no Lovable
+### 1. Blog / Artigos (CMS no Lovable Cloud)
+- Página pública `/blog` listando artigos publicados (ordenados por data, com paginação e filtro por categoria).
+- Página `/blog/:slug` com o conteúdo do artigo, capa, autor, data, tempo de leitura, tags e botões de compartilhamento.
+- Editor admin em `/admin/blog` (protegido por role `admin`/`editor`) com:
+  - Lista de artigos (rascunho, agendado, publicado, arquivado)
+  - Criar/editar artigo: título, slug, resumo, capa (upload), conteúdo (Markdown com preview), categoria, tags, autor, **data de publicação agendada**, status
+- SEO por artigo: title, meta description, OG image, JSON-LD `Article`.
+- Feed RSS em `/blog/rss.xml` e sitemap atualizado.
 
-Recriar **elooptoken.com inteiro** dentro deste projeto, mantendo a landing `/investidores` que já existe, e unificando a identidade visual (paleta verde escuro + ciano já em uso).
+### 2. Publicação automática semanal
+- Cron job semanal (segunda 09:00 BRT) que muda artigos com `status='scheduled'` e `scheduled_at <= now()` para `published`.
+- Funciona também para qualquer cadência: basta agendar a data e o cron processa.
 
-### Estrutura de rotas
+### 3. Contador de visitas
+- **Público**: contador de visualizações em cada artigo (incrementado server-side, com deduplicação por IP+UA em janela de 30 min para evitar inflar).
+- **Admin**: dashboard `/admin/analytics` com:
+  - Visitas totais por dia (últimos 30/90 dias)
+  - Top artigos por views
+  - Origem (referrer) e país (via header)
+  - Tempo médio na página (tracking leve client-side)
 
-```text
-/                    Home institucional (substitui app atual da home)
-/projeto             Projeto Eloop Token (como funciona, 8 pilares)
-/quem-somos          Time, missão, visão
-/contato             Formulário + canais
-/privacidade         Política de Privacidade (LGPD)
-/investidores        (mantém — já existe)
-```
-
-### Seções da Home
-
-1. **Hero** — "Infraestrutura de Compliance para Resíduos Eletrônicos" + CTA "Solicitar demo" / "Seja parceiro"
-2. **Problema** — PNRS (Lei 12.305/2010), ~70% REEE informal no Brasil
-3. **Como funciona** — grid com os 8 pilares (Ponto Crítico → Diferencial Competitivo)
-4. **Stats** — 62M ton REEE globais, 12% CAGR, OEMs sob pressão regulatória
-5. **Tecnologia** — Balança INMETRO + QR + MTR/CDF on-chain Polygon + SINIR/ISO 14001
-6. **Para quem é** — OEMs, beneficiadores, órgãos ambientais, investidores
-7. **CTA final** — demo + link investidores
-8. **Footer** — contato, redes (Instagram, TikTok, LinkedIn), políticas
-
-### Página /projeto
-
-Detalha os 8 blocos do carrossel atual com ícones, descrição longa e diagrama do fluxo (balança → QR → on-chain → SINIR).
-
-### Página /contato
-
-Formulário (nome, e-mail, mensagem) que persiste em `investor_leads` (ou nova tabela `contact_leads` se quiser separar), + e-mail direto + redes sociais.
-
-### Página /privacidade
-
-LGPD: dados coletados, base legal, retenção, direitos do titular, contato do DPO (elooptoken.project@elooptoken.com).
-
-### SEO (em todas as rotas)
-
-- `head()` por rota com title único, description, og:title, og:description, og:type, og:url, canonical
-- JSON-LD Organization no `__root.tsx` (já tem), + Service na /projeto, + ContactPoint na /contato
-- `src/routes/sitemap[.]xml.ts` listando todas as rotas
-- `public/robots.txt` permitindo crawl + apontando sitemap
-- Imagem OG dedicada (gerada com imagegen, premium para legibilidade do texto)
-
-### Design
-
-Manter a paleta atual do projeto (verde escuro + accent ciano + tipografia já configurada). O Squarespace usa verde mais "musgo" + bege — vou puxar essa influência para reforçar o tom "socioambiental", mas dentro dos tokens semânticos já em `src/styles.css`, sem hardcode.
-
-## O que NÃO vou fazer agora
-
-- Migrar e-commerce/cart do Squarespace (não tem produtos reais lá, é só link nativo)
-- Configurar o domínio `elooptoken.com` apontando para Lovable — isso é feito por você em **Project Settings → Domains** depois que aprovarmos o conteúdo. Hoje o domínio está no Squarespace; o cutover de DNS é uma etapa separada, sem rollback automático.
-- Migrar logins/usuários do Squarespace (não há área logada lá)
+### 4. Espaços Google AdSense
+- Slots reservados em posições estratégicas:
+  - Topo do `/blog` (banner)
+  - Entre artigos na listagem (in-feed, a cada 4 cards)
+  - Dentro do artigo (após o 1º bloco + meio do conteúdo)
+  - Sidebar do artigo (sticky)
+  - Rodapé do site
+- Componente `<AdSlot slot="..." />` que injeta o script do AdSense quando `VITE_ADSENSE_CLIENT_ID` estiver configurado; em dev mostra placeholder visual.
+- Você cola seu **publisher ID** (`ca-pub-...`) e os **slot IDs** uma vez nas configurações.
 
 ## Detalhes técnicos
 
-- Rotas em `src/routes/*.tsx` com `createFileRoute` e `head()` por rota
-- Formulário de contato reaproveita o padrão de `src/lib/investor-leads.functions.ts` (server function + tabela Supabase com RLS)
-- Nova tabela `contact_leads` com GRANTs e RLS (anon INSERT, authenticated SELECT via role)
-- Imagens hero geradas via imagegen e importadas como ES6
-- Header/Footer extraídos em `src/components/SiteHeader.tsx` e `SiteFooter.tsx` para reuso entre rotas institucionais (a `/investidores` continua com header próprio mais focado em conversão)
+**Tabelas novas** (Lovable Cloud):
+- `articles` (title, slug, excerpt, content_md, cover_url, author_id, category, tags[], status, scheduled_at, published_at, views_count, reading_minutes)
+- `article_views` (article_id, ip_hash, ua_hash, referrer, country, created_at) — para dedupe e analytics
+- `site_visits` (path, ip_hash, ua_hash, referrer, created_at) — visitas gerais do site
+- `ad_slots` (slot_key, adsense_slot_id, enabled) — opcional, permite ligar/desligar slots sem deploy
 
-## Próximo passo
+**RLS**: leitura pública só de `articles` com `status='published'`; escrita restrita a `admin`/`editor` via `has_role`. Inserts em `*_views` permitidos para `anon` com colunas mínimas.
 
-Confirme:
-1. **Pode prosseguir** com toda essa estrutura, ou prefere começar só pela **Home + /projeto + /contato** e deixar /quem-somos e /privacidade para depois?
-2. **Conteúdo de /quem-somos**: você manda o texto sobre o time/missão, ou eu redijo a partir do que já existe na /investidores e você revisa?
-3. **Cutover de domínio elooptoken.com**: faço só depois da sua aprovação visual, certo?
+**Storage**: bucket `article-covers` (público) para capas.
+
+**Server functions**:
+- `publishScheduledArticles` (cron semanal)
+- `trackPageView` (chamada do client em cada navegação)
+- `getArticles`, `getArticleBySlug`, `getAnalytics` (admin)
+
+**AdSense**: script `adsbygoogle.js` carregado uma vez no `__root.tsx` quando o publisher ID existir; componente `<AdSlot>` em cada posição.
+
+## O que você precisará fornecer depois
+- Publisher ID do Google AdSense (`ca-pub-...`) e os slot IDs de cada bloco — adicionados como variáveis (não secret, são públicos). Sem isso, os espaços ficam reservados mas não monetizam.
+- AdSense exige aprovação da conta — posso deixar tudo pronto e você ativa quando aprovado.
+
+## Fora do escopo desta etapa
+- Comentários nos artigos
+- Newsletter / inscrição por email
+- A/B testing de anúncios
+- Integração com Google Analytics (podemos adicionar depois se quiser)
+
+Posso começar pela base (tabelas + página pública do blog + admin) e seguir para cron, analytics e ad slots — ou prefere outra ordem?
