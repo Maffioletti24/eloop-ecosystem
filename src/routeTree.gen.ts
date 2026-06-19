@@ -12,11 +12,15 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ValidadorRouteImport } from './routes/validador'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RegistroRouteImport } from './routes/registro'
+import { Route as QuemSomosRouteImport } from './routes/quem-somos'
+import { Route as ProjetoRouteImport } from './routes/projeto'
+import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as LotesRouteImport } from './routes/lotes'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as InvestidoresRouteImport } from './routes/investidores'
 import { Route as EsgRouteImport } from './routes/esg'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as ConformidadeRouteImport } from './routes/conformidade'
 import { Route as CompensarRouteImport } from './routes/compensar'
 import { Route as CarteiraRouteImport } from './routes/carteira'
@@ -37,6 +41,21 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const RegistroRoute = RegistroRouteImport.update({
   id: '/registro',
   path: '/registro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuemSomosRoute = QuemSomosRouteImport.update({
+  id: '/quem-somos',
+  path: '/quem-somos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjetoRoute = ProjetoRouteImport.update({
+  id: '/projeto',
+  path: '/projeto',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacidadeRoute = PrivacidadeRouteImport.update({
+  id: '/privacidade',
+  path: '/privacidade',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LotesRoute = LotesRouteImport.update({
@@ -62,6 +81,11 @@ const EsgRoute = EsgRouteImport.update({
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContatoRoute = ContatoRouteImport.update({
+  id: '/contato',
+  path: '/contato',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConformidadeRoute = ConformidadeRouteImport.update({
@@ -102,11 +126,15 @@ export interface FileRoutesByFullPath {
   '/carteira': typeof CarteiraRoute
   '/compensar': typeof CompensarRoute
   '/conformidade': typeof ConformidadeRoute
+  '/contato': typeof ContatoRoute
   '/dashboard': typeof DashboardRoute
   '/esg': typeof EsgRoute
   '/investidores': typeof InvestidoresRoute
   '/login': typeof LoginRoute
   '/lotes': typeof LotesRoute
+  '/privacidade': typeof PrivacidadeRoute
+  '/projeto': typeof ProjetoRoute
+  '/quem-somos': typeof QuemSomosRoute
   '/registro': typeof RegistroRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/validador': typeof ValidadorRoute
@@ -118,11 +146,15 @@ export interface FileRoutesByTo {
   '/carteira': typeof CarteiraRoute
   '/compensar': typeof CompensarRoute
   '/conformidade': typeof ConformidadeRoute
+  '/contato': typeof ContatoRoute
   '/dashboard': typeof DashboardRoute
   '/esg': typeof EsgRoute
   '/investidores': typeof InvestidoresRoute
   '/login': typeof LoginRoute
   '/lotes': typeof LotesRoute
+  '/privacidade': typeof PrivacidadeRoute
+  '/projeto': typeof ProjetoRoute
+  '/quem-somos': typeof QuemSomosRoute
   '/registro': typeof RegistroRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/validador': typeof ValidadorRoute
@@ -135,11 +167,15 @@ export interface FileRoutesById {
   '/carteira': typeof CarteiraRoute
   '/compensar': typeof CompensarRoute
   '/conformidade': typeof ConformidadeRoute
+  '/contato': typeof ContatoRoute
   '/dashboard': typeof DashboardRoute
   '/esg': typeof EsgRoute
   '/investidores': typeof InvestidoresRoute
   '/login': typeof LoginRoute
   '/lotes': typeof LotesRoute
+  '/privacidade': typeof PrivacidadeRoute
+  '/projeto': typeof ProjetoRoute
+  '/quem-somos': typeof QuemSomosRoute
   '/registro': typeof RegistroRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/validador': typeof ValidadorRoute
@@ -153,11 +189,15 @@ export interface FileRouteTypes {
     | '/carteira'
     | '/compensar'
     | '/conformidade'
+    | '/contato'
     | '/dashboard'
     | '/esg'
     | '/investidores'
     | '/login'
     | '/lotes'
+    | '/privacidade'
+    | '/projeto'
+    | '/quem-somos'
     | '/registro'
     | '/sitemap.xml'
     | '/validador'
@@ -169,11 +209,15 @@ export interface FileRouteTypes {
     | '/carteira'
     | '/compensar'
     | '/conformidade'
+    | '/contato'
     | '/dashboard'
     | '/esg'
     | '/investidores'
     | '/login'
     | '/lotes'
+    | '/privacidade'
+    | '/projeto'
+    | '/quem-somos'
     | '/registro'
     | '/sitemap.xml'
     | '/validador'
@@ -185,11 +229,15 @@ export interface FileRouteTypes {
     | '/carteira'
     | '/compensar'
     | '/conformidade'
+    | '/contato'
     | '/dashboard'
     | '/esg'
     | '/investidores'
     | '/login'
     | '/lotes'
+    | '/privacidade'
+    | '/projeto'
+    | '/quem-somos'
     | '/registro'
     | '/sitemap.xml'
     | '/validador'
@@ -202,11 +250,15 @@ export interface RootRouteChildren {
   CarteiraRoute: typeof CarteiraRoute
   CompensarRoute: typeof CompensarRoute
   ConformidadeRoute: typeof ConformidadeRoute
+  ContatoRoute: typeof ContatoRoute
   DashboardRoute: typeof DashboardRoute
   EsgRoute: typeof EsgRoute
   InvestidoresRoute: typeof InvestidoresRoute
   LoginRoute: typeof LoginRoute
   LotesRoute: typeof LotesRoute
+  PrivacidadeRoute: typeof PrivacidadeRoute
+  ProjetoRoute: typeof ProjetoRoute
+  QuemSomosRoute: typeof QuemSomosRoute
   RegistroRoute: typeof RegistroRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ValidadorRoute: typeof ValidadorRoute
@@ -234,6 +286,27 @@ declare module '@tanstack/react-router' {
       path: '/registro'
       fullPath: '/registro'
       preLoaderRoute: typeof RegistroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quem-somos': {
+      id: '/quem-somos'
+      path: '/quem-somos'
+      fullPath: '/quem-somos'
+      preLoaderRoute: typeof QuemSomosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projeto': {
+      id: '/projeto'
+      path: '/projeto'
+      fullPath: '/projeto'
+      preLoaderRoute: typeof ProjetoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacidade': {
+      id: '/privacidade'
+      path: '/privacidade'
+      fullPath: '/privacidade'
+      preLoaderRoute: typeof PrivacidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lotes': {
@@ -269,6 +342,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contato': {
+      id: '/contato'
+      path: '/contato'
+      fullPath: '/contato'
+      preLoaderRoute: typeof ContatoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/conformidade': {
@@ -322,11 +402,15 @@ const rootRouteChildren: RootRouteChildren = {
   CarteiraRoute: CarteiraRoute,
   CompensarRoute: CompensarRoute,
   ConformidadeRoute: ConformidadeRoute,
+  ContatoRoute: ContatoRoute,
   DashboardRoute: DashboardRoute,
   EsgRoute: EsgRoute,
   InvestidoresRoute: InvestidoresRoute,
   LoginRoute: LoginRoute,
   LotesRoute: LotesRoute,
+  PrivacidadeRoute: PrivacidadeRoute,
+  ProjetoRoute: ProjetoRoute,
+  QuemSomosRoute: QuemSomosRoute,
   RegistroRoute: RegistroRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ValidadorRoute: ValidadorRoute,
@@ -335,13 +419,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

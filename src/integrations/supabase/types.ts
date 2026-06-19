@@ -165,6 +165,33 @@ export type Database = {
           },
         ]
       }
+      contact_leads: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          source: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          source?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          source?: string
+        }
+        Relationships: []
+      }
       disposal_events: {
         Row: {
           alpha: number
