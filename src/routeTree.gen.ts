@@ -25,8 +25,15 @@ import { Route as ConformidadeRouteImport } from './routes/conformidade'
 import { Route as CompensarRouteImport } from './routes/compensar'
 import { Route as CarteiraRouteImport } from './routes/carteira'
 import { Route as CadastroRouteImport } from './routes/cadastro'
+import { Route as BlogRouteImport } from './routes/blog'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AdminBlogRouteImport } from './routes/admin.blog'
+import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
+import { Route as AdminBlogNovoRouteImport } from './routes/admin.blog.novo'
+import { Route as AdminBlogIdRouteImport } from './routes/admin.blog.$id'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
+import { Route as ApiPublicHooksPublishScheduledArticlesRouteImport } from './routes/api/public/hooks/publish-scheduled-articles'
 
 const ValidadorRoute = ValidadorRouteImport.update({
   id: '/validador',
@@ -108,10 +115,40 @@ const CadastroRoute = CadastroRouteImport.update({
   path: '/cadastro',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
+const AdminBlogRoute = AdminBlogRouteImport.update({
+  id: '/admin/blog',
+  path: '/admin/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
+  id: '/admin/analytics',
+  path: '/admin/analytics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminBlogNovoRoute = AdminBlogNovoRouteImport.update({
+  id: '/novo',
+  path: '/novo',
+  getParentRoute: () => AdminBlogRoute,
+} as any)
+const AdminBlogIdRoute = AdminBlogIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AdminBlogRoute,
 } as any)
 const LovableEmailQueueProcessRoute =
   LovableEmailQueueProcessRouteImport.update({
@@ -119,9 +156,16 @@ const LovableEmailQueueProcessRoute =
     path: '/lovable/email/queue/process',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicHooksPublishScheduledArticlesRoute =
+  ApiPublicHooksPublishScheduledArticlesRouteImport.update({
+    id: '/api/public/hooks/publish-scheduled-articles',
+    path: '/api/public/hooks/publish-scheduled-articles',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/blog': typeof BlogRouteWithChildren
   '/cadastro': typeof CadastroRoute
   '/carteira': typeof CarteiraRoute
   '/compensar': typeof CompensarRoute
@@ -138,10 +182,17 @@ export interface FileRoutesByFullPath {
   '/registro': typeof RegistroRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/validador': typeof ValidadorRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/blog': typeof AdminBlogRouteWithChildren
+  '/blog/$slug': typeof BlogSlugRoute
+  '/admin/blog/$id': typeof AdminBlogIdRoute
+  '/admin/blog/novo': typeof AdminBlogNovoRoute
+  '/api/public/hooks/publish-scheduled-articles': typeof ApiPublicHooksPublishScheduledArticlesRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/blog': typeof BlogRouteWithChildren
   '/cadastro': typeof CadastroRoute
   '/carteira': typeof CarteiraRoute
   '/compensar': typeof CompensarRoute
@@ -158,11 +209,18 @@ export interface FileRoutesByTo {
   '/registro': typeof RegistroRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/validador': typeof ValidadorRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/blog': typeof AdminBlogRouteWithChildren
+  '/blog/$slug': typeof BlogSlugRoute
+  '/admin/blog/$id': typeof AdminBlogIdRoute
+  '/admin/blog/novo': typeof AdminBlogNovoRoute
+  '/api/public/hooks/publish-scheduled-articles': typeof ApiPublicHooksPublishScheduledArticlesRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/blog': typeof BlogRouteWithChildren
   '/cadastro': typeof CadastroRoute
   '/carteira': typeof CarteiraRoute
   '/compensar': typeof CompensarRoute
@@ -179,12 +237,19 @@ export interface FileRoutesById {
   '/registro': typeof RegistroRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/validador': typeof ValidadorRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/blog': typeof AdminBlogRouteWithChildren
+  '/blog/$slug': typeof BlogSlugRoute
+  '/admin/blog/$id': typeof AdminBlogIdRoute
+  '/admin/blog/novo': typeof AdminBlogNovoRoute
+  '/api/public/hooks/publish-scheduled-articles': typeof ApiPublicHooksPublishScheduledArticlesRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/blog'
     | '/cadastro'
     | '/carteira'
     | '/compensar'
@@ -201,10 +266,17 @@ export interface FileRouteTypes {
     | '/registro'
     | '/sitemap.xml'
     | '/validador'
+    | '/admin/analytics'
+    | '/admin/blog'
+    | '/blog/$slug'
+    | '/admin/blog/$id'
+    | '/admin/blog/novo'
+    | '/api/public/hooks/publish-scheduled-articles'
     | '/lovable/email/queue/process'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/blog'
     | '/cadastro'
     | '/carteira'
     | '/compensar'
@@ -221,10 +293,17 @@ export interface FileRouteTypes {
     | '/registro'
     | '/sitemap.xml'
     | '/validador'
+    | '/admin/analytics'
+    | '/admin/blog'
+    | '/blog/$slug'
+    | '/admin/blog/$id'
+    | '/admin/blog/novo'
+    | '/api/public/hooks/publish-scheduled-articles'
     | '/lovable/email/queue/process'
   id:
     | '__root__'
     | '/'
+    | '/blog'
     | '/cadastro'
     | '/carteira'
     | '/compensar'
@@ -241,11 +320,18 @@ export interface FileRouteTypes {
     | '/registro'
     | '/sitemap.xml'
     | '/validador'
+    | '/admin/analytics'
+    | '/admin/blog'
+    | '/blog/$slug'
+    | '/admin/blog/$id'
+    | '/admin/blog/novo'
+    | '/api/public/hooks/publish-scheduled-articles'
     | '/lovable/email/queue/process'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BlogRoute: typeof BlogRouteWithChildren
   CadastroRoute: typeof CadastroRoute
   CarteiraRoute: typeof CarteiraRoute
   CompensarRoute: typeof CompensarRoute
@@ -262,6 +348,9 @@ export interface RootRouteChildren {
   RegistroRoute: typeof RegistroRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ValidadorRoute: typeof ValidadorRoute
+  AdminAnalyticsRoute: typeof AdminAnalyticsRoute
+  AdminBlogRoute: typeof AdminBlogRouteWithChildren
+  ApiPublicHooksPublishScheduledArticlesRoute: typeof ApiPublicHooksPublishScheduledArticlesRoute
   LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
 }
 
@@ -379,12 +468,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CadastroRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
+    '/admin/blog': {
+      id: '/admin/blog'
+      path: '/admin/blog'
+      fullPath: '/admin/blog'
+      preLoaderRoute: typeof AdminBlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/analytics': {
+      id: '/admin/analytics'
+      path: '/admin/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AdminAnalyticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/blog/novo': {
+      id: '/admin/blog/novo'
+      path: '/novo'
+      fullPath: '/admin/blog/novo'
+      preLoaderRoute: typeof AdminBlogNovoRouteImport
+      parentRoute: typeof AdminBlogRoute
+    }
+    '/admin/blog/$id': {
+      id: '/admin/blog/$id'
+      path: '/$id'
+      fullPath: '/admin/blog/$id'
+      preLoaderRoute: typeof AdminBlogIdRouteImport
+      parentRoute: typeof AdminBlogRoute
     }
     '/lovable/email/queue/process': {
       id: '/lovable/email/queue/process'
@@ -393,11 +524,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LovableEmailQueueProcessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/publish-scheduled-articles': {
+      id: '/api/public/hooks/publish-scheduled-articles'
+      path: '/api/public/hooks/publish-scheduled-articles'
+      fullPath: '/api/public/hooks/publish-scheduled-articles'
+      preLoaderRoute: typeof ApiPublicHooksPublishScheduledArticlesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
+
+interface AdminBlogRouteChildren {
+  AdminBlogIdRoute: typeof AdminBlogIdRoute
+  AdminBlogNovoRoute: typeof AdminBlogNovoRoute
+}
+
+const AdminBlogRouteChildren: AdminBlogRouteChildren = {
+  AdminBlogIdRoute: AdminBlogIdRoute,
+  AdminBlogNovoRoute: AdminBlogNovoRoute,
+}
+
+const AdminBlogRouteWithChildren = AdminBlogRoute._addFileChildren(
+  AdminBlogRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BlogRoute: BlogRouteWithChildren,
   CadastroRoute: CadastroRoute,
   CarteiraRoute: CarteiraRoute,
   CompensarRoute: CompensarRoute,
@@ -414,6 +577,10 @@ const rootRouteChildren: RootRouteChildren = {
   RegistroRoute: RegistroRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ValidadorRoute: ValidadorRoute,
+  AdminAnalyticsRoute: AdminAnalyticsRoute,
+  AdminBlogRoute: AdminBlogRouteWithChildren,
+  ApiPublicHooksPublishScheduledArticlesRoute:
+    ApiPublicHooksPublishScheduledArticlesRoute,
   LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
 }
 export const routeTree = rootRouteImport
