@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ScrollText, Layers, Cpu, FileCheck2, Recycle, TrendingUp, Users, ShieldCheck,
-  ArrowRight,
+  ArrowRight, TreePine, BarChart3, Leaf,
 } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -9,6 +9,7 @@ import processImage from "@/assets/eloop-process.jpg";
 import appImage from "@/assets/eloop-app.jpg";
 import dashboardImage from "@/assets/eloop-dashboard.jpg";
 import materialsImage from "@/assets/eloop-materials.jpg";
+import carbonImage from "@/assets/eloop-carbon.jpg";
 
 const PILLAR_IMAGES: Record<string, { src: string; alt: string }> = {
   "Tecnologia Eloop Token": {
@@ -168,6 +169,55 @@ function ProjetoPage() {
               </article>
             );
           })}
+        </section>
+
+        <section className="mx-auto max-w-6xl px-4 py-16 md:py-20">
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
+            <div>
+              <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                GHG Protocol · Escopo 3
+              </span>
+              <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
+                Métrica de carbono integrada à cadeia de valor
+              </h2>
+              <p className="mt-4 text-muted-foreground">
+                O Escopo 3 do GHG Protocol obriga empresas a reportarem emissões
+                indiretas da cadeia de valor — incluindo resíduos de produtos
+                vendidos. O Eloop transforma cada quilograma de REEE coletado em
+                dados de CO₂e mitigado, com rastreabilidade desde o gerador até
+                a destinação final.
+              </p>
+
+              <div className="mt-8 grid gap-4 sm:grid-cols-3">
+                <div className="rounded-xl border border-border bg-card p-4">
+                  <TreePine className="h-5 w-5 text-primary" />
+                  <p className="mt-2 text-sm font-semibold">CO₂e evitado</p>
+                  <p className="text-xs text-muted-foreground">até 3,5 kg / kg REEE</p>
+                </div>
+                <div className="rounded-xl border border-border bg-card p-4">
+                  <BarChart3 className="h-5 w-5 text-primary" />
+                  <p className="mt-2 text-sm font-semibold">Mensuração automatizada</p>
+                  <p className="text-xs text-muted-foreground">kg → tCO₂e em tempo real</p>
+                </div>
+                <div className="rounded-xl border border-border bg-card p-4">
+                  <Leaf className="h-5 w-5 text-primary" />
+                  <p className="mt-2 text-sm font-semibold">Lastro auditável</p>
+                  <p className="text-xs text-muted-foreground">Hash on-chain + MTR</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
+              <img
+                src={carbonImage}
+                alt="Dashboard de métricas de carbono integrado ao fluxo REEE"
+                width={1536}
+                height={1024}
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </div>
         </section>
 
         <section className="mx-auto max-w-6xl px-4 pb-20">
