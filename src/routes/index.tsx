@@ -117,7 +117,7 @@ function HomePage() {
           <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 pb-20 pt-16 md:grid-cols-2 md:pb-24 md:pt-24">
             <div>
               <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                <span className="compliance-dot" /> PNRS · SINIR · ISO 14001 · on-chain
+                <span className="compliance-dot" /> Novo site Eloop · PNRS · SINIR · ISO 14001 · on-chain
               </span>
               <h1 className="mt-5 text-4xl font-bold leading-[1.1] tracking-tight md:text-5xl lg:text-6xl">
                 Infraestrutura de{" "}
