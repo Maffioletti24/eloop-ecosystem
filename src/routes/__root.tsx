@@ -213,10 +213,23 @@ function AdSenseLoader() {
     s.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`;
     s.async = true;
     s.crossOrigin = "anonymous";
+    s.onload = () => {
+      try {
+        // Enable Auto Ads (page-level ads) — Google decides placement.
+        (window as any).adsbygoogle = (window as any).adsbygoogle || [];
+        (window as any).adsbygoogle.push({
+          google_ad_client: ADSENSE_CLIENT,
+          enable_page_level_ads: true,
+        });
+      } catch {
+        /* noop */
+      }
+    };
     document.body.appendChild(s);
   }, []);
   return null;
 }
+
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();

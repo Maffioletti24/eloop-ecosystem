@@ -6,6 +6,8 @@ import { marked } from "marked";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { AdSlot } from "@/components/AdSlot";
+import { LeadMagnetCTA } from "@/components/LeadMagnetCTA";
+import { PartnersStrip } from "@/components/PartnersStrip";
 import { getArticleBySlug } from "@/lib/blog.functions";
 import { trackArticleView, getArticlePublicViews } from "@/lib/analytics.functions";
 import { ArrowLeft, Clock, Eye, Calendar } from "lucide-react";
@@ -141,6 +143,7 @@ function ArticlePage() {
 
         <article className="prose prose-invert prose-headings:font-semibold prose-a:text-primary mt-8 max-w-none">
           <div dangerouslySetInnerHTML={{ __html: html.top }} />
+          <LeadMagnetCTA className="my-8 not-prose" source={`blog_article_mid:${article.slug}`} />
           <AdSlot slot={undefined} label="Anúncio meio do artigo" className="my-6" />
           <div dangerouslySetInnerHTML={{ __html: html.bottom }} />
         </article>
@@ -155,6 +158,13 @@ function ArticlePage() {
           </div>
         )}
 
+        <LeadMagnetCTA
+          className="my-10"
+          source={`blog_article_end:${article.slug}`}
+          title="Gostou do conteúdo? Veja a plataforma Eloop em ação"
+          description="Receba uma demo gratuita e o material completo sobre compliance REEE direto no seu e-mail."
+        />
+        <PartnersStrip className="my-10" />
         <AdSlot slot={undefined} label="Anúncio final do artigo" className="my-10" />
 
         <Link to="/blog" className="mt-6 inline-flex items-center gap-2 text-primary">
