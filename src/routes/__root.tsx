@@ -204,6 +204,20 @@ function GoogleTranslateLoader() {
   return null;
 }
 
+function AdSenseLoader() {
+  useEffect(() => {
+    if (!ADSENSE_CLIENT) return;
+    if ((window as any).__adsInit) return;
+    (window as any).__adsInit = true;
+    const s = document.createElement("script");
+    s.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`;
+    s.async = true;
+    s.crossOrigin = "anonymous";
+    document.body.appendChild(s);
+  }, []);
+  return null;
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
@@ -211,6 +225,7 @@ function RootComponent() {
       <AuthSync />
       <VisitTracker />
       <GoogleTranslateLoader />
+      <AdSenseLoader />
       <Outlet />
       <Toaster />
     </QueryClientProvider>
