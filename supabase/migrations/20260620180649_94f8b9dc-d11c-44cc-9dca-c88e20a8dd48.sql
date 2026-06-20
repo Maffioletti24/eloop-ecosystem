@@ -1,0 +1,1 @@
+UPDATE public.articles SET cover_url = 'https://eloop-investidores.lovable.app/__l5e/assets-v1/084aab50-349b-48d2-8e8a-738f62dd535c/blog-urban-mining.png', updated_at = now() WHERE slug = 'mineradoras-urbanas-brasil-compliance';
