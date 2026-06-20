@@ -444,6 +444,88 @@ function HomePage() {
           </div>
         </section>
 
+        {/* ARTIGOS EM DESTAQUE */}
+        <section className="border-y border-border/40 bg-surface/40">
+          <div className="mx-auto max-w-6xl px-4 py-16 md:py-20">
+            <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+              <div>
+                <span className="text-xs font-semibold uppercase tracking-wider text-primary">
+                  Blog
+                </span>
+                <h2 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">
+                  Artigos em destaque
+                </h2>
+              </div>
+              <Link
+                to="/blog"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+              >
+                Ver todos <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+
+            <div className="mt-10 grid gap-6 md:grid-cols-2">
+              <Link
+                to="/blog/mineradoras-urbanas-brasil-compliance"
+                className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:border-primary/40 hover:shadow-lg"
+              >
+                <div className="aspect-[16/9] overflow-hidden bg-muted">
+                  <img
+                    src="https://eloop-investidores.lovable.app/__l5e/assets-v1/084aab50-349b-48d2-8e8a-738f62dd535c/blog-urban-mining.png"
+                    alt="Mineradoras urbanas do Brasil — problema de compliance"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col p-5">
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <BookOpen className="h-3.5 w-3.5 text-primary" />
+                    <span>Compliance · REEE · PNRS</span>
+                  </div>
+                  <h3 className="mt-2 text-lg font-semibold leading-snug group-hover:text-primary">
+                    As "mineradoras urbanas" do Brasil estão invisíveis — e isso é um problema de compliance
+                  </h3>
+                  <p className="mt-2 flex-1 text-sm text-muted-foreground line-clamp-3">
+                    Uma tonelada de placas de circuito pode conter até 200g de ouro. Mas ~70% dos REEE no Brasil circulam fora da cadeia formal — sem visibilidade, sem compliance PNRS, sem crédito de carbono. Veja como a infraestrutura digital resolve.
+                  </p>
+                  <div className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+                    Ler artigo <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                  </div>
+                </div>
+              </Link>
+
+              <Link
+                to="/blog/mineradoras-urbanas-visibilidade-blockchain"
+                className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:border-primary/40 hover:shadow-lg"
+              >
+                <div className="aspect-[16/9] overflow-hidden bg-muted">
+                  <img
+                    src="https://cvouysrmanyqjoayxywm.supabase.co/storage/v1/object/public/blog-covers/mineradoras-urbanas-visibilidade-blockchain.png"
+                    alt="Mineradoras urbanas com visibilidade na blockchain"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col p-5">
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <BookOpen className="h-3.5 w-3.5 text-primary" />
+                    <span>Blockchain · Rastreabilidade · Oportunidade</span>
+                  </div>
+                  <h3 className="mt-2 text-lg font-semibold leading-snug group-hover:text-primary">
+                    Como as mineradoras urbanas do Brasil podem ganhar visibilidade na blockchain — e por que a Eloop é a oportunidade
+                  </h3>
+                  <p className="mt-2 flex-1 text-sm text-muted-foreground line-clamp-3">
+                    Uma tonelada de placas de circuito pode conter até 200g de ouro. Mas ~70% dos REEE no Brasil circulam fora da cadeia formal — sem visibilidade, sem compliance PNRS, sem crédito de carbono. Veja como a blockchain e a infraestrutura digital da Eloop transformam esse cenário em oportunidade.
+                  </p>
+                  <div className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+                    Ler artigo <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* SOLUÇÕES & OPORTUNIDADES */}
         <section className="border-y border-border/40 bg-surface/40">
           <div className="mx-auto max-w-6xl px-4 py-16 md:py-20">
