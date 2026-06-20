@@ -4,6 +4,8 @@ import { useServerFn } from "@tanstack/react-start";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { AdSlot } from "@/components/AdSlot";
+import { PartnersStrip } from "@/components/PartnersStrip";
+import { LeadMagnetCTA } from "@/components/LeadMagnetCTA";
 import { listPublishedArticles, listCategories } from "@/lib/blog.functions";
 import { useState, Fragment } from "react";
 import { Eye, Clock, Tag } from "lucide-react";
@@ -59,6 +61,7 @@ function BlogPage() {
           </p>
         </header>
 
+        <PartnersStrip className="mb-8" />
         <AdSlot slot={undefined} label="Banner topo do blog (728x90)" className="mb-8" />
 
         {(categories.data?.length ?? 0) > 0 && (
@@ -97,6 +100,11 @@ function BlogPage() {
               <Fragment key={a.id}>
                 <ArticleCard a={a} />
                 {idx > 0 && (idx + 1) % 4 === 0 && (
+                  <div className="md:col-span-2 lg:col-span-3">
+                    <LeadMagnetCTA source="blog_feed_cta" />
+                  </div>
+                )}
+                {idx > 0 && (idx + 1) % 6 === 0 && (
                   <div className="md:col-span-2 lg:col-span-3">
                     <AdSlot slot={undefined} label="In-feed (responsivo)" />
                   </div>
