@@ -10,7 +10,7 @@ import { Eye, Clock, Tag } from "lucide-react";
 
 const SITE_URL = "https://eloop-investidores.lovable.app";
 
-export const Route = createFileRoute("/blog")({
+export const Route = createFileRoute("/blog/")({
   head: () => ({
     meta: [
       { title: "Blog Eloop — Conteúdo sobre REEE, ESG e logística reversa" },
