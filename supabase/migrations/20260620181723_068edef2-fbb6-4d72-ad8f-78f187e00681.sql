@@ -1,0 +1,1 @@
+UPDATE public.articles SET cover_url = 'https://eloop-investidores.lovable.app/__l5e/assets-v1/a8125ea8-eaa2-4880-a250-1bd94a859041/blog-blockchain-visibility.png' WHERE slug = 'mineradoras-urbanas-visibilidade-blockchain';
