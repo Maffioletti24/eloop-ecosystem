@@ -18,6 +18,7 @@ declare global {
 export function AdSlot({ slot, format = "auto", label, className }: Props) {
   const ref = useRef<HTMLModElement>(null);
   const [mounted, setMounted] = useState(false);
+  const hasClient = Boolean(CLIENT_ID);
   const enabled = Boolean(CLIENT_ID && slot);
 
   useEffect(() => {
@@ -33,6 +34,11 @@ export function AdSlot({ slot, format = "auto", label, className }: Props) {
     }
   }, [enabled, mounted]);
 
+  // AdSense client configured but no manual slot ID:
+  // rely on Auto Ads (page-level) injected by the loader. Render nothing.
+  if (hasClient && !slot) {
+    return null;
+  }
 
   if (!enabled) {
     return (
@@ -54,6 +60,7 @@ export function AdSlot({ slot, format = "auto", label, className }: Props) {
   if (!mounted) {
     return <div className={className} style={{ minHeight: 120 }} />;
   }
+
 
   return (
     <div className={className}>
