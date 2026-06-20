@@ -1,0 +1,1 @@
+UPDATE public.articles SET cover_url = 'https://elooptoken.com/__l5e/assets-v1/add63cae-6dc0-4c1f-aba4-e62d18eead07/post-lancamento-artigo-1.jpg' WHERE slug = 'da-ideia-ao-mvp-eloop';
