@@ -156,15 +156,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
             "Plataforma de conformidade REEE com rastreabilidade auditável e prova on-chain.",
         }),
       },
-      ...(ADSENSE_CLIENT
-        ? [
-            {
-              src: `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`,
-              async: true,
-              crossOrigin: "anonymous" as const,
-            },
-          ]
-        : []),
+      // AdSense is injected client-side after hydration (see AdSenseLoader)
+      // to avoid hydration mismatches caused by auto-ads injecting <ins> nodes
+      // before React hydrates.
     ],
   }),
   shellComponent: RootShell,
@@ -210,6 +204,20 @@ function GoogleTranslateLoader() {
   return null;
 }
 
+function AdSenseLoader() {
+  useEffect(() => {
+    if (!ADSENSE_CLIENT) return;
+    if ((window as any).__adsInit) return;
+    (window as any).__adsInit = true;
+    const s = document.createElement("script");
+    s.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`;
+    s.async = true;
+    s.crossOrigin = "anonymous";
+    document.body.appendChild(s);
+  }, []);
+  return null;
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
@@ -217,6 +225,7 @@ function RootComponent() {
       <AuthSync />
       <VisitTracker />
       <GoogleTranslateLoader />
+      <AdSenseLoader />
       <Outlet />
       <Toaster />
     </QueryClientProvider>
