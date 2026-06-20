@@ -23,7 +23,7 @@ import dashboardImage from "@/assets/eloop-dashboard.jpg";
 import materialsImage from "@/assets/eloop-materials.jpg";
 import carbonImage from "@/assets/eloop-carbon.jpg";
 
-const SITE_URL = "https://eloop-investidores.lovable.app";
+const SITE_URL = "https://elooptoken.com";
 
 export const Route = createFileRoute("/")({
   head: () => ({
