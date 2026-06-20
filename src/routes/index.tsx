@@ -500,7 +500,7 @@ function HomePage() {
               >
                 <div className="aspect-[16/9] overflow-hidden bg-muted">
                   <img
-                    src="https://cvouysrmanyqjoayxywm.supabase.co/storage/v1/object/public/blog-covers/mineradoras-urbanas-visibilidade-blockchain.png"
+                    src="https://eloop-investidores.lovable.app/__l5e/assets-v1/a8125ea8-eaa2-4880-a250-1bd94a859041/blog-blockchain-visibility.png"
                     alt="Mineradoras urbanas com visibilidade na blockchain"
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
