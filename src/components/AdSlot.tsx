@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const CLIENT_ID = (import.meta.env.VITE_ADSENSE_CLIENT_ID as string | undefined) ?? "";
 
@@ -17,16 +17,22 @@ declare global {
 
 export function AdSlot({ slot, format = "auto", label, className }: Props) {
   const ref = useRef<HTMLModElement>(null);
+  const [mounted, setMounted] = useState(false);
   const enabled = Boolean(CLIENT_ID && slot);
 
   useEffect(() => {
-    if (!enabled) return;
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!enabled || !mounted) return;
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
     } catch {
       /* noop */
     }
-  }, [enabled]);
+  }, [enabled, mounted]);
+
 
   if (!enabled) {
     return (
@@ -45,6 +51,10 @@ export function AdSlot({ slot, format = "auto", label, className }: Props) {
     );
   }
 
+  if (!mounted) {
+    return <div className={className} style={{ minHeight: 120 }} />;
+  }
+
   return (
     <div className={className}>
       <ins
@@ -59,3 +69,4 @@ export function AdSlot({ slot, format = "auto", label, className }: Props) {
     </div>
   );
 }
+
