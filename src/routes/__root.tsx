@@ -165,6 +165,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
             },
           ]
         : []),
+      {
+        type: "text/javascript",
+        children: `
+          function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+              { pageLanguage: 'pt', includedLanguages: 'pt,en,es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE },
+              'google_translate_element'
+            );
+          }
+        `,
+      },
+      {
+        type: "text/javascript",
+        src: "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -175,7 +190,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <head>
         <HeadContent />
       </head>

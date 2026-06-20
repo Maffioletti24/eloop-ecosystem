@@ -42,7 +42,8 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-3 md:flex">
+          <div id="google_translate_element" className="[&_.goog-te-gadget]:text-[11px] [&_.goog-te-gadget]:text-muted-foreground [&_.goog-te-gadget>div>span>a]:text-foreground" />
           <Link
             to="/contato"
             className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
