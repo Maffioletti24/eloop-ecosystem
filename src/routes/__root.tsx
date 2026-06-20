@@ -156,15 +156,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
             "Plataforma de conformidade REEE com rastreabilidade auditável e prova on-chain.",
         }),
       },
-      ...(ADSENSE_CLIENT
-        ? [
-            {
-              src: `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`,
-              async: true,
-              crossOrigin: "anonymous" as const,
-            },
-          ]
-        : []),
+      // AdSense is injected client-side after hydration (see AdSenseLoader)
+      // to avoid hydration mismatches caused by auto-ads injecting <ins> nodes
+      // before React hydrates.
     ],
   }),
   shellComponent: RootShell,
