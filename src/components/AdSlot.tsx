@@ -51,6 +51,10 @@ export function AdSlot({ slot, format = "auto", label, className }: Props) {
     );
   }
 
+  if (!mounted) {
+    return <div className={className} style={{ minHeight: 120 }} />;
+  }
+
   return (
     <div className={className}>
       <ins
@@ -65,3 +69,4 @@ export function AdSlot({ slot, format = "auto", label, className }: Props) {
     </div>
   );
 }
+
