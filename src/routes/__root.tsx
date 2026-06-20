@@ -170,7 +170,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         children: `
           function googleTranslateElementInit() {
             new google.translate.TranslateElement(
-              { pageLanguage: 'pt', includedLanguages: 'pt,en,es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE },
+              { pageLanguage: 'pt-BR', includedLanguages: 'pt-BR,en,es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false },
               'google_translate_element'
             );
           }
