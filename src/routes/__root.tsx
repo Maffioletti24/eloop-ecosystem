@@ -165,21 +165,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
             },
           ]
         : []),
-      {
-        type: "text/javascript",
-        children: `
-          function googleTranslateElementInit() {
-            new google.translate.TranslateElement(
-              { pageLanguage: 'pt-BR', includedLanguages: 'pt-BR,en,es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false },
-              'google_translate_element'
-            );
-          }
-        `,
-      },
-      {
-        type: "text/javascript",
-        src: "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
-      },
     ],
   }),
   shellComponent: RootShell,
@@ -190,16 +175,39 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         {children}
         <Scripts />
       </body>
     </html>
   );
+}
+
+function GoogleTranslateLoader() {
+  useEffect(() => {
+    if ((window as any).__gtInit) return;
+    (window as any).__gtInit = true;
+    (window as any).googleTranslateElementInit = () => {
+      new (window as any).google.translate.TranslateElement(
+        {
+          pageLanguage: "pt-BR",
+          includedLanguages: "pt-BR,en,es",
+          layout: (window as any).google.translate.TranslateElement.InlineLayout.SIMPLE,
+          autoDisplay: false,
+        },
+        "google_translate_element"
+      );
+    };
+    const s = document.createElement("script");
+    s.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    s.async = true;
+    document.body.appendChild(s);
+  }, []);
+  return null;
 }
 
 function RootComponent() {
@@ -208,6 +216,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <AuthSync />
       <VisitTracker />
+      <GoogleTranslateLoader />
       <Outlet />
       <Toaster />
     </QueryClientProvider>
