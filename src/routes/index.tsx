@@ -466,7 +466,8 @@ function HomePage() {
 
             <div className="mt-10 grid gap-6 md:grid-cols-2">
               <Link
-                to="/blog/mineradoras-urbanas-brasil-compliance"
+                to="/blog/$slug"
+                params={{ slug: "mineradoras-urbanas-brasil-compliance" }}
                 className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:border-primary/40 hover:shadow-lg"
               >
                 <div className="aspect-[16/9] overflow-hidden bg-muted">
@@ -495,7 +496,8 @@ function HomePage() {
               </Link>
 
               <Link
-                to="/blog/mineradoras-urbanas-visibilidade-blockchain"
+                to="/blog/$slug"
+                params={{ slug: "mineradoras-urbanas-visibilidade-blockchain" }}
                 className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:border-primary/40 hover:shadow-lg"
               >
                 <div className="aspect-[16/9] overflow-hidden bg-muted">
