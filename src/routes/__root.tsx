@@ -123,21 +123,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Eloop Token — Compliance REEE on-chain" },
+      { title: "Eloop — Compliance Digital para Logística Reversa de REEE | PNRS" },
       {
         name: "description",
         content:
-          "Eloop Token — Plataforma de conformidade REEE com rastreabilidade auditável, MTR e CDF on-chain na rede Polygon e relatórios SINIR.",
+          "Plataforma de conformidade PNRS para resíduos eletrônicos: balança INMETRO, QR no ponto de coleta, MTR/CDF on-chain e relatórios SINIR/ISO 14001 automatizados.",
       },
-      { property: "og:title", content: "Eloop Token — Compliance REEE on-chain" },
+      { property: "og:title", content: "Eloop — Compliance Digital para REEE | PNRS" },
       {
         property: "og:description",
         content:
-          "Infraestrutura de conformidade REEE com rastreabilidade auditável, MTR/CDF on-chain e relatórios SINIR para OEMs e recicladores.",
+          "Infraestrutura B2B SaaS para logística reversa de eletroeletrônicos no Brasil: rastreabilidade auditável e prova on-chain.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "Eloop Token" },
-      { property: "og:url", content: "https://eloop-investidores.lovable.app/" },
+      { property: "og:site_name", content: "Eloop" },
+      { property: "og:url", content: "https://elooptoken.com/" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -149,9 +149,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
-          name: "Eloop Token",
-          url: "https://eloop-investidores.lovable.app/",
-          logo: "https://eloop-investidores.lovable.app/favicon.svg",
+          name: "Eloop",
+          url: "https://elooptoken.com/",
+          logo: "https://elooptoken.com/favicon.svg",
           description:
             "Plataforma de conformidade REEE com rastreabilidade auditável e prova on-chain.",
         }),
