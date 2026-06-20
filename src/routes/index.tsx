@@ -443,6 +443,50 @@ function HomePage() {
           </div>
         </section>
 
+        {/* SOLUÇÕES & OPORTUNIDADES */}
+        <section className="border-y border-border/40 bg-surface/40">
+          <div className="mx-auto max-w-6xl px-4 py-16 md:py-20">
+            <div className="max-w-2xl">
+              <span className="text-xs font-semibold uppercase tracking-wider text-primary">
+                Soluções & Oportunidades
+              </span>
+              <h2 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">
+                Além do REEE: um motor de compliance para outras cadeias
+              </h2>
+              <p className="mt-3 text-muted-foreground">
+                A mesma infraestrutura — pesagem certificada, QR no ponto de coleta
+                e prova on-chain — pode ser estendida a outras classes de resíduos
+                e operações reguladas. Estamos abertos a pilotos e parcerias.
+              </p>
+            </div>
+
+            <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {[
+                { t: "Embalagens pós-consumo", d: "Vidro, plástico, papel e alumínio sob acordos setoriais da PNRS." },
+                { t: "Resíduos da construção civil", d: "Rastreabilidade de RCC com MTR digital e destinação certificada." },
+                { t: "Pilhas e baterias", d: "Logística reversa obrigatória (CONAMA 401) com cadeia de custódia auditável." },
+                { t: "Óleo lubrificante usado (OLUC)", d: "Coleta, transporte e re-refino com prova on-chain por lote." },
+                { t: "Resíduos de saúde (RSS)", d: "Rastreabilidade do gerador ao destinador final, com assinatura digital." },
+                { t: "Créditos de logística reversa", d: "Lastro auditável para certificados emitidos por entidades gestoras." },
+              ].map((s) => (
+                <div key={s.t} className="rounded-xl border border-border bg-card p-5">
+                  <CheckCircle2 className="h-5 w-5 text-primary" />
+                  <h3 className="mt-3 font-semibold">{s.t}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{s.d}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 rounded-xl border border-primary/20 bg-primary/5 p-5 text-sm text-muted-foreground">
+              Tem uma cadeia de resíduos ou um caso de uso regulado que precisa de
+              rastreabilidade auditável?{" "}
+              <Link to="/contato" className="font-semibold text-primary hover:underline">
+                Fale com a gente sobre um piloto →
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* CTA */}
         <section className="mx-auto max-w-6xl px-4 py-16 md:py-20">
           <div className="rounded-2xl border border-primary/30 bg-primary/10 p-8 md:p-12">
