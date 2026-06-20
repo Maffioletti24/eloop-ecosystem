@@ -483,7 +483,7 @@ function HomePage() {
                     <span>Compliance · REEE · PNRS</span>
                   </div>
                   <h3 className="mt-2 text-lg font-semibold leading-snug group-hover:text-primary">
-                    As "mineradoras urbanas" do Brasil estão invisíveis — e isso é um problema de compliance
+                    As Mineradoras Urbanas no Brasil estão invisíveis? — Veja como o compliance pode resolver isso
                   </h3>
                   <p className="mt-2 flex-1 text-sm text-muted-foreground line-clamp-3">
                     Uma tonelada de placas de circuito pode conter até 200g de ouro. Mas ~70% dos REEE no Brasil circulam fora da cadeia formal — sem visibilidade, sem compliance PNRS, sem crédito de carbono. Veja como a infraestrutura digital resolve.
