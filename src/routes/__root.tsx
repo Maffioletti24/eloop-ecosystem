@@ -10,9 +10,6 @@ import {
 import { useEffect } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { VisitTracker } from "@/components/VisitTracker";
-
-const ADSENSE_CLIENT = (import.meta.env.VITE_ADSENSE_CLIENT_ID as string | undefined) ?? "";
 
 import appCss from "../styles.css?url";
 
@@ -123,42 +120,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Eloop — Compliance Digital para Logística Reversa de REEE | PNRS" },
+      { name: "robots", content: "noindex,nofollow" },
+      { title: "Eloop MVP — Operação e Validação ELP" },
       {
         name: "description",
         content:
-          "Plataforma de conformidade PNRS para resíduos eletrônicos: balança INMETRO, QR no ponto de coleta, MTR/CDF on-chain e relatórios SINIR/ISO 14001 automatizados.",
+          "Aplicação operacional Eloop: registro de descarte REEE, lotes, validação, carteira ELP e compensação on-chain.",
       },
-      { property: "og:title", content: "Eloop — Compliance Digital para REEE | PNRS" },
-      {
-        property: "og:description",
-        content:
-          "Infraestrutura B2B SaaS para logística reversa de eletroeletrônicos no Brasil: rastreabilidade auditável e prova on-chain.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "Eloop" },
-      { property: "og:url", content: "https://elooptoken.com/" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
-    ],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          name: "Eloop",
-          url: "https://elooptoken.com/",
-          logo: "https://elooptoken.com/favicon.svg",
-          description:
-            "Plataforma de conformidade REEE com rastreabilidade auditável e prova on-chain.",
-        }),
-      },
-      // AdSense is injected client-side after hydration (see AdSenseLoader)
-      // to avoid hydration mismatches caused by auto-ads injecting <ins> nodes
-      // before React hydrates.
     ],
   }),
   shellComponent: RootShell,
@@ -204,41 +176,12 @@ function GoogleTranslateLoader() {
   return null;
 }
 
-function AdSenseLoader() {
-  useEffect(() => {
-    if (!ADSENSE_CLIENT) return;
-    if ((window as any).__adsInit) return;
-    (window as any).__adsInit = true;
-    const s = document.createElement("script");
-    s.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`;
-    s.async = true;
-    s.crossOrigin = "anonymous";
-    s.onload = () => {
-      try {
-        // Enable Auto Ads (page-level ads) — Google decides placement.
-        (window as any).adsbygoogle = (window as any).adsbygoogle || [];
-        (window as any).adsbygoogle.push({
-          google_ad_client: ADSENSE_CLIENT,
-          enable_page_level_ads: true,
-        });
-      } catch {
-        /* noop */
-      }
-    };
-    document.body.appendChild(s);
-  }, []);
-  return null;
-}
-
-
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
       <AuthSync />
-      <VisitTracker />
       <GoogleTranslateLoader />
-      <AdSenseLoader />
       <Outlet />
       <Toaster />
     </QueryClientProvider>

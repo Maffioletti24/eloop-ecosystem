@@ -10,59 +10,26 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ValidadorRouteImport } from './routes/validador'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RegistroRouteImport } from './routes/registro'
-import { Route as QuemSomosRouteImport } from './routes/quem-somos'
-import { Route as ProjetoRouteImport } from './routes/projeto'
-import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as LotesRouteImport } from './routes/lotes'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as InvestidoresRouteImport } from './routes/investidores'
 import { Route as EsgRouteImport } from './routes/esg'
 import { Route as DashboardRouteImport } from './routes/dashboard'
-import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as ConformidadeRouteImport } from './routes/conformidade'
 import { Route as CompensarRouteImport } from './routes/compensar'
 import { Route as CarteiraRouteImport } from './routes/carteira'
 import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as BlogIndexRouteImport } from './routes/blog.index'
-import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
-import { Route as AdminBlogRouteImport } from './routes/admin.blog'
-import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
-import { Route as AdminBlogNovoRouteImport } from './routes/admin.blog.novo'
-import { Route as AdminBlogIdRouteImport } from './routes/admin.blog.$id'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
-import { Route as ApiPublicHooksPublishScheduledArticlesRouteImport } from './routes/api/public/hooks/publish-scheduled-articles'
 
 const ValidadorRoute = ValidadorRouteImport.update({
   id: '/validador',
   path: '/validador',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const RegistroRoute = RegistroRouteImport.update({
   id: '/registro',
   path: '/registro',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const QuemSomosRoute = QuemSomosRouteImport.update({
-  id: '/quem-somos',
-  path: '/quem-somos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProjetoRoute = ProjetoRouteImport.update({
-  id: '/projeto',
-  path: '/projeto',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacidadeRoute = PrivacidadeRouteImport.update({
-  id: '/privacidade',
-  path: '/privacidade',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LotesRoute = LotesRouteImport.update({
@@ -75,11 +42,6 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const InvestidoresRoute = InvestidoresRouteImport.update({
-  id: '/investidores',
-  path: '/investidores',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const EsgRoute = EsgRouteImport.update({
   id: '/esg',
   path: '/esg',
@@ -88,11 +50,6 @@ const EsgRoute = EsgRouteImport.update({
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContatoRoute = ContatoRouteImport.update({
-  id: '/contato',
-  path: '/contato',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConformidadeRoute = ConformidadeRouteImport.update({
@@ -120,46 +77,10 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogIndexRoute = BlogIndexRouteImport.update({
-  id: '/blog/',
-  path: '/blog/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogSlugRoute = BlogSlugRouteImport.update({
-  id: '/blog/$slug',
-  path: '/blog/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminBlogRoute = AdminBlogRouteImport.update({
-  id: '/admin/blog',
-  path: '/admin/blog',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
-  id: '/admin/analytics',
-  path: '/admin/analytics',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminBlogNovoRoute = AdminBlogNovoRouteImport.update({
-  id: '/novo',
-  path: '/novo',
-  getParentRoute: () => AdminBlogRoute,
-} as any)
-const AdminBlogIdRoute = AdminBlogIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => AdminBlogRoute,
-} as any)
 const LovableEmailQueueProcessRoute =
   LovableEmailQueueProcessRouteImport.update({
     id: '/lovable/email/queue/process',
     path: '/lovable/email/queue/process',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ApiPublicHooksPublishScheduledArticlesRoute =
-  ApiPublicHooksPublishScheduledArticlesRouteImport.update({
-    id: '/api/public/hooks/publish-scheduled-articles',
-    path: '/api/public/hooks/publish-scheduled-articles',
     getParentRoute: () => rootRouteImport,
   } as any)
 
@@ -169,25 +90,12 @@ export interface FileRoutesByFullPath {
   '/carteira': typeof CarteiraRoute
   '/compensar': typeof CompensarRoute
   '/conformidade': typeof ConformidadeRoute
-  '/contato': typeof ContatoRoute
   '/dashboard': typeof DashboardRoute
   '/esg': typeof EsgRoute
-  '/investidores': typeof InvestidoresRoute
   '/login': typeof LoginRoute
   '/lotes': typeof LotesRoute
-  '/privacidade': typeof PrivacidadeRoute
-  '/projeto': typeof ProjetoRoute
-  '/quem-somos': typeof QuemSomosRoute
   '/registro': typeof RegistroRoute
-  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/validador': typeof ValidadorRoute
-  '/admin/analytics': typeof AdminAnalyticsRoute
-  '/admin/blog': typeof AdminBlogRouteWithChildren
-  '/blog/$slug': typeof BlogSlugRoute
-  '/blog/': typeof BlogIndexRoute
-  '/admin/blog/$id': typeof AdminBlogIdRoute
-  '/admin/blog/novo': typeof AdminBlogNovoRoute
-  '/api/public/hooks/publish-scheduled-articles': typeof ApiPublicHooksPublishScheduledArticlesRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRoutesByTo {
@@ -196,25 +104,12 @@ export interface FileRoutesByTo {
   '/carteira': typeof CarteiraRoute
   '/compensar': typeof CompensarRoute
   '/conformidade': typeof ConformidadeRoute
-  '/contato': typeof ContatoRoute
   '/dashboard': typeof DashboardRoute
   '/esg': typeof EsgRoute
-  '/investidores': typeof InvestidoresRoute
   '/login': typeof LoginRoute
   '/lotes': typeof LotesRoute
-  '/privacidade': typeof PrivacidadeRoute
-  '/projeto': typeof ProjetoRoute
-  '/quem-somos': typeof QuemSomosRoute
   '/registro': typeof RegistroRoute
-  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/validador': typeof ValidadorRoute
-  '/admin/analytics': typeof AdminAnalyticsRoute
-  '/admin/blog': typeof AdminBlogRouteWithChildren
-  '/blog/$slug': typeof BlogSlugRoute
-  '/blog': typeof BlogIndexRoute
-  '/admin/blog/$id': typeof AdminBlogIdRoute
-  '/admin/blog/novo': typeof AdminBlogNovoRoute
-  '/api/public/hooks/publish-scheduled-articles': typeof ApiPublicHooksPublishScheduledArticlesRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRoutesById {
@@ -224,25 +119,12 @@ export interface FileRoutesById {
   '/carteira': typeof CarteiraRoute
   '/compensar': typeof CompensarRoute
   '/conformidade': typeof ConformidadeRoute
-  '/contato': typeof ContatoRoute
   '/dashboard': typeof DashboardRoute
   '/esg': typeof EsgRoute
-  '/investidores': typeof InvestidoresRoute
   '/login': typeof LoginRoute
   '/lotes': typeof LotesRoute
-  '/privacidade': typeof PrivacidadeRoute
-  '/projeto': typeof ProjetoRoute
-  '/quem-somos': typeof QuemSomosRoute
   '/registro': typeof RegistroRoute
-  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/validador': typeof ValidadorRoute
-  '/admin/analytics': typeof AdminAnalyticsRoute
-  '/admin/blog': typeof AdminBlogRouteWithChildren
-  '/blog/$slug': typeof BlogSlugRoute
-  '/blog/': typeof BlogIndexRoute
-  '/admin/blog/$id': typeof AdminBlogIdRoute
-  '/admin/blog/novo': typeof AdminBlogNovoRoute
-  '/api/public/hooks/publish-scheduled-articles': typeof ApiPublicHooksPublishScheduledArticlesRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRouteTypes {
@@ -253,25 +135,12 @@ export interface FileRouteTypes {
     | '/carteira'
     | '/compensar'
     | '/conformidade'
-    | '/contato'
     | '/dashboard'
     | '/esg'
-    | '/investidores'
     | '/login'
     | '/lotes'
-    | '/privacidade'
-    | '/projeto'
-    | '/quem-somos'
     | '/registro'
-    | '/sitemap.xml'
     | '/validador'
-    | '/admin/analytics'
-    | '/admin/blog'
-    | '/blog/$slug'
-    | '/blog/'
-    | '/admin/blog/$id'
-    | '/admin/blog/novo'
-    | '/api/public/hooks/publish-scheduled-articles'
     | '/lovable/email/queue/process'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -280,25 +149,12 @@ export interface FileRouteTypes {
     | '/carteira'
     | '/compensar'
     | '/conformidade'
-    | '/contato'
     | '/dashboard'
     | '/esg'
-    | '/investidores'
     | '/login'
     | '/lotes'
-    | '/privacidade'
-    | '/projeto'
-    | '/quem-somos'
     | '/registro'
-    | '/sitemap.xml'
     | '/validador'
-    | '/admin/analytics'
-    | '/admin/blog'
-    | '/blog/$slug'
-    | '/blog'
-    | '/admin/blog/$id'
-    | '/admin/blog/novo'
-    | '/api/public/hooks/publish-scheduled-articles'
     | '/lovable/email/queue/process'
   id:
     | '__root__'
@@ -307,25 +163,12 @@ export interface FileRouteTypes {
     | '/carteira'
     | '/compensar'
     | '/conformidade'
-    | '/contato'
     | '/dashboard'
     | '/esg'
-    | '/investidores'
     | '/login'
     | '/lotes'
-    | '/privacidade'
-    | '/projeto'
-    | '/quem-somos'
     | '/registro'
-    | '/sitemap.xml'
     | '/validador'
-    | '/admin/analytics'
-    | '/admin/blog'
-    | '/blog/$slug'
-    | '/blog/'
-    | '/admin/blog/$id'
-    | '/admin/blog/novo'
-    | '/api/public/hooks/publish-scheduled-articles'
     | '/lovable/email/queue/process'
   fileRoutesById: FileRoutesById
 }
@@ -335,23 +178,12 @@ export interface RootRouteChildren {
   CarteiraRoute: typeof CarteiraRoute
   CompensarRoute: typeof CompensarRoute
   ConformidadeRoute: typeof ConformidadeRoute
-  ContatoRoute: typeof ContatoRoute
   DashboardRoute: typeof DashboardRoute
   EsgRoute: typeof EsgRoute
-  InvestidoresRoute: typeof InvestidoresRoute
   LoginRoute: typeof LoginRoute
   LotesRoute: typeof LotesRoute
-  PrivacidadeRoute: typeof PrivacidadeRoute
-  ProjetoRoute: typeof ProjetoRoute
-  QuemSomosRoute: typeof QuemSomosRoute
   RegistroRoute: typeof RegistroRoute
-  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ValidadorRoute: typeof ValidadorRoute
-  AdminAnalyticsRoute: typeof AdminAnalyticsRoute
-  AdminBlogRoute: typeof AdminBlogRouteWithChildren
-  BlogSlugRoute: typeof BlogSlugRoute
-  BlogIndexRoute: typeof BlogIndexRoute
-  ApiPublicHooksPublishScheduledArticlesRoute: typeof ApiPublicHooksPublishScheduledArticlesRoute
   LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
 }
 
@@ -364,39 +196,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ValidadorRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/registro': {
       id: '/registro'
       path: '/registro'
       fullPath: '/registro'
       preLoaderRoute: typeof RegistroRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/quem-somos': {
-      id: '/quem-somos'
-      path: '/quem-somos'
-      fullPath: '/quem-somos'
-      preLoaderRoute: typeof QuemSomosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/projeto': {
-      id: '/projeto'
-      path: '/projeto'
-      fullPath: '/projeto'
-      preLoaderRoute: typeof ProjetoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacidade': {
-      id: '/privacidade'
-      path: '/privacidade'
-      fullPath: '/privacidade'
-      preLoaderRoute: typeof PrivacidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lotes': {
@@ -413,13 +217,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/investidores': {
-      id: '/investidores'
-      path: '/investidores'
-      fullPath: '/investidores'
-      preLoaderRoute: typeof InvestidoresRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/esg': {
       id: '/esg'
       path: '/esg'
@@ -432,13 +229,6 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contato': {
-      id: '/contato'
-      path: '/contato'
-      fullPath: '/contato'
-      preLoaderRoute: typeof ContatoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/conformidade': {
@@ -476,48 +266,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/': {
-      id: '/blog/'
-      path: '/blog'
-      fullPath: '/blog/'
-      preLoaderRoute: typeof BlogIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog/$slug': {
-      id: '/blog/$slug'
-      path: '/blog/$slug'
-      fullPath: '/blog/$slug'
-      preLoaderRoute: typeof BlogSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/blog': {
-      id: '/admin/blog'
-      path: '/admin/blog'
-      fullPath: '/admin/blog'
-      preLoaderRoute: typeof AdminBlogRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/analytics': {
-      id: '/admin/analytics'
-      path: '/admin/analytics'
-      fullPath: '/admin/analytics'
-      preLoaderRoute: typeof AdminAnalyticsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/blog/novo': {
-      id: '/admin/blog/novo'
-      path: '/novo'
-      fullPath: '/admin/blog/novo'
-      preLoaderRoute: typeof AdminBlogNovoRouteImport
-      parentRoute: typeof AdminBlogRoute
-    }
-    '/admin/blog/$id': {
-      id: '/admin/blog/$id'
-      path: '/$id'
-      fullPath: '/admin/blog/$id'
-      preLoaderRoute: typeof AdminBlogIdRouteImport
-      parentRoute: typeof AdminBlogRoute
-    }
     '/lovable/email/queue/process': {
       id: '/lovable/email/queue/process'
       path: '/lovable/email/queue/process'
@@ -525,29 +273,8 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LovableEmailQueueProcessRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/hooks/publish-scheduled-articles': {
-      id: '/api/public/hooks/publish-scheduled-articles'
-      path: '/api/public/hooks/publish-scheduled-articles'
-      fullPath: '/api/public/hooks/publish-scheduled-articles'
-      preLoaderRoute: typeof ApiPublicHooksPublishScheduledArticlesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
-
-interface AdminBlogRouteChildren {
-  AdminBlogIdRoute: typeof AdminBlogIdRoute
-  AdminBlogNovoRoute: typeof AdminBlogNovoRoute
-}
-
-const AdminBlogRouteChildren: AdminBlogRouteChildren = {
-  AdminBlogIdRoute: AdminBlogIdRoute,
-  AdminBlogNovoRoute: AdminBlogNovoRoute,
-}
-
-const AdminBlogRouteWithChildren = AdminBlogRoute._addFileChildren(
-  AdminBlogRouteChildren,
-)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -555,36 +282,14 @@ const rootRouteChildren: RootRouteChildren = {
   CarteiraRoute: CarteiraRoute,
   CompensarRoute: CompensarRoute,
   ConformidadeRoute: ConformidadeRoute,
-  ContatoRoute: ContatoRoute,
   DashboardRoute: DashboardRoute,
   EsgRoute: EsgRoute,
-  InvestidoresRoute: InvestidoresRoute,
   LoginRoute: LoginRoute,
   LotesRoute: LotesRoute,
-  PrivacidadeRoute: PrivacidadeRoute,
-  ProjetoRoute: ProjetoRoute,
-  QuemSomosRoute: QuemSomosRoute,
   RegistroRoute: RegistroRoute,
-  SitemapDotxmlRoute: SitemapDotxmlRoute,
   ValidadorRoute: ValidadorRoute,
-  AdminAnalyticsRoute: AdminAnalyticsRoute,
-  AdminBlogRoute: AdminBlogRouteWithChildren,
-  BlogSlugRoute: BlogSlugRoute,
-  BlogIndexRoute: BlogIndexRoute,
-  ApiPublicHooksPublishScheduledArticlesRoute:
-    ApiPublicHooksPublishScheduledArticlesRoute,
   LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
