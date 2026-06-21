@@ -1,8 +1,10 @@
-# Eloop Token
+# Eloop MVP
 
-> Plataforma B2B SaaS de compliance REEE (resíduos eletroeletrônicos) no Brasil com rastreabilidade auditável, MTR e CDF on-chain e relatórios SINIR.
+> Aplicação operacional interna do Eloop Token: registro de descarte REEE,
+> lotes, validação, carteira ELP, compensação on-chain e relatórios SINIR.
+> Não é um site público — acesso restrito a operadores autenticados.
 
-## Pages
+## Páginas
 
-- [Início](/): Visão geral do Eloop Token e da plataforma de compliance REEE.
-- [Investidores](/investidores): Captação pré-seed e busca por Co Founders — tese, tração e contato.
+- /login — autenticação de operadores
+- /cadastro — criação de conta operacional

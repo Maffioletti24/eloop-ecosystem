@@ -10,7 +10,6 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ValidadorRouteImport } from './routes/validador'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RegistroRouteImport } from './routes/registro'
 import { Route as LotesRouteImport } from './routes/lotes'
 import { Route as LoginRouteImport } from './routes/login'
@@ -26,11 +25,6 @@ import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/e
 const ValidadorRoute = ValidadorRouteImport.update({
   id: '/validador',
   path: '/validador',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegistroRoute = RegistroRouteImport.update({
@@ -101,7 +95,6 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/lotes': typeof LotesRoute
   '/registro': typeof RegistroRoute
-  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/validador': typeof ValidadorRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
@@ -116,7 +109,6 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/lotes': typeof LotesRoute
   '/registro': typeof RegistroRoute
-  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/validador': typeof ValidadorRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
@@ -132,7 +124,6 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/lotes': typeof LotesRoute
   '/registro': typeof RegistroRoute
-  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/validador': typeof ValidadorRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
@@ -149,7 +140,6 @@ export interface FileRouteTypes {
     | '/login'
     | '/lotes'
     | '/registro'
-    | '/sitemap.xml'
     | '/validador'
     | '/lovable/email/queue/process'
   fileRoutesByTo: FileRoutesByTo
@@ -164,7 +154,6 @@ export interface FileRouteTypes {
     | '/login'
     | '/lotes'
     | '/registro'
-    | '/sitemap.xml'
     | '/validador'
     | '/lovable/email/queue/process'
   id:
@@ -179,7 +168,6 @@ export interface FileRouteTypes {
     | '/login'
     | '/lotes'
     | '/registro'
-    | '/sitemap.xml'
     | '/validador'
     | '/lovable/email/queue/process'
   fileRoutesById: FileRoutesById
@@ -195,7 +183,6 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   LotesRoute: typeof LotesRoute
   RegistroRoute: typeof RegistroRoute
-  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ValidadorRoute: typeof ValidadorRoute
   LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
 }
@@ -207,13 +194,6 @@ declare module '@tanstack/react-router' {
       path: '/validador'
       fullPath: '/validador'
       preLoaderRoute: typeof ValidadorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/registro': {
@@ -307,10 +287,19 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   LotesRoute: LotesRoute,
   RegistroRoute: RegistroRoute,
-  SitemapDotxmlRoute: SitemapDotxmlRoute,
   ValidadorRoute: ValidadorRoute,
   LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
