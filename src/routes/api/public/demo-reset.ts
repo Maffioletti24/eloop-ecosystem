@@ -6,7 +6,7 @@ import { createClient } from '@supabase/supabase-js'
 const ALLOWED_EMAIL = 'elooptoken.project@elooptoken.com'
 const GUARD = 'eloop-demo-reset-2026-06-22'
 
-export const Route = createFileRoute('/api/public/_demo-reset')({
+export const Route = createFileRoute('/api/public/demo-reset')({
   server: {
     handlers: {
       POST: async ({ request }) => {
