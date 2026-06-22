@@ -20,7 +20,6 @@ import { Route as CompensarRouteImport } from './routes/compensar'
 import { Route as CarteiraRouteImport } from './routes/carteira'
 import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ApiPublicDemoResetRouteImport } from './routes/api/public/demo-reset'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
 
 const ValidadorRoute = ValidadorRouteImport.update({
@@ -78,11 +77,6 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPublicDemoResetRoute = ApiPublicDemoResetRouteImport.update({
-  id: '/api/public/demo-reset',
-  path: '/api/public/demo-reset',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LovableEmailQueueProcessRoute =
   LovableEmailQueueProcessRouteImport.update({
     id: '/lovable/email/queue/process',
@@ -102,7 +96,6 @@ export interface FileRoutesByFullPath {
   '/lotes': typeof LotesRoute
   '/registro': typeof RegistroRoute
   '/validador': typeof ValidadorRoute
-  '/api/public/demo-reset': typeof ApiPublicDemoResetRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRoutesByTo {
@@ -117,7 +110,6 @@ export interface FileRoutesByTo {
   '/lotes': typeof LotesRoute
   '/registro': typeof RegistroRoute
   '/validador': typeof ValidadorRoute
-  '/api/public/demo-reset': typeof ApiPublicDemoResetRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRoutesById {
@@ -133,7 +125,6 @@ export interface FileRoutesById {
   '/lotes': typeof LotesRoute
   '/registro': typeof RegistroRoute
   '/validador': typeof ValidadorRoute
-  '/api/public/demo-reset': typeof ApiPublicDemoResetRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRouteTypes {
@@ -150,7 +141,6 @@ export interface FileRouteTypes {
     | '/lotes'
     | '/registro'
     | '/validador'
-    | '/api/public/demo-reset'
     | '/lovable/email/queue/process'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -165,7 +155,6 @@ export interface FileRouteTypes {
     | '/lotes'
     | '/registro'
     | '/validador'
-    | '/api/public/demo-reset'
     | '/lovable/email/queue/process'
   id:
     | '__root__'
@@ -180,7 +169,6 @@ export interface FileRouteTypes {
     | '/lotes'
     | '/registro'
     | '/validador'
-    | '/api/public/demo-reset'
     | '/lovable/email/queue/process'
   fileRoutesById: FileRoutesById
 }
@@ -196,7 +184,6 @@ export interface RootRouteChildren {
   LotesRoute: typeof LotesRoute
   RegistroRoute: typeof RegistroRoute
   ValidadorRoute: typeof ValidadorRoute
-  ApiPublicDemoResetRoute: typeof ApiPublicDemoResetRoute
   LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
 }
 
@@ -279,13 +266,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/demo-reset': {
-      id: '/api/public/demo-reset'
-      path: '/api/public/demo-reset'
-      fullPath: '/api/public/demo-reset'
-      preLoaderRoute: typeof ApiPublicDemoResetRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/lovable/email/queue/process': {
       id: '/lovable/email/queue/process'
       path: '/lovable/email/queue/process'
@@ -308,7 +288,6 @@ const rootRouteChildren: RootRouteChildren = {
   LotesRoute: LotesRoute,
   RegistroRoute: RegistroRoute,
   ValidadorRoute: ValidadorRoute,
-  ApiPublicDemoResetRoute: ApiPublicDemoResetRoute,
   LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
 }
 export const routeTree = rootRouteImport
