@@ -73,7 +73,9 @@ export const anchorHashOnPolygon = createServerFn({ method: "POST" })
 
     try {
       const account = privateKeyToAccount(pk);
-      const transport = http("https://polygon-rpc.com");
+      const rpcUrl =
+        process.env.POLYGON_RPC_URL ?? "https://polygon-bor-rpc.publicnode.com";
+      const transport = http(rpcUrl);
       const publicClient = createPublicClient({ chain: polygon, transport });
       const wallet = createWalletClient({ account, chain: polygon, transport });
 
