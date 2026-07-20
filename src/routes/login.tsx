@@ -102,6 +102,13 @@ function LoginPage() {
           Cadastre-se
         </Link>
       </p>
+
+      <p className="text-[11px] text-dim text-center mt-4">
+        <Link to="/termos" className="underline">Termos</Link>
+        {" · "}
+        <Link to="/privacidade" className="underline">Privacidade</Link>
+      </p>
+
     </div>
   );
 }
