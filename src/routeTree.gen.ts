@@ -10,7 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ValidadorRouteImport } from './routes/validador'
+import { Route as TermosRouteImport } from './routes/termos'
 import { Route as RegistroRouteImport } from './routes/registro'
+import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as LotesRouteImport } from './routes/lotes'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as EsgRouteImport } from './routes/esg'
@@ -27,9 +29,19 @@ const ValidadorRoute = ValidadorRouteImport.update({
   path: '/validador',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TermosRoute = TermosRouteImport.update({
+  id: '/termos',
+  path: '/termos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegistroRoute = RegistroRouteImport.update({
   id: '/registro',
   path: '/registro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacidadeRoute = PrivacidadeRouteImport.update({
+  id: '/privacidade',
+  path: '/privacidade',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LotesRoute = LotesRouteImport.update({
@@ -94,7 +106,9 @@ export interface FileRoutesByFullPath {
   '/esg': typeof EsgRoute
   '/login': typeof LoginRoute
   '/lotes': typeof LotesRoute
+  '/privacidade': typeof PrivacidadeRoute
   '/registro': typeof RegistroRoute
+  '/termos': typeof TermosRoute
   '/validador': typeof ValidadorRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
@@ -108,7 +122,9 @@ export interface FileRoutesByTo {
   '/esg': typeof EsgRoute
   '/login': typeof LoginRoute
   '/lotes': typeof LotesRoute
+  '/privacidade': typeof PrivacidadeRoute
   '/registro': typeof RegistroRoute
+  '/termos': typeof TermosRoute
   '/validador': typeof ValidadorRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
@@ -123,7 +139,9 @@ export interface FileRoutesById {
   '/esg': typeof EsgRoute
   '/login': typeof LoginRoute
   '/lotes': typeof LotesRoute
+  '/privacidade': typeof PrivacidadeRoute
   '/registro': typeof RegistroRoute
+  '/termos': typeof TermosRoute
   '/validador': typeof ValidadorRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
@@ -139,7 +157,9 @@ export interface FileRouteTypes {
     | '/esg'
     | '/login'
     | '/lotes'
+    | '/privacidade'
     | '/registro'
+    | '/termos'
     | '/validador'
     | '/lovable/email/queue/process'
   fileRoutesByTo: FileRoutesByTo
@@ -153,7 +173,9 @@ export interface FileRouteTypes {
     | '/esg'
     | '/login'
     | '/lotes'
+    | '/privacidade'
     | '/registro'
+    | '/termos'
     | '/validador'
     | '/lovable/email/queue/process'
   id:
@@ -167,7 +189,9 @@ export interface FileRouteTypes {
     | '/esg'
     | '/login'
     | '/lotes'
+    | '/privacidade'
     | '/registro'
+    | '/termos'
     | '/validador'
     | '/lovable/email/queue/process'
   fileRoutesById: FileRoutesById
@@ -182,7 +206,9 @@ export interface RootRouteChildren {
   EsgRoute: typeof EsgRoute
   LoginRoute: typeof LoginRoute
   LotesRoute: typeof LotesRoute
+  PrivacidadeRoute: typeof PrivacidadeRoute
   RegistroRoute: typeof RegistroRoute
+  TermosRoute: typeof TermosRoute
   ValidadorRoute: typeof ValidadorRoute
   LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
 }
@@ -196,11 +222,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ValidadorRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/termos': {
+      id: '/termos'
+      path: '/termos'
+      fullPath: '/termos'
+      preLoaderRoute: typeof TermosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/registro': {
       id: '/registro'
       path: '/registro'
       fullPath: '/registro'
       preLoaderRoute: typeof RegistroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacidade': {
+      id: '/privacidade'
+      path: '/privacidade'
+      fullPath: '/privacidade'
+      preLoaderRoute: typeof PrivacidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lotes': {
@@ -286,7 +326,9 @@ const rootRouteChildren: RootRouteChildren = {
   EsgRoute: EsgRoute,
   LoginRoute: LoginRoute,
   LotesRoute: LotesRoute,
+  PrivacidadeRoute: PrivacidadeRoute,
   RegistroRoute: RegistroRoute,
+  TermosRoute: TermosRoute,
   ValidadorRoute: ValidadorRoute,
   LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
 }

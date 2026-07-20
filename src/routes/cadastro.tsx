@@ -94,13 +94,18 @@ function CadastroPage() {
   const [cpfCnpj, setCpfCnpj] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [aceite, setAceite] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const cfg = PERFIS[perfil];
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!aceite) {
+      return toast.error("Você precisa aceitar os Termos de Uso e a Política de Privacidade.");
+    }
     setLoading(true);
+    const acceptedAt = new Date().toISOString();
     const { error } = await supabase.auth.signUp({
       email,
       password: senha,
@@ -112,6 +117,9 @@ function CadastroPage() {
           tipo: cfg.tipo,
           operation_level: cfg.operation_level,
           role: cfg.role,
+          accepted_terms_at: acceptedAt,
+          accepted_privacy_at: acceptedAt,
+          terms_version: "2026-07-20",
         },
       },
     });
@@ -130,6 +138,7 @@ function CadastroPage() {
     toast.success(`Conta criada — perfil ${cfg.label}.`);
     navigate({ to: "/dashboard" });
   }
+
 
   const grupos: Array<{ titulo: string; itens: Perfil[] }> = [
     { titulo: "Operadores logísticos", itens: ["cooperativa", "reciclador", "gerador"] },
@@ -220,7 +229,28 @@ function CadastroPage() {
           />
         </div>
 
-        <Button type="submit" className="w-full h-11" disabled={loading}>
+        <label className="flex items-start gap-2 text-xs text-dim">
+          <input
+            type="checkbox"
+            className="mt-0.5 h-4 w-4 accent-primary"
+            checked={aceite}
+            onChange={(e) => setAceite(e.target.checked)}
+            required
+          />
+          <span>
+            Li e aceito os{" "}
+            <Link to="/termos" target="_blank" className="text-primary underline">
+              Termos de Uso
+            </Link>{" "}
+            e a{" "}
+            <Link to="/privacidade" target="_blank" className="text-primary underline">
+              Política de Privacidade
+            </Link>{" "}
+            (LGPD).
+          </span>
+        </label>
+
+        <Button type="submit" className="w-full h-11" disabled={loading || !aceite}>
           {loading && <Loader2 className="h-4 w-4 animate-spin" />}
           Criar conta
         </Button>
@@ -235,3 +265,4 @@ function CadastroPage() {
     </div>
   );
 }
+
