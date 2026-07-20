@@ -1,8 +1,52 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { createWalletClient, http, createPublicClient, type Hex } from "viem";
+import { createWalletClient, http, createPublicClient, formatEther, type Hex } from "viem";
 import { polygon } from "viem/chains";
 import { privateKeyToAccount } from "viem/accounts";
+
+/**
+ * Diagnóstico da carteira de ancoragem — retorna endereço público e saldo
+ * em POL (MATIC) na Polygon Mainnet. Use para saber para onde enviar gás
+ * e monitorar o saldo durante o beta.
+ *
+ * Custo estimado por evento: ~0.0005 POL (~$0.0003).
+ * Recomendado: manter ≥ 1 POL na carteira para ~2.000 eventos.
+ */
+export const getAnchorWalletStatus = createServerFn({ method: "GET" }).handler(
+  async () => {
+    const pkRaw = process.env.POLYGON_PRIVATE_KEY;
+    if (!pkRaw) {
+      return {
+        ok: false as const,
+        error: "POLYGON_PRIVATE_KEY não configurada",
+      };
+    }
+    try {
+      const pk = (pkRaw.startsWith("0x") ? pkRaw : `0x${pkRaw}`) as Hex;
+      const account = privateKeyToAccount(pk);
+      const publicClient = createPublicClient({
+        chain: polygon,
+        transport: http("https://polygon-rpc.com"),
+      });
+      const balanceWei = await publicClient.getBalance({ address: account.address });
+      const balancePol = formatEther(balanceWei);
+      const estEvents = Math.floor(Number(balancePol) / 0.0005);
+      return {
+        ok: true as const,
+        address: account.address,
+        balancePol,
+        estEvents,
+        explorer: `https://polygonscan.com/address/${account.address}`,
+        needsFunding: Number(balancePol) < 0.1,
+      };
+    } catch (e) {
+      return {
+        ok: false as const,
+        error: e instanceof Error ? e.message : String(e),
+      };
+    }
+  },
+);
 
 /**
  * Ancora o hash SHA-256 de um evento na Polygon Mainnet enviando uma
