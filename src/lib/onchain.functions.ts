@@ -24,9 +24,11 @@ export const getAnchorWalletStatus = createServerFn({ method: "GET" }).handler(
     try {
       const pk = (pkRaw.startsWith("0x") ? pkRaw : `0x${pkRaw}`) as Hex;
       const account = privateKeyToAccount(pk);
+      const rpcUrl =
+        process.env.POLYGON_RPC_URL ?? "https://polygon-bor-rpc.publicnode.com";
       const publicClient = createPublicClient({
         chain: polygon,
-        transport: http("https://polygon-rpc.com"),
+        transport: http(rpcUrl),
       });
       const balanceWei = await publicClient.getBalance({ address: account.address });
       const balancePol = formatEther(balanceWei);
